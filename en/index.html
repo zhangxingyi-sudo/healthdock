@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>HealthDock — Free Local Apple Health Export Converter (Claude, ChatGPT &amp; CSV)</title>
-  <meta name="description" content="Convert Apple Health export.zip or export.xml locally in your browser—zero upload. Generate an AI-ready context.md for Claude, ChatGPT, and Cursor (7d/30d/90d baselines + anomaly days) or clean CSV/JSON in seconds.">
+  <title>HealthDock — Free Local Apple Health Converter (ChatGPT, Claude, Gemini, Grok &amp; CSV)</title>
+  <meta name="description" content="Convert Apple Health export.zip or export.xml locally in your browser—zero upload. Generate an AI-ready context.md for ChatGPT, Claude, Google Gemini, NotebookLM, and Grok (7d/30d/90d baselines + anomaly days) or clean CSV/JSON in seconds.">
   <link rel="canonical" href="https://gethealthdock.com/en/">
   <link rel="alternate" hreflang="en" href="https://gethealthdock.com/en/">
   <link rel="alternate" hreflang="zh-Hans" href="https://gethealthdock.com/">
@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="../assets/site.css">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="HealthDock — Free 100% Local Apple Health to Claude, ChatGPT & CSV Converter">
-  <meta property="og:description" content="Drop a 500MB+ Apple Health export.zip or export.xml in your browser. Zero upload—get an AI-ready context.md or clean daily CSV/JSON in seconds.">
+  <meta property="og:title" content="HealthDock — Free 100% Local Apple Health to ChatGPT, Claude, Gemini, Grok & CSV">
+  <meta property="og:description" content="Drop a 500MB+ Apple Health export.zip or export.xml in your browser. Zero upload—get an AI-ready context.md for ChatGPT, Claude, Gemini & Grok or clean daily CSV/JSON in seconds.">
   <meta property="og:url" content="https://gethealthdock.com/en/">
   <meta property="og:image" content="https://gethealthdock.com/icon.png">
   <meta name="twitter:card" content="summary">
@@ -76,10 +76,11 @@
       </a>
       <nav class="nav-links" aria-label="Primary">
         <a class="active" href="./">Converter</a>
-        <a href="./tools/apple-health-to-claude/">Apple Health → Claude</a>
+        <a href="./tools/apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="./tools/apple-health-to-claude/">Claude</a>
+        <a href="./tools/apple-health-to-gemini/">Gemini</a>
+        <a href="./tools/apple-health-to-grok/">Grok</a>
         <a href="./tools/xml-to-csv/">XML → CSV</a>
-        <a href="#how-it-works">How to Export</a>
-        <a href="#faq">FAQ</a>
         <a href="privacy.html">Privacy</a>
         <a href="../">中文</a>
       </nav>
@@ -91,7 +92,7 @@
       <div class="eyebrow"><span class="dot"></span>Free · 100% Browser-Local · Zero Upload · Works Worldwide</div>
       <h1>Turn Apple Health <code>export.zip</code> into AI Context or CSV—in Seconds.</h1>
       <p class="lead">
-        Drop your iPhone’s 500MB+ Apple Health export right here. Our local Web Worker streams it in 4MB chunks—without uploading a single byte—and gives you an AI-ready <code>context.md</code> for <strong>Claude, ChatGPT &amp; Cursor</strong> or clean <strong>CSV / JSON</strong> for spreadsheets and Python.
+        Drop your iPhone’s 500MB+ Apple Health export right here. Our local Web Worker streams it in 4MB chunks—without uploading a single byte—and gives you an AI-ready <code>context.md</code> for <strong>ChatGPT, Claude, Gemini &amp; Grok</strong> or clean <strong>CSV / JSON</strong> for spreadsheets and Python.
       </p>
       <div class="trust-strip" style="margin-top:0">
         <span>🔒 Runs 100% offline in your browser</span>
@@ -211,17 +212,40 @@
     </section>
 
     <section class="section-block">
-      <h2>Dedicated Free Tools</h2>
-      <div class="grid-2" style="margin-top:14px">
+      <h2>Dedicated Free AI &amp; Export Tools</h2>
+      <div class="grid-3" style="margin-top:14px">
         <div class="card">
-          <h3>Apple Health to Claude &amp; ChatGPT</h3>
-          <p class="muted">Generate <code>context.md</code> with custom baseline windows (30/60/90 days), optional self-reported profile notes, and 3 curated health-review prompts ready to paste.</p>
+          <h3>Apple Health → ChatGPT</h3>
+          <p class="muted">Generate <code>context.md</code> plus a Python-ready Daily CSV for ChatGPT Data Analysis charts, ChatGPT Projects, and Custom GPTs.</p>
           <div class="btn-row" style="margin-top:14px">
-            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-claude/">Open Claude Converter →</a>
+            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-chatgpt/">Open ChatGPT Tool →</a>
           </div>
         </div>
         <div class="card">
-          <h3>Apple Health XML to CSV &amp; JSON</h3>
+          <h3>Apple Health → Claude</h3>
+          <p class="muted">Build <code>context.md</code> with 7d/30d/90d baselines and Claude prompts. Works worldwide with Claude Web, Desktop &amp; Claude Code.</p>
+          <div class="btn-row" style="margin-top:14px">
+            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-claude/">Open Claude Tool →</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Apple Health → Gemini &amp; NotebookLM</h3>
+          <p class="muted">Export <code>context.md</code>, a NotebookLM-ready <code>.txt</code> source, and Multi-Year Daily JSON built for Gemini’s 1M+ token context window.</p>
+          <div class="btn-row" style="margin-top:14px">
+            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-gemini/">Open Gemini Tool →</a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:16px">
+        <div class="card">
+          <h3>Apple Health → Grok</h3>
+          <p class="muted">Create a tight ~2KB <code>context.md</code> and Daily CSV with tailored Grok Think &amp; DeepSearch prompts for direct recovery and norm benchmarking.</p>
+          <div class="btn-row" style="margin-top:14px">
+            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-grok/">Open Grok Tool →</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Apple Health XML → CSV &amp; JSON</h3>
           <p class="muted">Filter by custom date range and 15 metrics (Resting HR, HRV, Sleep stages, Steps, VO₂max, Weight, Blood Pressure) to download Daily CSV, Workouts CSV, or JSON.</p>
           <div class="btn-row" style="margin-top:14px">
             <a class="btn btn-secondary btn-sm" href="./tools/xml-to-csv/">Open CSV / JSON Converter →</a>
@@ -264,7 +288,10 @@
     <footer class="site-footer">
       <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
       <div class="footer-links">
-        <a href="./tools/apple-health-to-claude/">Apple Health → Claude</a>
+        <a href="./tools/apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="./tools/apple-health-to-claude/">Claude</a>
+        <a href="./tools/apple-health-to-gemini/">Gemini</a>
+        <a href="./tools/apple-health-to-grok/">Grok</a>
         <a href="./tools/xml-to-csv/">XML → CSV</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="../llms.txt">llms.txt</a>

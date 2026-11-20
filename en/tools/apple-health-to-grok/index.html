@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apple Health to Grok — Free Local export.xml &amp; export.zip Converter | HealthDock</title>
+  <meta name="description" content="Convert your Apple Health export.zip or export.xml locally in your browser into a clean, compact context.md or daily CSV for Grok (grok.com &amp; X). Zero upload, handles 500MB+ files in seconds.">
+  <link rel="canonical" href="https://gethealthdock.com/en/tools/apple-health-to-grok/">
+  <link rel="icon" href="../../../icon.png">
+  <link rel="stylesheet" href="../../../assets/site.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Apple Health to Grok — Free 100% Local export.xml Converter">
+  <meta property="og:description" content="Turn 500MB+ Apple Health exports into a compact ~2KB Markdown context.md and clean CSV for Grok without uploading raw health records to any server.">
+  <meta property="og:url" content="https://gethealthdock.com/en/tools/apple-health-to-grok/">
+  <meta property="og:image" content="https://gethealthdock.com/icon.png">
+  <meta name="twitter:card" content="summary">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Apple Health to Grok Converter",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any (Web Browser)",
+    "url": "https://gethealthdock.com/en/tools/apple-health-to-grok/",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free 100% browser-local streaming converter that converts Apple Health export.zip or export.xml into a structured Markdown context.md and clean daily CSV ready for Grok."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I upload Apple Health export.xml directly to Grok?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Raw Apple Health exports are usually 300MB–2GB, which far exceeds Grok's file upload and context limits. HealthDock stream-parses export.zip locally in your browser and reduces years of raw XML into a crisp ~2KB context.md summary you can paste directly into grok.com or the Grok app."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I stop Grok from training on my health metrics?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HealthDock processes your file 100% offline in your browser with zero server upload. Inside Grok or X Settings → Privacy and Safety → Grok & Third-party Collaborators, disable data sharing for training (or use Private Chat on grok.com) before pasting your summary."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which Grok mode works best with Apple Health context.md?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Grok Think mode excels at spotting multi-metric interactions (such as rising resting heart rate paired with dropping HRV and higher 8-week training load), while DeepSearch is great for benchmarking your VO2max, resting HR, and sleep metrics against peer-reviewed age/sex norms."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../">
+        <img src="../../../icon.png" alt="HealthDock icon">
+        <span>HealthDock</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../../">Converter</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a class="active" href="./">Grok</a>
+        <a href="../xml-to-csv/">XML → CSV</a>
+        <a href="../../privacy.html">Privacy</a>
+        <a href="../../../">中文</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container container-narrow">
+    <section class="hero" style="padding-bottom:20px">
+      <div class="eyebrow"><span class="dot"></span>100% Local in Your Browser · Ready for Grok Think &amp; DeepSearch · Zero Upload</div>
+      <h1>Analyze Apple Health Data with Grok</h1>
+      <p class="lead">
+        Apple Health’s raw <code>export.zip</code> is too big for Grok’s upload limits. Drop your file below to stream-parse it locally in 4MB chunks—turning years of Apple Watch &amp; iPhone metrics into a tight ~2KB <code>context.md</code> with 7d/30d/90d baselines, ≥2 SD unusual days, and 8-week training volume built for direct, no-fluff analysis in Grok.
+      </p>
+      <div class="trust-strip" style="margin-top:0">
+        <span>🔒 Zero server upload (runs offline in Web Worker)</span>
+        <span>⚡ Streams 500MB–2GB exports in seconds</span>
+        <span>🎯 Built for Grok Think, DeepSearch &amp; Private Chat</span>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Apple Health to Grok Converter">
+      <div id="dropzone" class="dropzone">
+        <input id="fileInput" type="file" accept=".xml,.zip,application/xml,text/xml,application/zip" aria-label="Select Apple Health export.xml or export.zip">
+        <p class="dropzone-title">Drop <code>export.zip</code> or <code>export.xml</code> here</p>
+        <p class="dropzone-sub">No unzipping required · Processed strictly on your device · Zero server calls</p>
+      </div>
+
+      <div class="tool-controls">
+        <div class="btn-row">
+          <button id="sampleBtn" type="button" class="btn btn-primary btn-sm">✨ Try Sample Data (1-click demo)</button>
+          <a class="btn btn-ghost btn-sm" href="../xml-to-csv/">Need Full CSV / JSON Filters? →</a>
+        </div>
+        <div class="field-group">
+          <label for="windowSelect">Baseline window:</label>
+          <select id="windowSelect">
+            <option value="90" selected>Last 90 days (recommended)</option>
+            <option value="60">Last 60 days</option>
+            <option value="30">Last 30 days</option>
+          </select>
+        </div>
+      </div>
+
+      <details style="margin-top:14px">
+        <summary class="small" style="cursor:pointer;font-weight:600">+ Optional: add short personal context (age/sex, training goal, sleep schedule) for Grok</summary>
+        <div style="margin-top:8px">
+          <textarea id="profileNotes" placeholder="Example: 35M, lifting 4x/week + Zone 2 cycling. Want blunt feedback on recovery, sleep debt, and VO2max progress."></textarea>
+        </div>
+      </details>
+
+      <div id="errorBox" class="notice-error" role="alert"></div>
+
+      <div id="progressWrap" class="progress-wrap">
+        <div class="progress-bar-track">
+          <div id="progressFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progressStatus">Streaming locally…</span>
+          <span id="progressStats">0%</span>
+        </div>
+      </div>
+
+      <div id="outputPanel" class="output-panel">
+        <div class="stat-strip">
+          <div class="stat-box"><div class="k">Records Scanned</div><div id="statRecords" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Days Summarized</div><div id="statDays" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Workouts</div><div id="statWorkouts" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Parse Time</div><div id="statTime" class="v">—</div></div>
+        </div>
+
+        <div class="toolbar-bar">
+          <div class="tabs" role="tablist">
+            <button id="tabRendered" type="button" class="tab-btn active" role="tab" aria-selected="true">Grok Context (context.md)</button>
+            <button id="tabRaw" type="button" class="tab-btn" role="tab" aria-selected="false">Raw Markdown</button>
+          </div>
+          <div class="btn-row">
+            <button id="copyMdBtn" type="button" class="btn btn-primary btn-sm">Copy context.md</button>
+            <button id="downloadMdBtn" type="button" class="btn btn-secondary btn-sm">Download .md</button>
+            <button id="downloadCsvBtn" type="button" class="btn btn-secondary btn-sm">Download Daily CSV</button>
+          </div>
+        </div>
+
+        <div id="renderedView" class="md-view"></div>
+        <div id="rawView" class="code-window" style="display:none">
+          <div class="code-window-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span>context.md</span>
+          </div>
+          <pre id="rawPre" class="code-body"></pre>
+        </div>
+
+        <div style="margin-top:26px">
+          <h3>Ready-to-Use Grok Prompts</h3>
+          <p class="small" style="margin:0 0 12px">Click <strong>Copy Prompt + Context</strong> and paste directly into grok.com, Grok iOS, or Private Chat.</p>
+          <div class="grid-3" id="promptGrid"></div>
+        </div>
+
+        <div class="funnel-banner">
+          <div class="funnel-copy">
+            <h3>Coming Soon: Automatic iPhone → Mac Sync</h3>
+            <p>
+              Tired of manually exporting a 500MB ZIP from iPhone Health? We’re building the <strong>HealthDock iPhone &amp; Mac companion apps</strong> to keep your <code>context.md</code> and local daily files synced automatically over Bluetooth &amp; local Wi-Fi—zero cloud servers.
+            </p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-secondary btn-sm" href="mailto:zhangxingyiopenclaw@gmail.com?subject=Notify%20me%20when%20HealthDock%20launches&body=Hi%2C%20please%20let%20me%20know%20when%20HealthDock%20for%20iPhone%20%26%20Mac%20is%20live%20on%20the%20App%20Store.">Get Launch Notification</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block card">
+      <h2>How to Get the Most Out of Grok with Apple Health</h2>
+      <div class="grid-3" style="margin-top:12px">
+        <div>
+          <h3>1. Use Private Chat</h3>
+          <p class="muted" style="margin:0;font-size:14px">On <code>grok.com</code> or X, switch on <strong>Private Chat</strong> (and opt out of training in Privacy Settings) before pasting personal health summaries.</p>
+        </div>
+        <div>
+          <h3>2. Turn on Think Mode</h3>
+          <p class="muted" style="margin:0;font-size:14px">Grok’s reasoning mode shines at cross-checking subtle multi-metric signals—like rising resting HR alongside an HRV drop and a spike in weekly training hours.</p>
+        </div>
+        <div>
+          <h3>3. Use DeepSearch for Benchmarks</h3>
+          <p class="muted" style="margin:0;font-size:14px">Include your age &amp; sex in the optional notes box above, then let Grok DeepSearch compare your VO₂max, resting HR, and sleep stages against published population percentiles.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>Grok &amp; Privacy FAQ</h2>
+      <details class="faq-item">
+        <summary>Why use HealthDock instead of uploading export.zip to Grok?</summary>
+        <p>Raw Apple Health exports contain millions of sensor samples across 300MB–2GB of XML, which exceeds Grok’s upload ceiling and wastes context on raw boilerplate. HealthDock cleans duplicates locally (merging overlapping sleep windows and preventing Watch + iPhone step double-counting) and outputs a crisp ~2KB Markdown summary.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does my Apple Health file ever touch HealthDock’s servers?</summary>
+        <p>Never. HealthDock has zero backend servers, zero accounts, and zero analytics. Parsing runs strictly inside your browser’s Web Worker—you can turn off Wi-Fi after loading the page and it still works.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is this medical advice?</summary>
+        <p>No. This tool summarizes your personal Apple Health records for informational self-tracking only. Always consult a qualified healthcare professional for medical advice or diagnosis.</p>
+      </details>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
+      <div class="footer-links">
+        <a href="../../">Home</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a href="../xml-to-csv/">XML → CSV</a>
+        <a href="../../privacy.html">Privacy</a>
+        <a href="../../../">中文</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+  (() => {
+    const PROMPTS = [
+      {
+        title: 'No-Fluff Recovery & Training Audit',
+        desc: 'Direct, candid critique of sleep consistency, HRV strain, and recent training load.',
+        text: 'Give me a blunt, evidence-grounded review of my Apple Health data below—skip generic filler. Compare my last 7 days against my 30-day and 90-day baselines, call out any signs of under-recovery or overtraining across sleep, HRV, resting HR, and 8-week workout volume, explain what the ≥2 SD unusual days suggest, and list the top 3 highest-leverage fixes for the next 14 days. Note anything that should be discussed with a doctor.'
+      },
+      {
+        title: 'DeepSearch Norm Benchmarking',
+        desc: 'Benchmark your VO₂max, resting HR, and HRV against peer-reviewed age/sex percentiles.',
+        text: 'Using my Apple Health context below (and any age/sex noted in Personal Notes), benchmark my resting heart rate, HRV (SDNN), VO2max, sleep duration, and daily activity against peer-reviewed clinical or sports-science norms. Rank my metrics from strongest to weakest, note where wearable data has measurement limits, and outline realistic 90-day targets (informational only, not medical diagnosis).'
+      },
+      {
+        title: '30-Day Habit Experiment Protocol',
+        desc: 'Turn baseline weaknesses into a strict, measurable 4-week self-experiment.',
+        text: 'Based on the Apple Health baselines and anomalies below, design a focused 30-day self-experiment targeting my single biggest bottleneck (sleep consistency, cardiovascular fitness, or recovery). Give me: (1) the exact hypothesis, (2) 2–3 daily rules easy to track, (3) which Apple Health metrics should move and by how much after 30 days, and (4) clear stop/consult-a-doctor guardrails.'
+      }
+    ];
+
+    const worker = new Worker('../../../assets/health-worker.js');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const windowSelect = document.getElementById('windowSelect');
+    const profileNotes = document.getElementById('profileNotes');
+    const errorBox = document.getElementById('errorBox');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressFill = document.getElementById('progressFill');
+    const progressStatus = document.getElementById('progressStatus');
+    const progressStats = document.getElementById('progressStats');
+    const outputPanel = document.getElementById('outputPanel');
+    const renderedView = document.getElementById('renderedView');
+    const rawView = document.getElementById('rawView');
+    const rawPre = document.getElementById('rawPre');
+    const tabRendered = document.getElementById('tabRendered');
+    const tabRaw = document.getElementById('tabRaw');
+    const copyMdBtn = document.getElementById('copyMdBtn');
+    const downloadMdBtn = document.getElementById('downloadMdBtn');
+    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+    const promptGrid = document.getElementById('promptGrid');
+
+    let currentMarkdown = '';
+    let currentCsv = null;
+    let hasData = false;
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.add('visible');
+    }
+    function clearError() {
+      errorBox.textContent = '';
+      errorBox.classList.remove('visible');
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    function renderSimpleMarkdown(md) {
+      const lines = md.split('\n');
+      const out = [];
+      let i = 0;
+      while (i < lines.length) {
+        const line = lines[i];
+        if (!line.trim()) { i++; continue; }
+        if (line.startsWith('### ')) { out.push('<h3>' + escapeHtml(line.slice(4)) + '</h3>'); i++; }
+        else if (line.startsWith('## ')) { out.push('<h2>' + escapeHtml(line.slice(3)) + '</h2>'); i++; }
+        else if (line.startsWith('# ')) { out.push('<h1>' + escapeHtml(line.slice(2)) + '</h1>'); i++; }
+        else if (line.startsWith('|') && i + 1 < lines.length && lines[i + 1].startsWith('|---')) {
+          const headers = line.split('|').slice(1, -1).map(c => c.trim());
+          let html = '<div class="table-scroll"><table><thead><tr>' +
+            headers.map(h => '<th>' + escapeHtml(h) + '</th>').join('') + '</tr></thead><tbody>';
+          i += 2;
+          while (i < lines.length && lines[i].startsWith('|')) {
+            const cells = lines[i].split('|').slice(1, -1).map(c => c.trim());
+            html += '<tr>' + cells.map(c => '<td>' + escapeHtml(c) + '</td>').join('') + '</tr>';
+            i++;
+          }
+          html += '</tbody></table></div>';
+          out.push(html);
+        } else { out.push('<p>' + escapeHtml(line) + '</p>'); i++; }
+      }
+      return out.join('');
+    }
+    function displayMarkdown(md) {
+      currentMarkdown = md;
+      rawPre.textContent = md;
+      renderedView.innerHTML = renderSimpleMarkdown(md);
+    }
+    function downloadBlob(content, filename, mime) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    function flashButton(btn, label) {
+      const prev = btn.textContent;
+      btn.textContent = label;
+      setTimeout(() => { btn.textContent = prev; }, 1800);
+    }
+    async function copyText(text, btn, doneLabel) {
+      try {
+        await navigator.clipboard.writeText(text);
+        flashButton(btn, doneLabel);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        flashButton(btn, doneLabel);
+      }
+    }
+
+    function buildPromptCards() {
+      promptGrid.innerHTML = '';
+      PROMPTS.forEach((p) => {
+        const card = document.createElement('div');
+        card.className = 'prompt-card';
+        card.innerHTML = `
+          <div>
+            <h3>${escapeHtml(p.title)}</h3>
+            <p>${escapeHtml(p.desc)}</p>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-primary btn-sm copy-both">Copy Prompt + Context</button>
+            <button type="button" class="btn btn-ghost btn-sm copy-only">Prompt Only</button>
+          </div>
+        `;
+        card.querySelector('.copy-both').addEventListener('click', (e) => {
+          copyText(p.text + '\n\n---\n\n' + currentMarkdown, e.currentTarget, 'Copied!');
+        });
+        card.querySelector('.copy-only').addEventListener('click', (e) => {
+          copyText(p.text, e.currentTarget, 'Copied!');
+        });
+        promptGrid.appendChild(card);
+      });
+    }
+    buildPromptCards();
+
+    function startFile(file) {
+      if (!file) return;
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '2%';
+      progressStatus.textContent = `Streaming ${file.name} locally…`;
+      progressStats.textContent = 'Starting…';
+      worker.postMessage({
+        action: 'parse',
+        file,
+        windowDays: Number(windowSelect.value) || 90,
+        profile: profileNotes.value || ''
+      });
+    }
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) startFile(e.target.files[0]);
+    });
+    ['dragenter', 'dragover'].forEach((ev) => {
+      dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    });
+    ['dragleave', 'drop'].forEach((ev) => {
+      dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); });
+    });
+    dropzone.addEventListener('drop', (e) => {
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) startFile(e.dataTransfer.files[0]);
+    });
+    sampleBtn.addEventListener('click', () => {
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '60%';
+      progressStatus.textContent = 'Generating synthetic demo dataset…';
+      progressStats.textContent = 'Sample';
+      worker.postMessage({
+        action: 'sample',
+        windowDays: Number(windowSelect.value) || 90,
+        profile: profileNotes.value || ''
+      });
+    });
+
+    function triggerRerender() {
+      if (!hasData) return;
+      worker.postMessage({
+        action: 'rerender',
+        windowDays: Number(windowSelect.value) || 90,
+        profile: profileNotes.value || ''
+      });
+    }
+    windowSelect.addEventListener('change', triggerRerender);
+    let profileTimer = null;
+    profileNotes.addEventListener('input', () => {
+      clearTimeout(profileTimer);
+      profileTimer = setTimeout(triggerRerender, 220);
+    });
+
+    tabRendered.addEventListener('click', () => {
+      tabRendered.classList.add('active');
+      tabRaw.classList.remove('active');
+      tabRendered.setAttribute('aria-selected', 'true');
+      tabRaw.setAttribute('aria-selected', 'false');
+      renderedView.style.display = 'block';
+      rawView.style.display = 'none';
+    });
+    tabRaw.addEventListener('click', () => {
+      tabRaw.classList.add('active');
+      tabRendered.classList.remove('active');
+      tabRaw.setAttribute('aria-selected', 'true');
+      tabRendered.setAttribute('aria-selected', 'false');
+      renderedView.style.display = 'none';
+      rawView.style.display = 'block';
+    });
+
+    copyMdBtn.addEventListener('click', () => copyText(currentMarkdown, copyMdBtn, 'Copied!'));
+    downloadMdBtn.addEventListener('click', () => {
+      if (currentMarkdown) downloadBlob(currentMarkdown, 'context.md', 'text/markdown;charset=utf-8');
+    });
+    downloadCsvBtn.addEventListener('click', () => {
+      if (currentCsv) downloadBlob(currentCsv.content, currentCsv.filename, currentCsv.mime);
+    });
+
+    worker.onmessage = (e) => {
+      const data = e.data || {};
+      if (data.type === 'progress') {
+        progressFill.style.width = data.percent + '%';
+        const doneMB = (data.doneBytes / (1024 * 1024)).toFixed(1);
+        const totalMB = (data.totalBytes / (1024 * 1024)).toFixed(1);
+        progressStatus.textContent = `Scanned ${data.recordsScanned.toLocaleString('en-US')} records (${data.mbPerSec.toFixed(1)} MB/s)`;
+        progressStats.textContent = `${doneMB} / ${totalMB} MB (${data.percent}%)`;
+      } else if (data.type === 'done') {
+        hasData = true;
+        progressFill.style.width = '100%';
+        progressStatus.textContent = data.isSample
+          ? 'Loaded synthetic sample data (not real user data)'
+          : `Finished streaming ${data.summary.sourceLabel} locally`;
+        progressStats.textContent = '100%';
+        document.getElementById('statRecords').textContent = data.summary.recordsScanned.toLocaleString('en-US');
+        document.getElementById('statDays').textContent = data.summary.daysCount.toLocaleString('en-US');
+        document.getElementById('statWorkouts').textContent = data.summary.workoutsCount.toLocaleString('en-US');
+        document.getElementById('statTime').textContent = data.summary.elapsedMs < 1000
+          ? `${data.summary.elapsedMs} ms`
+          : `${(data.summary.elapsedMs / 1000).toFixed(1)} s`;
+        displayMarkdown(data.markdown);
+        outputPanel.classList.add('visible');
+        worker.postMessage({
+          action: 'export',
+          options: {
+            format: 'daily-csv',
+            metrics: ['resting_hr_avg', 'hrv_sdnn_ms', 'sleep_min', 'deep_min', 'rem_min', 'steps', 'active_kcal', 'exercise_min', 'vo2max', 'weight_kg'],
+          },
+        });
+      } else if (data.type === 'exported') {
+        currentCsv = data;
+      } else if (data.type === 'rendered') {
+        displayMarkdown(data.markdown);
+      } else if (data.type === 'error') {
+        progressWrap.classList.remove('visible');
+        showError(data.message);
+      }
+    };
+  })();
+  </script>
+</body>
+</html>

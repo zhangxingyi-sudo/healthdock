@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apple Health to ChatGPT — Free Local export.xml &amp; export.zip Converter | HealthDock</title>
+  <meta name="description" content="Convert your 500MB+ Apple Health export.zip or export.xml into a paste-ready context.md and clean daily CSV for ChatGPT, ChatGPT Projects, Custom GPTs, and Python Data Analysis. 100% browser-local with zero upload.">
+  <link rel="canonical" href="https://gethealthdock.com/en/tools/apple-health-to-chatgpt/">
+  <link rel="icon" href="../../../icon.png">
+  <link rel="stylesheet" href="../../../assets/site.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Apple Health to ChatGPT — Free 100% Local Converter (Markdown + CSV)">
+  <meta property="og:description" content="Stop ChatGPT timeouts on 500MB Apple Health exports. Stream-parse export.zip locally in your browser into a ~2KB context.md and clean daily CSV for ChatGPT Data Analysis.">
+  <meta property="og:url" content="https://gethealthdock.com/en/tools/apple-health-to-chatgpt/">
+  <meta property="og:image" content="https://gethealthdock.com/icon.png">
+  <meta name="twitter:card" content="summary">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Apple Health to ChatGPT Converter",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any (Web Browser)",
+    "url": "https://gethealthdock.com/en/tools/apple-health-to-chatgpt/",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free 100% browser-local streaming converter that transforms huge Apple Health export.zip or export.xml files into a compact Markdown context.md and clean daily CSV for ChatGPT, ChatGPT Projects, and Python Data Analysis."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why does uploading Apple Health export.zip or export.xml directly to ChatGPT fail?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Apple Health exports typically weigh 300MB to 2GB with millions of verbose XML lines. ChatGPT's Code Interpreter frequently hits memory limits or execution timeouts when parsing raw XML. Converting locally into a ~2KB context.md summary plus a ~50KB clean daily CSV lets ChatGPT analyze trends and plot Python charts in seconds."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I upload context.md or Daily CSV to ChatGPT?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use context.md for fast conversational reviews, ChatGPT Projects, and Custom GPT knowledge—it already includes 7d/30d/90d baselines, ≥2 SD unusual days, yearly averages, and 8-week training load. Download the Daily CSV alongside it whenever you want ChatGPT Data Analysis (Python) to draw charts or run statistical regressions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I keep my health data out of ChatGPT model training?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "First, HealthDock converts your Apple Health export 100% offline in your browser—zero bytes touch our servers. Second, before pasting into ChatGPT, open ChatGPT Settings → Data Controls and disable 'Improve the model for everyone', or use Temporary Chat."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can this tool handle a 1GB Apple Health export.xml without crashing my browser?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Our Web Worker streams export.xml in 4MB chunks (and decompresses export.zip natively via DecompressionStream) instead of loading the XML DOM into RAM."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../">
+        <img src="../../../icon.png" alt="HealthDock icon">
+        <span>HealthDock</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../../">Converter</a>
+        <a class="active" href="./">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a href="../xml-to-csv/">XML → CSV</a>
+        <a href="../../privacy.html">Privacy</a>
+        <a href="../../../">中文</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container container-narrow">
+    <section class="hero" style="padding-bottom:20px">
+      <div class="eyebrow"><span class="dot"></span>100% Local in Your Browser · Markdown + Python-Ready CSV · Zero Upload</div>
+      <h1>Export &amp; Analyze Apple Health Data with ChatGPT</h1>
+      <p class="lead">
+        ChatGPT times out when you upload a raw 500MB Apple Health <code>export.zip</code> or <code>export.xml</code>. Drop your file below to stream-parse it locally in 4MB chunks—getting both a compact <code>context.md</code> for ChatGPT chat / Projects and a clean <strong>Daily CSV</strong> built for ChatGPT’s Python Data Analysis charts.
+      </p>
+      <div class="trust-strip" style="margin-top:0">
+        <span>🔒 Zero server upload (runs offline in Web Worker)</span>
+        <span>📊 Outputs both <code>context.md</code> &amp; Python-ready CSV</span>
+        <span>⚡ Handles 500MB–2GB exports in seconds</span>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Apple Health to ChatGPT Converter">
+      <div id="dropzone" class="dropzone">
+        <input id="fileInput" type="file" accept=".xml,.zip,application/xml,text/xml,application/zip" aria-label="Select Apple Health export.xml or export.zip">
+        <p class="dropzone-title">Drop <code>export.zip</code> or <code>export.xml</code> here</p>
+        <p class="dropzone-sub">No unzipping needed · Processed locally in your browser · Zero data leaves your computer</p>
+      </div>
+
+      <div class="tool-controls">
+        <div class="btn-row">
+          <button id="sampleBtn" type="button" class="btn btn-primary btn-sm">✨ Try Sample Data (1-click demo)</button>
+          <a class="btn btn-ghost btn-sm" href="../xml-to-csv/">Custom CSV / JSON Filters →</a>
+        </div>
+        <div class="field-group">
+          <label for="windowSelect">Baseline window:</label>
+          <select id="windowSelect">
+            <option value="90" selected>Last 90 days (recommended)</option>
+            <option value="60">Last 60 days</option>
+            <option value="30">Last 30 days</option>
+          </select>
+        </div>
+      </div>
+
+      <details style="margin-top:14px">
+        <summary class="small" style="cursor:pointer;font-weight:600">+ Optional: add short personal context (age/sex, goals, medications or training block) for ChatGPT</summary>
+        <div style="margin-top:8px">
+          <textarea id="profileNotes" placeholder="Example: 36M, desk job, running 3x/week for a 10K. Trying to lower resting HR and stabilize weekday bedtime."></textarea>
+        </div>
+      </details>
+
+      <div id="errorBox" class="notice-error" role="alert"></div>
+
+      <div id="progressWrap" class="progress-wrap">
+        <div class="progress-bar-track">
+          <div id="progressFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progressStatus">Streaming locally…</span>
+          <span id="progressStats">0%</span>
+        </div>
+      </div>
+
+      <div id="outputPanel" class="output-panel">
+        <div class="stat-strip">
+          <div class="stat-box"><div class="k">Records Scanned</div><div id="statRecords" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Days Summarized</div><div id="statDays" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Workouts</div><div id="statWorkouts" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Parse Time</div><div id="statTime" class="v">—</div></div>
+        </div>
+
+        <div class="toolbar-bar">
+          <div class="tabs" role="tablist">
+            <button id="tabRendered" type="button" class="tab-btn active" role="tab" aria-selected="true">ChatGPT Context (context.md)</button>
+            <button id="tabRaw" type="button" class="tab-btn" role="tab" aria-selected="false">Raw Markdown</button>
+          </div>
+          <div class="btn-row">
+            <button id="copyMdBtn" type="button" class="btn btn-primary btn-sm">Copy context.md</button>
+            <button id="downloadMdBtn" type="button" class="btn btn-secondary btn-sm">Download .md</button>
+            <button id="downloadCsvBtn" type="button" class="btn btn-secondary btn-sm">Download CSV for Python</button>
+          </div>
+        </div>
+
+        <div id="renderedView" class="md-view"></div>
+        <div id="rawView" class="code-window" style="display:none">
+          <div class="code-window-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span>context.md</span>
+          </div>
+          <pre id="rawPre" class="code-body"></pre>
+        </div>
+
+        <div style="margin-top:26px">
+          <h3>Ready-to-Use ChatGPT Prompts</h3>
+          <p class="small" style="margin:0 0 12px">Paste directly into ChatGPT, a ChatGPT Project, or attach the downloaded Daily CSV for Python charts.</p>
+          <div class="grid-3" id="promptGrid"></div>
+        </div>
+
+        <div class="funnel-banner">
+          <div class="funnel-copy">
+            <h3>Coming Soon: Automatic iPhone → Mac Sync</h3>
+            <p>
+              Don’t want to re-export a 500MB ZIP every month? We’re building the <strong>HealthDock iPhone &amp; Mac apps</strong> to sync Apple Health automatically over Bluetooth &amp; local Wi-Fi—keeping your <code>context.md</code> and daily files fresh on your Mac with zero cloud servers.
+            </p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-secondary btn-sm" href="mailto:zhangxingyiopenclaw@gmail.com?subject=Notify%20me%20when%20HealthDock%20launches&body=Hi%2C%20please%20let%20me%20know%20when%20HealthDock%20for%20iPhone%20%26%20Mac%20is%20live%20on%20the%20App%20Store.">Get Launch Notification</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block card">
+      <h2>Best Way to Use Apple Health Data in ChatGPT</h2>
+      <div class="grid-3" style="margin-top:12px">
+        <div>
+          <h3>1. Quick Check-In (Paste <code>context.md</code>)</h3>
+          <p class="muted" style="margin:0;font-size:14px">Open a new chat (or Temporary Chat), paste a prompt + <code>context.md</code>. At ~2KB, ChatGPT reads every baseline, anomaly day, and 8-week training block without losing context.</p>
+        </div>
+        <div>
+          <h3>2. Python Charts (Attach Daily CSV)</h3>
+          <p class="muted" style="margin:0;font-size:14px">Click <strong>Download CSV for Python</strong> and upload the compact CSV to ChatGPT. Ask it to plot sleep vs. HRV correlations, 14-day rolling resting HR, or weekday vs. weekend splits.</p>
+        </div>
+        <div>
+          <h3>3. ChatGPT Projects / Custom GPT</h3>
+          <p class="muted" style="margin:0;font-size:14px">Upload <code>context.md</code> to a dedicated <strong>Health</strong> Project so every future question automatically knows your personal baselines—and disable model training in Settings → Data Controls.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>ChatGPT &amp; Privacy FAQ</h2>
+      <details class="faq-item">
+        <summary>Why does ChatGPT fail or time out on Apple Health export.zip?</summary>
+        <p>Raw Apple Health exports contain millions of overlapping sensor rows—often 300MB to 2GB uncompressed. ChatGPT’s Python sandbox hits memory or time limits reading raw XML and frequently double-counts steps across iPhone and Apple Watch. HealthDock cleans, deduplicates, and summarizes everything locally in your browser first.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I stop ChatGPT from training on my health summary?</summary>
+        <p>Open <strong>ChatGPT → Settings → Data Controls</strong> and turn off <strong>Improve the model for everyone</strong>, or paste your summary into a <strong>Temporary Chat</strong>. HealthDock itself never transmits or stores your file anywhere.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does it work with free ChatGPT as well as ChatGPT Plus / Team?</summary>
+        <p>Yes. Because <code>context.md</code> is compact plain Markdown (~2KB), you can paste it into free ChatGPT, Plus, Pro, or Team without hitting attachment quotas.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is this medical advice?</summary>
+        <p>No. HealthDock only formats and summarizes your personal Apple Health records. Always verify health insights with a qualified clinician before making medical changes.</p>
+      </details>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
+      <div class="footer-links">
+        <a href="../../">Home</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a href="../xml-to-csv/">XML → CSV</a>
+        <a href="../../privacy.html">Privacy</a>
+        <a href="../../../">中文</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+  (() => {
+    const PROMPTS = [
+      {
+        title: 'Python Charts & Correlations (CSV)',
+        desc: 'Attach the downloaded Daily CSV so ChatGPT Data Analysis plots sleep, HRV, RHR, and training trends.',
+        text: 'I have attached my cleaned Apple Health Daily CSV and pasted my baseline summary below. Using Python (matplotlib), create 3 clear charts: (1) 14-day rolling Resting Heart Rate and HRV over time, (2) Sleep duration vs. next-day HRV/resting HR scatter with correlation, and (3) Weekday vs. weekend sleep and steps comparison. Highlight the top 3 data-backed takeaways—not medical diagnosis.'
+      },
+      {
+        title: 'Weekly Health & Recovery Review',
+        desc: 'Paste context.md alone for a fast check-in against your 90-day baseline and unusual days.',
+        text: 'Review my Apple Health context below. Compare the last 7 days against my 30-day and 90-day personal baselines, call out any statistically unusual days (≥2 SD) and possible recovery strain from my 8-week training volume, and give me 3 concrete adjustments for next week. Note any metrics with sparse data and remind me what warrants talking to a doctor.'
+      },
+      {
+        title: 'ChatGPT Project Memory Setup',
+        desc: 'Save your personal baselines inside a ChatGPT Project or Custom GPT for ongoing check-ins.',
+        text: 'Save the Apple Health context below as my current health baseline profile for this Project. Summarize my key baselines (sleep, resting HR, HRV, steps, VO2max, weight, recent workouts) in 8 concise bullet points, list 3 metrics I should watch over the next month, and ask me 3 clarifying questions about my lifestyle and goals before making recommendations.'
+      }
+    ];
+
+    const worker = new Worker('../../../assets/health-worker.js');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const windowSelect = document.getElementById('windowSelect');
+    const profileNotes = document.getElementById('profileNotes');
+    const errorBox = document.getElementById('errorBox');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressFill = document.getElementById('progressFill');
+    const progressStatus = document.getElementById('progressStatus');
+    const progressStats = document.getElementById('progressStats');
+    const outputPanel = document.getElementById('outputPanel');
+    const renderedView = document.getElementById('renderedView');
+    const rawView = document.getElementById('rawView');
+    const rawPre = document.getElementById('rawPre');
+    const tabRendered = document.getElementById('tabRendered');
+    const tabRaw = document.getElementById('tabRaw');
+    const copyMdBtn = document.getElementById('copyMdBtn');
+    const downloadMdBtn = document.getElementById('downloadMdBtn');
+    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+    const promptGrid = document.getElementById('promptGrid');
+
+    let currentMarkdown = '';
+    let currentCsv = null;
+    let hasData = false;
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.add('visible');
+    }
+    function clearError() {
+      errorBox.textContent = '';
+      errorBox.classList.remove('visible');
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    function renderSimpleMarkdown(md) {
+      const lines = md.split('\n');
+      const out = [];
+      let i = 0;
+      while (i < lines.length) {
+        const line = lines[i];
+        if (!line.trim()) { i++; continue; }
+        if (line.startsWith('### ')) { out.push('<h3>' + escapeHtml(line.slice(4)) + '</h3>'); i++; }
+        else if (line.startsWith('## ')) { out.push('<h2>' + escapeHtml(line.slice(3)) + '</h2>'); i++; }
+        else if (line.startsWith('# ')) { out.push('<h1>' + escapeHtml(line.slice(2)) + '</h1>'); i++; }
+        else if (line.startsWith('|') && i + 1 < lines.length && lines[i + 1].startsWith('|---')) {
+          const headers = line.split('|').slice(1, -1).map(c => c.trim());
+          let html = '<div class="table-scroll"><table><thead><tr>' +
+            headers.map(h => '<th>' + escapeHtml(h) + '</th>').join('') + '</tr></thead><tbody>';
+          i += 2;
+          while (i < lines.length && lines[i].startsWith('|')) {
+            const cells = lines[i].split('|').slice(1, -1).map(c => c.trim());
+            html += '<tr>' + cells.map(c => '<td>' + escapeHtml(c) + '</td>').join('') + '</tr>';
+            i++;
+          }
+          html += '</tbody></table></div>';
+          out.push(html);
+        } else { out.push('<p>' + escapeHtml(line) + '</p>'); i++; }
+      }
+      return out.join('');
+    }
+    function displayMarkdown(md) {
+      currentMarkdown = md;
+      rawPre.textContent = md;
+      renderedView.innerHTML = renderSimpleMarkdown(md);
+    }
+    function downloadBlob(content, filename, mime) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    function flashButton(btn, label) {
+      const prev = btn.textContent;
+      btn.textContent = label;
+      setTimeout(() => { btn.textContent = prev; }, 1800);
+    }
+    async function copyText(text, btn, doneLabel) {
+      try {
+        await navigator.clipboard.writeText(text);
+        flashButton(btn, doneLabel);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        flashButton(btn, doneLabel);
+      }
+    }
+
+    function buildPromptCards() {
+      promptGrid.innerHTML = '';
+      PROMPTS.forEach((p) => {
+        const card = document.createElement('div');
+        card.className = 'prompt-card';
+        card.innerHTML = `
+          <div>
+            <h3>${escapeHtml(p.title)}</h3>
+            <p>${escapeHtml(p.desc)}</p>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-primary btn-sm copy-both">Copy Prompt + Context</button>
+            <button type="button" class="btn btn-ghost btn-sm copy-only">Prompt Only</button>
+          </div>
+        `;
+        card.querySelector('.copy-both').addEventListener('click', (e) => {
+          copyText(p.text + '\n\n---\n\n' + currentMarkdown, e.currentTarget, 'Copied!');
+        });
+        card.querySelector('.copy-only').addEventListener('click', (e) => {
+          copyText(p.text, e.currentTarget, 'Copied!');
+        });
+        promptGrid.appendChild(card);
+      });
+    }
+    buildPromptCards();
+
+    function startFile(file) {
+      if (!file) return;
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '2%';
+      progressStatus.textContent = `Streaming ${file.name} locally…`;
+      progressStats.textContent = 'Starting…';
+      worker.postMessage({
+        action: 'parse',
+        file,
+        windowDays: Number(windowSelect.value) || 90,
+        profile: profileNotes.value || ''
+      });
+    }
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) startFile(e.target.files[0]);
+    });
+    ['dragenter', 'dragover'].forEach((ev) => {
+      dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    });
+    ['dragleave', 'drop'].forEach((ev) => {
+      dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); });
+    });
+    dropzone.addEventListener('drop', (e) => {
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) startFile(e.dataTransfer.files[0]);
+    });
+    sampleBtn.addEventListener('click', () => {
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '60%';
+      progressStatus.textContent = 'Generating synthetic demo dataset…';
+      progressStats.textContent = 'Sample';
+      worker.postMessage({
+        action: 'sample',
+        windowDays: Number(windowSelect.value) || 90,
+        profile: profileNotes.value || ''
+      });
+    });
+
+    function triggerRerender() {
+      if (!hasData) return;
+      worker.postMessage({
+        action: 'rerender',
+        windowDays: Number(windowSelect.value) || 90,
+        profile: profileNotes.value || ''
+      });
+    }
+    windowSelect.addEventListener('change', triggerRerender);
+    let profileTimer = null;
+    profileNotes.addEventListener('input', () => {
+      clearTimeout(profileTimer);
+      profileTimer = setTimeout(triggerRerender, 220);
+    });
+
+    tabRendered.addEventListener('click', () => {
+      tabRendered.classList.add('active');
+      tabRaw.classList.remove('active');
+      tabRendered.setAttribute('aria-selected', 'true');
+      tabRaw.setAttribute('aria-selected', 'false');
+      renderedView.style.display = 'block';
+      rawView.style.display = 'none';
+    });
+    tabRaw.addEventListener('click', () => {
+      tabRaw.classList.add('active');
+      tabRendered.classList.remove('active');
+      tabRaw.setAttribute('aria-selected', 'true');
+      tabRendered.setAttribute('aria-selected', 'false');
+      renderedView.style.display = 'none';
+      rawView.style.display = 'block';
+    });
+
+    copyMdBtn.addEventListener('click', () => copyText(currentMarkdown, copyMdBtn, 'Copied!'));
+    downloadMdBtn.addEventListener('click', () => {
+      if (currentMarkdown) downloadBlob(currentMarkdown, 'context.md', 'text/markdown;charset=utf-8');
+    });
+    downloadCsvBtn.addEventListener('click', () => {
+      if (currentCsv) downloadBlob(currentCsv.content, currentCsv.filename, currentCsv.mime);
+    });
+
+    worker.onmessage = (e) => {
+      const data = e.data || {};
+      if (data.type === 'progress') {
+        progressFill.style.width = data.percent + '%';
+        const doneMB = (data.doneBytes / (1024 * 1024)).toFixed(1);
+        const totalMB = (data.totalBytes / (1024 * 1024)).toFixed(1);
+        progressStatus.textContent = `Scanned ${data.recordsScanned.toLocaleString('en-US')} records (${data.mbPerSec.toFixed(1)} MB/s)`;
+        progressStats.textContent = `${doneMB} / ${totalMB} MB (${data.percent}%)`;
+      } else if (data.type === 'done') {
+        hasData = true;
+        progressFill.style.width = '100%';
+        progressStatus.textContent = data.isSample
+          ? 'Loaded synthetic sample data (not real user data)'
+          : `Finished streaming ${data.summary.sourceLabel} locally`;
+        progressStats.textContent = '100%';
+        document.getElementById('statRecords').textContent = data.summary.recordsScanned.toLocaleString('en-US');
+        document.getElementById('statDays').textContent = data.summary.daysCount.toLocaleString('en-US');
+        document.getElementById('statWorkouts').textContent = data.summary.workoutsCount.toLocaleString('en-US');
+        document.getElementById('statTime').textContent = data.summary.elapsedMs < 1000
+          ? `${data.summary.elapsedMs} ms`
+          : `${(data.summary.elapsedMs / 1000).toFixed(1)} s`;
+        displayMarkdown(data.markdown);
+        outputPanel.classList.add('visible');
+        worker.postMessage({
+          action: 'export',
+          options: {
+            format: 'daily-csv',
+            metrics: ['resting_hr_avg', 'hrv_sdnn_ms', 'sleep_min', 'deep_min', 'rem_min', 'steps', 'active_kcal', 'exercise_min', 'spo2_pct', 'vo2max', 'weight_kg'],
+          },
+        });
+      } else if (data.type === 'exported') {
+        currentCsv = data;
+      } else if (data.type === 'rendered') {
+        displayMarkdown(data.markdown);
+      } else if (data.type === 'error') {
+        progressWrap.classList.remove('visible');
+        showError(data.message);
+      }
+    };
+  })();
+  </script>
+</body>
+</html>

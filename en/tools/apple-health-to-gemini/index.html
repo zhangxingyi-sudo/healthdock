@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apple Health to Google Gemini &amp; NotebookLM — Free Local Converter | HealthDock</title>
+  <meta name="description" content="Convert Apple Health export.zip or export.xml locally in your browser into a structured context.md, NotebookLM .txt source, and multi-year daily JSON for Google Gemini's 1M+ token context window. Zero upload.">
+  <link rel="canonical" href="https://gethealthdock.com/en/tools/apple-health-to-gemini/">
+  <link rel="icon" href="../../../icon.png">
+  <link rel="stylesheet" href="../../../assets/site.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Apple Health to Google Gemini & NotebookLM — 100% Local Converter">
+  <meta property="og:description" content="Turn 500MB+ Apple Health exports into Gemini-ready context.md, multi-year daily JSON, and NotebookLM text sources locally in your browser with zero server upload.">
+  <meta property="og:url" content="https://gethealthdock.com/en/tools/apple-health-to-gemini/">
+  <meta property="og:image" content="https://gethealthdock.com/icon.png">
+  <meta name="twitter:card" content="summary">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Apple Health to Google Gemini & NotebookLM Converter",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any (Web Browser)",
+    "url": "https://gethealthdock.com/en/tools/apple-health-to-gemini/",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free 100% browser-local streaming converter that prepares Apple Health export.zip or export.xml for Google Gemini (1M+ context window), Gemini Gems, and NotebookLM with zero server upload."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why not upload Apple Health export.xml directly to Google Gemini's 1M token context?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Even Gemini's 1M–2M token window cannot hold a raw 500MB Apple Health XML file (which equals 100M+ tokens of repetitive XML attributes). HealthDock locally strips the noise and outputs a ~2KB baseline context.md plus a clean multi-year daily JSON file that fits comfortably inside Gemini's long context window."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I upload my Apple Health summary into Google NotebookLM?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Click 'Download .txt for NotebookLM' after parsing your export locally, then add that file as a source inside NotebookLM to run grounded Q&A or generate a personalized Audio Overview alongside your lab reports."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I protect my privacy when sharing health summaries with Google Gemini?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HealthDock never uploads your Apple Health export—everything parses locally in your browser Web Worker. In Google Gemini, open Activity (myactivity.google.com/product/gemini) to turn off Gemini Apps Activity if you do not want chats reviewed or used to improve models."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What makes Gemini especially strong for Apple Health analysis?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Gemini's massive long-context window excels when you pair HealthDock's compact context.md with the full multi-year daily JSON—letting Gemini spot seasonal shifts, year-over-year fitness trajectories, and long-term sleep/HRV patterns in a single prompt."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../">
+        <img src="../../../icon.png" alt="HealthDock icon">
+        <span>HealthDock</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../../">Converter</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a class="active" href="./">Gemini</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a href="../xml-to-csv/">XML → CSV</a>
+        <a href="../../privacy.html">Privacy</a>
+        <a href="../../../">中文</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container container-narrow">
+    <section class="hero" style="padding-bottom:20px">
+      <div class="eyebrow"><span class="dot"></span>100% Local in Your Browser · Built for Gemini 1M Context &amp; NotebookLM · Zero Upload</div>
+      <h1>Analyze Apple Health Data with Google Gemini &amp; NotebookLM</h1>
+      <p class="lead">
+        Even Gemini’s 1M+ token context window gets overwhelmed by a 500MB Apple Health <code>export.xml</code>. Drop your iPhone’s <code>export.zip</code> below to stream-parse it locally into a high-signal <code>context.md</code>, a <strong>NotebookLM-ready <code>.txt</code></strong>, and a clean <strong>Multi-Year Daily JSON</strong> built for Gemini’s long-context trend analysis.
+      </p>
+      <div class="trust-strip" style="margin-top:0">
+        <span>🔒 100% offline Web Worker parsing</span>
+        <span>📚 Exports Markdown, Multi-Year JSON &amp; NotebookLM <code>.txt</code></span>
+        <span>⚡ Streams 500MB–2GB files in 4MB chunks</span>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Apple Health to Gemini Converter">
+      <div id="dropzone" class="dropzone">
+        <input id="fileInput" type="file" accept=".xml,.zip,application/xml,text/xml,application/zip" aria-label="Select Apple Health export.xml or export.zip">
+        <p class="dropzone-title">Drop <code>export.zip</code> or <code>export.xml</code> here</p>
+        <p class="dropzone-sub">No unzipping needed · Runs locally in your browser · Zero bytes sent to any server</p>
+      </div>
+
+      <div class="tool-controls">
+        <div class="btn-row">
+          <button id="sampleBtn" type="button" class="btn btn-primary btn-sm">✨ Try Sample Data (1-click demo)</button>
+          <a class="btn btn-ghost btn-sm" href="../xml-to-csv/">Custom Date &amp; Metric Filters →</a>
+        </div>
+        <div class="field-group">
+          <label for="windowSelect">Baseline window:</label>
+          <select id="windowSelect">
+            <option value="90" selected>Last 90 days (recommended)</option>
+            <option value="60">Last 60 days</option>
+            <option value="30">Last 30 days</option>
+          </select>
+        </div>
+      </div>
+
+      <details style="margin-top:14px">
+        <summary class="small" style="cursor:pointer;font-weight:600">+ Optional: add short personal notes (age/sex, goals, seasonal context) for Gemini</summary>
+        <div style="margin-top:8px">
+          <textarea id="profileNotes" placeholder="Example: 32F, marathon training in autumn, high travel schedule in Q1. Looking at seasonal sleep and VO2max trends across 3 years."></textarea>
+        </div>
+      </details>
+
+      <div id="errorBox" class="notice-error" role="alert"></div>
+
+      <div id="progressWrap" class="progress-wrap">
+        <div class="progress-bar-track">
+          <div id="progressFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progressStatus">Streaming locally…</span>
+          <span id="progressStats">0%</span>
+        </div>
+      </div>
+
+      <div id="outputPanel" class="output-panel">
+        <div class="stat-strip">
+          <div class="stat-box"><div class="k">Records Scanned</div><div id="statRecords" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Days Summarized</div><div id="statDays" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Workouts</div><div id="statWorkouts" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Parse Time</div><div id="statTime" class="v">—</div></div>
+        </div>
+
+        <div class="toolbar-bar">
+          <div class="tabs" role="tablist">
+            <button id="tabRendered" type="button" class="tab-btn active" role="tab" aria-selected="true">Gemini Context (context.md)</button>
+            <button id="tabRaw" type="button" class="tab-btn" role="tab" aria-selected="false">Raw Markdown</button>
+          </div>
+          <div class="btn-row">
+            <button id="copyMdBtn" type="button" class="btn btn-primary btn-sm">Copy context.md</button>
+            <button id="downloadTxtBtn" type="button" class="btn btn-secondary btn-sm">Download .txt (NotebookLM)</button>
+            <button id="downloadJsonBtn" type="button" class="btn btn-secondary btn-sm">Download Multi-Year JSON</button>
+          </div>
+        </div>
+
+        <div id="renderedView" class="md-view"></div>
+        <div id="rawView" class="code-window" style="display:none">
+          <div class="code-window-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span>context.md</span>
+          </div>
+          <pre id="rawPre" class="code-body"></pre>
+        </div>
+
+        <div style="margin-top:26px">
+          <h3>Ready-to-Use Gemini &amp; NotebookLM Prompts</h3>
+          <p class="small" style="margin:0 0 12px">Designed to take advantage of Gemini’s long context window, Gemini Gems, and NotebookLM source synthesis.</p>
+          <div class="grid-3" id="promptGrid"></div>
+        </div>
+
+        <div class="funnel-banner">
+          <div class="funnel-copy">
+            <h3>Coming Soon: Automatic iPhone → Mac Sync</h3>
+            <p>
+              Skip manual 500MB exports forever. We’re building the <strong>HealthDock iPhone &amp; Mac companion apps</strong> to sync Apple Health over Bluetooth &amp; local Wi-Fi every day—keeping your <code>context.md</code> and daily JSON archive updated locally on your Mac.
+            </p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-secondary btn-sm" href="mailto:zhangxingyiopenclaw@gmail.com?subject=Notify%20me%20when%20HealthDock%20launches&body=Hi%2C%20please%20let%20me%20know%20when%20HealthDock%20for%20iPhone%20%26%20Mac%20is%20live%20on%20the%20App%20Store.">Get Launch Notification</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block card">
+      <h2>3 Workflows Tailored for Google Gemini &amp; NotebookLM</h2>
+      <div class="grid-3" style="margin-top:12px">
+        <div>
+          <h3>1. Multi-Year Deep Dive (Gemini Pro)</h3>
+          <p class="muted" style="margin:0;font-size:14px">Download the clean <strong>Multi-Year JSON</strong> and attach it alongside <code>context.md</code> in Gemini. Gemini’s 1M+ token window can scan every single day across 5+ years to uncover seasonal patterns.</p>
+        </div>
+        <div>
+          <h3>2. NotebookLM Source + Audio</h3>
+          <p class="muted" style="margin:0;font-size:14px">Click <strong>Download .txt (NotebookLM)</strong> and drop it into a NotebookLM notebook alongside annual physical PDFs to ask cross-document questions or generate an Audio Overview.</p>
+        </div>
+        <div>
+          <h3>3. Custom Gemini Gem</h3>
+          <p class="muted" style="margin:0;font-size:14px">Create a personal <strong>Health Review Gem</strong> and attach <code>context.md</code> as reference knowledge so Gemini remembers your resting HR, HRV, and sleep baselines every week.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>Gemini &amp; Privacy FAQ</h2>
+      <details class="faq-item">
+        <summary>Why does raw export.xml still fail in Gemini’s 1M token window?</summary>
+        <p>A multi-year <code>export.xml</code> is often 500MB–2GB of verbose XML attributes—more than 100 million tokens. HealthDock strips duplicates and verbose metadata locally, producing a ~2KB baseline summary and a clean daily JSON (typically 100–400KB for multiple years) that Gemini ingests effortlessly.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I turn off Gemini Apps Activity before pasting health data?</summary>
+        <p>Visit your Google <strong>Gemini Apps Activity</strong> settings and pause activity tracking if you prefer not to have chats saved or reviewed. HealthDock itself is a static browser-only tool with zero backend servers.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does NotebookLM accept Markdown or JSON files?</summary>
+        <p>NotebookLM accepts plain text (<code>.txt</code>) and Markdown (<code>.md</code>) sources directly. Use our one-click <strong>Download .txt (NotebookLM)</strong> button for immediate upload compatibility.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is this medical advice?</summary>
+        <p>No. HealthDock formats your personal Apple Health metrics for self-tracking and discussion. Consult a qualified doctor for medical interpretation or treatment decisions.</p>
+      </details>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
+      <div class="footer-links">
+        <a href="../../">Home</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a href="../xml-to-csv/">XML → CSV</a>
+        <a href="../../privacy.html">Privacy</a>
+        <a href="../../../">中文</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+  (() => {
+    const PROMPTS = [
+      {
+        title: 'Multi-Year & Seasonal Trend Analysis',
+        desc: 'Pair context.md with the Multi-Year JSON to leverage Gemini’s 1M+ token context window.',
+        text: 'Analyze my Apple Health baseline summary below (and the attached multi-year daily JSON if included). Identify multi-year trajectories and seasonal patterns across sleep duration, resting heart rate, HRV, steps, VO2max, and weight. Compare my last 30 days against both my 90-day baseline and the same season in prior years, call out meaningful inflection points, and suggest 3 realistic focus areas—clearly distinguishing observations from medical advice.'
+      },
+      {
+        title: 'Gemini Gem Personal Coach Setup',
+        desc: 'Configure a reusable Gemini Gem grounded in your real Apple Health baselines.',
+        text: 'Act as my data-grounded health & training review assistant. Ingest the Apple Health context.md below as my personal baseline reference. First, confirm my core 90-day baselines and any ≥2 SD unusual days in a clean table. Second, identify the biggest mismatch between my recent 8-week training volume and my sleep/HRV recovery. Keep recommendations practical, conservative, and non-diagnostic.'
+      },
+      {
+        title: 'NotebookLM Grounded Synthesis',
+        desc: 'Use inside NotebookLM (with the .txt source + lab PDFs) for Q&A or an Audio Overview.',
+        text: 'Using only the uploaded Apple Health context source (and any lab reports in this notebook), synthesize a clear health briefing covering: (1) stable strengths, (2) recent changes vs. my 90-day baseline, (3) unusual days worth noting, and (4) 5 concrete questions I should bring to my next annual checkup. Cite exact numbers and dates from the source.'
+      }
+    ];
+
+    const worker = new Worker('../../../assets/health-worker.js');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const windowSelect = document.getElementById('windowSelect');
+    const profileNotes = document.getElementById('profileNotes');
+    const errorBox = document.getElementById('errorBox');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressFill = document.getElementById('progressFill');
+    const progressStatus = document.getElementById('progressStatus');
+    const progressStats = document.getElementById('progressStats');
+    const outputPanel = document.getElementById('outputPanel');
+    const renderedView = document.getElementById('renderedView');
+    const rawView = document.getElementById('rawView');
+    const rawPre = document.getElementById('rawPre');
+    const tabRendered = document.getElementById('tabRendered');
+    const tabRaw = document.getElementById('tabRaw');
+    const copyMdBtn = document.getElementById('copyMdBtn');
+    const downloadTxtBtn = document.getElementById('downloadTxtBtn');
+    const downloadJsonBtn = document.getElementById('downloadJsonBtn');
+    const promptGrid = document.getElementById('promptGrid');
+
+    let currentMarkdown = '';
+    let currentJson = null;
+    let hasData = false;
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.add('visible');
+    }
+    function clearError() {
+      errorBox.textContent = '';
+      errorBox.classList.remove('visible');
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    function renderSimpleMarkdown(md) {
+      const lines = md.split('\n');
+      const out = [];
+      let i = 0;
+      while (i < lines.length) {
+        const line = lines[i];
+        if (!line.trim()) { i++; continue; }
+        if (line.startsWith('### ')) { out.push('<h3>' + escapeHtml(line.slice(4)) + '</h3>'); i++; }
+        else if (line.startsWith('## ')) { out.push('<h2>' + escapeHtml(line.slice(3)) + '</h2>'); i++; }
+        else if (line.startsWith('# ')) { out.push('<h1>' + escapeHtml(line.slice(2)) + '</h1>'); i++; }
+        else if (line.startsWith('|') && i + 1 < lines.length && lines[i + 1].startsWith('|---')) {
+          const headers = line.split('|').slice(1, -1).map(c => c.trim());
+          let html = '<div class="table-scroll"><table><thead><tr>' +
+            headers.map(h => '<th>' + escapeHtml(h) + '</th>').join('') + '</tr></thead><tbody>';
+          i += 2;
+          while (i < lines.length && lines[i].startsWith('|')) {
+            const cells = lines[i].split('|').slice(1, -1).map(c => c.trim());
+            html += '<tr>' + cells.map(c => '<td>' + escapeHtml(c) + '</td>').join('') + '</tr>';
+            i++;
+          }
+          html += '</tbody></table></div>';
+          out.push(html);
+        } else { out.push('<p>' + escapeHtml(line) + '</p>'); i++; }
+      }
+      return out.join('');
+    }
+    function displayMarkdown(md) {
+      currentMarkdown = md;
+      rawPre.textContent = md;
+      renderedView.innerHTML = renderSimpleMarkdown(md);
+    }
+    function downloadBlob(content, filename, mime) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    function flashButton(btn, label) {
+      const prev = btn.textContent;
+      btn.textContent = label;
+      setTimeout(() => { btn.textContent = prev; }, 1800);
+    }
+    async function copyText(text, btn, doneLabel) {
+      try {
+        await navigator.clipboard.writeText(text);
+        flashButton(btn, doneLabel);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        flashButton(btn, doneLabel);
+      }
+    }
+
+    function buildPromptCards() {
+      promptGrid.innerHTML = '';
+      PROMPTS.forEach((p) => {
+        const card = document.createElement('div');
+        card.className = 'prompt-card';
+        card.innerHTML = `
+          <div>
+            <h3>${escapeHtml(p.title)}</h3>
+            <p>${escapeHtml(p.desc)}</p>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-primary btn-sm copy-both">Copy Prompt + Context</button>
+            <button type="button" class="btn btn-ghost btn-sm copy-only">Prompt Only</button>
+          </div>
+        `;
+        card.querySelector('.copy-both').addEventListener('click', (e) => {
+          copyText(p.text + '\n\n---\n\n' + currentMarkdown, e.currentTarget, 'Copied!');
+        });
+        card.querySelector('.copy-only').addEventListener('click', (e) => {
+          copyText(p.text, e.currentTarget, 'Copied!');
+        });
+        promptGrid.appendChild(card);
+      });
+    }
+    buildPromptCards();
+
+    function startFile(file) {
+      if (!file) return;
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '2%';
+      progressStatus.textContent = `Streaming ${file.name} locally…`;
+      progressStats.textContent = 'Starting…';
+      worker.postMessage({
+        action: 'parse',
+        file,
+        windowDays: Number(windowSelect.value) || 90,
+        profile: profileNotes.value || ''
+      });
+    }
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) startFile(e.target.files[0]);
+    });
+    ['dragenter', 'dragover'].forEach((ev) => {
+      dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    });
+    ['dragleave', 'drop'].forEach((ev) => {
+      dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); });
+    });
+    dropzone.addEventListener('drop', (e) => {
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) startFile(e.dataTransfer.files[0]);
+    });
+    sampleBtn.addEventListener('click', () => {
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '60%';
+      progressStatus.textContent = 'Generating synthetic demo dataset…';
+      progressStats.textContent = 'Sample';
+      worker.postMessage({
+        action: 'sample',
+        windowDays: Number(windowSelect.value) || 90,
+        profile: profileNotes.value || ''
+      });
+    });
+
+    function triggerRerender() {
+      if (!hasData) return;
+      worker.postMessage({
+        action: 'rerender',
+        windowDays: Number(windowSelect.value) || 90,
+        profile: profileNotes.value || ''
+      });
+    }
+    windowSelect.addEventListener('change', triggerRerender);
+    let profileTimer = null;
+    profileNotes.addEventListener('input', () => {
+      clearTimeout(profileTimer);
+      profileTimer = setTimeout(triggerRerender, 220);
+    });
+
+    tabRendered.addEventListener('click', () => {
+      tabRendered.classList.add('active');
+      tabRaw.classList.remove('active');
+      tabRendered.setAttribute('aria-selected', 'true');
+      tabRaw.setAttribute('aria-selected', 'false');
+      renderedView.style.display = 'block';
+      rawView.style.display = 'none';
+    });
+    tabRaw.addEventListener('click', () => {
+      tabRaw.classList.add('active');
+      tabRendered.classList.remove('active');
+      tabRaw.setAttribute('aria-selected', 'true');
+      tabRendered.setAttribute('aria-selected', 'false');
+      renderedView.style.display = 'none';
+      rawView.style.display = 'block';
+    });
+
+    copyMdBtn.addEventListener('click', () => copyText(currentMarkdown, copyMdBtn, 'Copied!'));
+    downloadTxtBtn.addEventListener('click', () => {
+      if (currentMarkdown) downloadBlob(currentMarkdown, 'apple-health-context-notebooklm.txt', 'text/plain;charset=utf-8');
+    });
+    downloadJsonBtn.addEventListener('click', () => {
+      if (currentJson) downloadBlob(currentJson.content, currentJson.filename, currentJson.mime);
+    });
+
+    worker.onmessage = (e) => {
+      const data = e.data || {};
+      if (data.type === 'progress') {
+        progressFill.style.width = data.percent + '%';
+        const doneMB = (data.doneBytes / (1024 * 1024)).toFixed(1);
+        const totalMB = (data.totalBytes / (1024 * 1024)).toFixed(1);
+        progressStatus.textContent = `Scanned ${data.recordsScanned.toLocaleString('en-US')} records (${data.mbPerSec.toFixed(1)} MB/s)`;
+        progressStats.textContent = `${doneMB} / ${totalMB} MB (${data.percent}%)`;
+      } else if (data.type === 'done') {
+        hasData = true;
+        progressFill.style.width = '100%';
+        progressStatus.textContent = data.isSample
+          ? 'Loaded synthetic sample data (not real user data)'
+          : `Finished streaming ${data.summary.sourceLabel} locally`;
+        progressStats.textContent = '100%';
+        document.getElementById('statRecords').textContent = data.summary.recordsScanned.toLocaleString('en-US');
+        document.getElementById('statDays').textContent = data.summary.daysCount.toLocaleString('en-US');
+        document.getElementById('statWorkouts').textContent = data.summary.workoutsCount.toLocaleString('en-US');
+        document.getElementById('statTime').textContent = data.summary.elapsedMs < 1000
+          ? `${data.summary.elapsedMs} ms`
+          : `${(data.summary.elapsedMs / 1000).toFixed(1)} s`;
+        displayMarkdown(data.markdown);
+        outputPanel.classList.add('visible');
+        worker.postMessage({
+          action: 'export',
+          options: {
+            format: 'daily-json',
+            metrics: ['resting_hr_avg', 'hrv_sdnn_ms', 'sleep_min', 'deep_min', 'rem_min', 'steps', 'active_kcal', 'exercise_min', 'spo2_pct', 'resp_rate', 'vo2max', 'weight_kg'],
+          },
+        });
+      } else if (data.type === 'exported') {
+        currentJson = data;
+      } else if (data.type === 'rendered') {
+        displayMarkdown(data.markdown);
+      } else if (data.type === 'error') {
+        progressWrap.classList.remove('visible');
+        showError(data.message);
+      }
+    };
+  })();
+  </script>
+</body>
+</html>

@@ -1,11 +1,14 @@
 # HealthDock (gethealthdock.com)
 
-> Free, 100% browser-local Apple Health export tools (zero upload, zero servers). Stream-parse Apple Health `export.zip` or `export.xml` files (500MB–2GB+) directly in your browser to generate an AI-ready `context.md` for Claude/ChatGPT or clean daily CSV/JSON files.
+> Free, 100% browser-local Apple Health export tools (zero upload, zero servers). Stream-parse Apple Health `export.zip` or `export.xml` files (500MB–2GB+) directly in your browser to generate an AI-ready `context.md` for ChatGPT, Claude, Google Gemini, NotebookLM, and Grok—or clean daily CSV/JSON files.
 
 ## Free Local Web Tools
 
 - [HealthDock — Free Apple Health Converter (AI Context & CSV)](https://gethealthdock.com/en/): Instant browser-local converter turning `export.zip` or `export.xml` into `context.md` (7d/30d/90d baselines, ≥2 SD unusual days, yearly averages, 8-week training load) or CSV/JSON.
-- [Apple Health to Claude (`context.md` Generator)](https://gethealthdock.com/en/tools/apple-health-to-claude/): Dedicated streaming converter with 3 ready-to-paste Claude / ChatGPT health review prompts. Works worldwide (outside the US) and with Claude Desktop, Claude Code, Cursor, and ChatGPT.
+- [Apple Health to ChatGPT Converter](https://gethealthdock.com/en/tools/apple-health-to-chatgpt/): Stream-parse huge Apple Health exports locally into a ~2KB `context.md` plus a Python-ready Daily CSV for ChatGPT Data Analysis charts, ChatGPT Projects, and Custom GPTs.
+- [Apple Health to Claude (`context.md` Generator)](https://gethealthdock.com/en/tools/apple-health-to-claude/): Dedicated streaming converter with ready-to-paste Claude health review prompts. Works worldwide (outside the US) and with Claude Web, Claude Desktop, Claude Code, and Cursor.
+- [Apple Health to Google Gemini & NotebookLM Converter](https://gethealthdock.com/en/tools/apple-health-to-gemini/): Generates `context.md`, a NotebookLM-compatible `.txt` source, and a Multi-Year Daily JSON built for Gemini's 1M+ token context window and Gemini Gems.
+- [Apple Health to Grok Converter](https://gethealthdock.com/en/tools/apple-health-to-grok/): Generates a compact ~2KB `context.md` and Daily CSV tailored for Grok Think mode, DeepSearch norm benchmarking, and Private Chat on grok.com and X.
 - [Apple Health XML to CSV & JSON Converter](https://gethealthdock.com/en/tools/xml-to-csv/): Filter by date range and 15 health metrics to export Daily Summary CSV, Workouts CSV, or Daily Summary JSON for Excel, Numbers, Python, or DuckDB.
 
 ## Key Technical Properties
