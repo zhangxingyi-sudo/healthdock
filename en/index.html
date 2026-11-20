@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>HealthDock — Sync Apple Health to Your Mac Automatically (Private &amp; AI-Ready)</title>
-  <meta name="description" content="Get Apple Health on your Mac automatically over Bluetooth and local Wi-Fi—zero cloud servers. HealthDock saves plain daily JSON, Markdown summaries, and an AI-ready context.md for Claude, Codex, and Cursor.">
+  <title>HealthDock — Free Local Apple Health Export Converter (Claude, ChatGPT &amp; CSV)</title>
+  <meta name="description" content="Convert Apple Health export.zip or export.xml locally in your browser—zero upload. Generate an AI-ready context.md for Claude, ChatGPT, and Cursor (7d/30d/90d baselines + anomaly days) or clean CSV/JSON in seconds.">
   <link rel="canonical" href="https://gethealthdock.com/en/">
   <link rel="alternate" hreflang="en" href="https://gethealthdock.com/en/">
   <link rel="alternate" hreflang="zh-Hans" href="https://gethealthdock.com/">
@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="../assets/site.css">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="HealthDock — Sync Apple Health to Your Mac Automatically">
-  <meta property="og:description" content="Private iPhone-to-Mac Apple Health sync over Bluetooth and local Wi-Fi. Plain files + daily AI-ready context.md for Claude, Codex, and Obsidian.">
+  <meta property="og:title" content="HealthDock — Free 100% Local Apple Health to Claude, ChatGPT & CSV Converter">
+  <meta property="og:description" content="Drop a 500MB+ Apple Health export.zip or export.xml in your browser. Zero upload—get an AI-ready context.md or clean daily CSV/JSON in seconds.">
   <meta property="og:url" content="https://gethealthdock.com/en/">
   <meta property="og:image" content="https://gethealthdock.com/icon.png">
   <meta name="twitter:card" content="summary">
@@ -21,18 +21,47 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "HealthDock",
-    "operatingSystem": "iOS 17+, macOS 14+",
+    "@type": "WebApplication",
+    "name": "HealthDock — Local Apple Health Converter",
+    "operatingSystem": "Any (Web Browser)",
     "applicationCategory": "HealthApplication",
-    "description": "Automatically sync Apple Health data from iPhone to Mac over Bluetooth and local Wi-Fi with zero cloud servers. Exports clean daily JSON, Markdown archives, and an AI-ready context.md summary.",
     "url": "https://gethealthdock.com/en/",
-    "offers": [
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free 100% browser-local streaming converter that turns Apple Health export.zip or export.xml (500MB+) into an AI-ready Markdown context.md for Claude and ChatGPT, or clean daily CSV and JSON files."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
       {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "description": "Free Mac companion app and 7-day iPhone free trial"
+        "@type": "Question",
+        "name": "How can I analyze my Apple Health data with Claude or ChatGPT privately?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Export your data from the iPhone Health app (export.zip) and drop it into HealthDock's local browser converter. It stream-parses the XML completely offline in a Web Worker and condenses years of records into a compact ~2KB context.md with 7-day, 30-day, and 90-day baselines, ≥2 SD unusual days, yearly averages, and recent workouts that you can paste into Claude, Claude Desktop, ChatGPT, or Gemini."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I convert a large 500MB+ Apple Health export.xml to CSV without crashing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HealthDock reads export.xml in 4MB chunks (and streams export.zip natively via DecompressionStream) inside a background Web Worker so browser memory stays under ~50MB even on multi-year exports."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is any health data uploaded to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Never. The site is pure static HTML and JavaScript with no backend, no accounts, and no analytics. You can disconnect from the internet after loading the page and the converter still runs locally."
+        }
       }
     ]
   }
@@ -46,205 +75,409 @@
         <span>HealthDock</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
+        <a class="active" href="./">Converter</a>
         <a href="./tools/apple-health-to-claude/">Apple Health → Claude</a>
         <a href="./tools/xml-to-csv/">XML → CSV</a>
-        <a href="#start">Get Started</a>
+        <a href="#how-it-works">How to Export</a>
         <a href="#faq">FAQ</a>
         <a href="privacy.html">Privacy</a>
         <a href="../">中文</a>
-        <a class="nav-cta" href="https://apps.apple.com/app/id6835271429">Mac App (Free)</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="eyebrow"><span class="dot"></span>Apple Health on Mac · 100% Local · Zero Servers</div>
-      <h1>Your Apple Health data, automatically on your Mac.</h1>
+  <main class="container container-narrow">
+    <section class="hero" style="padding-bottom:18px">
+      <div class="eyebrow"><span class="dot"></span>Free · 100% Browser-Local · Zero Upload · Works Worldwide</div>
+      <h1>Turn Apple Health <code>export.zip</code> into AI Context or CSV—in Seconds.</h1>
       <p class="lead">
-        Apple still doesn’t make a Health app for macOS. HealthDock quietly syncs your iPhone’s full health history—sleep, HRV, heart rate, workouts, GPS routes, and ECG—straight to your Mac over Bluetooth and local Wi-Fi as plain files and an AI-ready <code>context.md</code>.
+        Drop your iPhone’s 500MB+ Apple Health export right here. Our local Web Worker streams it in 4MB chunks—without uploading a single byte—and gives you an AI-ready <code>context.md</code> for <strong>Claude, ChatGPT &amp; Cursor</strong> or clean <strong>CSV / JSON</strong> for spreadsheets and Python.
       </p>
-      <div class="btn-row">
-        <a class="btn btn-primary" href="https://apps.apple.com/app/id6835269846">Download for iPhone</a>
-        <a class="btn btn-secondary" href="https://apps.apple.com/app/id6835271429">Download Free Mac App</a>
-        <a class="btn btn-ghost" href="./tools/apple-health-to-claude/">Try Free Browser Tool →</a>
-      </div>
-      <div class="trust-strip">
-        <span>🔒 End-to-end encrypted device-to-device</span>
-        <span>🌍 Works globally (US, UK, EU, Canada &amp; more)</span>
-        <span>🤖 Ready for Claude Desktop, Claude Code, Codex &amp; Cursor</span>
-        <span>📁 Plain JSON &amp; Markdown you own forever</span>
+      <div class="trust-strip" style="margin-top:0">
+        <span>🔒 Runs 100% offline in your browser</span>
+        <span>⚡ Streams 500MB–2GB files without crashing</span>
+        <span>🌍 Works outside the US (UK, EU, Canada &amp; Mac Desktop)</span>
       </div>
     </section>
 
-    <section class="section-block">
-      <h2>Stop manually exporting a 500MB XML file</h2>
-      <p class="muted" style="margin:0 0 18px">Compare Apple’s built-in manual export against HealthDock’s local automatic sync.</p>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Manual Apple Health Export</h3>
-          <ul class="compare-list">
-            <li><span class="tag-bad">✕</span><span>Export a massive 300MB–2GB <code>export.zip</code> by hand every time you want fresh data.</span></li>
-            <li><span class="tag-bad">✕</span><span>Wait minutes while your iPhone zips millions of raw XML lines, then AirDrop it yourself.</span></li>
-            <li><span class="tag-bad">✕</span><span>Unreadable raw XML—way too big to paste into Claude, ChatGPT, or spreadsheets.</span></li>
-            <li><span class="tag-bad">✕</span><span>Anthropic’s built-in Claude iOS Health connector is US-only, mobile-only, and cloud-routed.</span></li>
-          </ul>
-        </div>
-        <div class="card compare-good">
-          <h3>HealthDock (iPhone + Mac)</h3>
-          <ul class="compare-list">
-            <li><span class="tag-good">✓</span><span>Background daily sync over Bluetooth—plus fast local Wi-Fi catch-up for 10+ years of history.</span></li>
-            <li><span class="tag-good">✓</span><span>100% local: no cloud account, no servers, no third-party SDKs. Works in every country.</span></li>
-            <li><span class="tag-good">✓</span><span>Auto-refreshes a compact <code>context.md</code> with 7d/30d/90d baselines, ≥2 SD anomaly days, and trends.</span></li>
-            <li><span class="tag-good">✓</span><span>Ships with a local AI workspace (<code>CLAUDE.md</code> + 6 health skills) for Claude Code, Codex, and Obsidian.</span></li>
-          </ul>
+    <section class="card" aria-label="Apple Health Local Converter">
+      <div id="dropzone" class="dropzone">
+        <input id="fileInput" type="file" accept=".xml,.zip,application/xml,text/xml,application/zip" aria-label="Select Apple Health export.zip or export.xml">
+        <p class="dropzone-title">Drop Apple Health <code>export.zip</code> or <code>export.xml</code> here</p>
+        <p class="dropzone-sub">Or click to select a file · No unzipping required · Zero server upload</p>
+      </div>
+
+      <div class="tool-controls">
+        <div class="btn-row">
+          <button id="sampleBtn" type="button" class="btn btn-primary btn-sm">✨ Try Sample Data (Instant Demo)</button>
+          <a class="btn btn-ghost btn-sm" href="./tools/apple-health-to-claude/">Full Claude Prompt Studio →</a>
+          <a class="btn btn-ghost btn-sm" href="./tools/xml-to-csv/">Custom CSV / JSON Filters →</a>
         </div>
       </div>
-    </section>
 
-    <section class="section-block">
-      <div class="grid-2" style="align-items:center">
-        <div>
-          <div class="eyebrow"><span class="dot"></span>Built for AI &amp; Long-Term Tracking</div>
-          <h2>An AI-ready <code>context.md</code>, refreshed every day</h2>
-          <p class="muted">
-            Instead of dumping raw XML into a chat window, HealthDock distills your entire Apple Health archive into clean personal baselines—comparing your last 7 days against your own 90-day baseline, flagging statistical outliers (≥2 SD), and summarizing yearly trends and 8-week training load.
-          </p>
-          <p class="muted">
-            Click <strong>Copy for AI</strong> in the Mac menu bar to paste into Claude or ChatGPT, or open your Health Archive folder directly in <strong>Claude Code</strong>, <strong>Codex</strong>, <strong>Cursor</strong>, or <strong>Obsidian</strong>.
-          </p>
-          <div class="btn-row" style="margin-top:16px">
-            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-claude/">Generate one now in your browser →</a>
+      <div id="errorBox" class="notice-error" role="alert"></div>
+
+      <div id="progressWrap" class="progress-wrap">
+        <div class="progress-bar-track">
+          <div id="progressFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progressStatus">Streaming locally…</span>
+          <span id="progressStats">0%</span>
+        </div>
+      </div>
+
+      <div id="outputPanel" class="output-panel">
+        <div class="stat-strip">
+          <div class="stat-box"><div class="k">Records Scanned</div><div id="statRecords" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Days Summarized</div><div id="statDays" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Workouts</div><div id="statWorkouts" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Local Speed</div><div id="statTime" class="v">—</div></div>
+        </div>
+
+        <div class="toolbar-bar">
+          <div class="tabs" role="tablist">
+            <button id="tabContext" type="button" class="tab-btn active" role="tab" aria-selected="true">AI Context (context.md)</button>
+            <button id="tabRaw" type="button" class="tab-btn" role="tab" aria-selected="false">Raw Markdown</button>
+            <button id="tabCsv" type="button" class="tab-btn" role="tab" aria-selected="false">Daily CSV Preview</button>
+          </div>
+          <div class="btn-row">
+            <button id="copyBtn" type="button" class="btn btn-primary btn-sm">Copy context.md</button>
+            <button id="downloadMdBtn" type="button" class="btn btn-secondary btn-sm">Download .md</button>
+            <button id="downloadCsvBtn" type="button" class="btn btn-secondary btn-sm">Download .csv</button>
           </div>
         </div>
-        <div class="code-window" aria-label="Sample context.md generated by HealthDock">
+
+        <div id="renderedView" class="md-view"></div>
+        <div id="rawView" class="code-window" style="display:none">
           <div class="code-window-bar">
             <span class="dots"><i></i><i></i><i></i></span>
-            <span>~/Documents/HealthDock/context.md</span>
+            <span>context.md</span>
           </div>
-          <pre class="code-body"># My Health Context (for AI)
+          <pre id="rawPre" class="code-body"></pre>
+        </div>
+        <div id="csvView" style="display:none">
+          <div class="table-scroll"><table id="csvTable"></table></div>
+          <p class="small" style="margin:8px 0 0">Need custom date ranges, workouts CSV, or JSON? Open the <a href="./tools/xml-to-csv/">full XML → CSV / JSON Converter</a>.</p>
+        </div>
 
-Data through 2026-11-20 (up to date); 90 of the last 90 days have data.
-
-## Recent vs. Baseline
-
-| Metric | Last 7d | Last 30d | Last 90d | 7d vs. Baseline |
-|---|---|---|---|---|
-| Resting Heart Rate bpm | 60 | 58 | 58 | +3% |
-| HRV ms | 54 | 58 | 59 | -8% |
-| Sleep h | 7.1 | 7.3 | 7.3 | -3% |
-| Steps | 8,940 | 9,210 | 9,080 | -2% |
-| VO₂max ml/kg·min | 46.1 | 45.9 | 45.6 | +1% |
-
-## Unusual Days (last 14 days, ≥2 SD from baseline)
-
-| Date | Metric | Value | Baseline (±1 SD) |
-|---|---|---|---|
-| 2026-11-17 | Resting Heart Rate bpm | 68 | 58 (±2) |
-| 2026-11-17 | HRV ms | 34 | 59 (±6) |
-| 2026-11-17 | Sleep h | 5.2 | 7.3 (±0.6) |</pre>
+        <div class="funnel-banner">
+          <div class="funnel-copy">
+            <h3>Coming Soon: Automatic iPhone → Mac Sync</h3>
+            <p>
+              We’re building the <strong>HealthDock iPhone &amp; Mac companion apps</strong> to sync Apple Health automatically over Bluetooth &amp; local Wi-Fi—keeping your <code>context.md</code>, daily JSON, and local AI workspace refreshed without ever exporting a 500MB XML by hand.
+            </p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-secondary btn-sm" href="mailto:zhangxingyiopenclaw@gmail.com?subject=Notify%20me%20when%20HealthDock%20launches&body=Hi%2C%20please%20let%20me%20know%20when%20HealthDock%20for%20iPhone%20%26%20Mac%20is%20live%20on%20the%20App%20Store.">Get Launch Notification</a>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section-block">
-      <h2>Free 100% Local Browser Tools</h2>
-      <p class="muted" style="margin:0 0 18px">Already exported <code>export.zip</code> or <code>export.xml</code> from your iPhone? Convert it locally in your browser—nothing is ever uploaded.</p>
-      <div class="grid-2">
+      <h2>Why Use HealthDock’s Local Converter?</h2>
+      <div class="grid-3" style="margin-top:14px">
         <div class="card">
-          <h3>Apple Health to Claude (<code>context.md</code> Generator)</h3>
-          <p class="muted">
-            Stream-parse a 500MB+ <code>export.xml</code> or <code>export.zip</code> locally in seconds and generate the exact same <code>context.md</code> summary used by HealthDock for Mac—complete with 3 curated Claude analysis prompts.
+          <h3>AI-Ready Signal, Not Raw XML</h3>
+          <p class="muted" style="margin:0">
+            Raw Apple Health exports are 300MB–2GB—far too large for Claude or ChatGPT. HealthDock computes 7d/30d/90d rolling baselines, flags ≥2 SD unusual days, and extracts yearly trends &amp; 8-week training volume into ~2KB of Markdown.
           </p>
-          <div class="btn-row" style="margin-top:16px">
-            <a class="btn btn-primary btn-sm" href="./tools/apple-health-to-claude/">Open Apple Health → Claude Tool</a>
-          </div>
         </div>
         <div class="card">
-          <h3>Apple Health XML to CSV / JSON Converter</h3>
-          <p class="muted">
-            Filter by date range and metrics (HRV, sleep stages, resting HR, steps, VO₂max, workouts) and download clean daily CSV, workouts CSV, or JSON for Excel, Numbers, Python, or DuckDB.
+          <h3>Smart Cleaning Built In</h3>
+          <p class="muted" style="margin:0">
+            Merges overlapping sleep segments (18:00–12:00 night windows), avoids Watch + iPhone step double-counting, normalizes <code>lb</code>/<code>kJ</code>/<code>SpO2</code> units, and filters corrupted third-party timestamps automatically.
           </p>
-          <div class="btn-row" style="margin-top:16px">
-            <a class="btn btn-secondary btn-sm" href="./tools/xml-to-csv/">Open XML → CSV Converter</a>
-          </div>
+        </div>
+        <div class="card">
+          <h3>Works Globally &amp; Offline</h3>
+          <p class="muted" style="margin:0">
+            Anthropic’s native iOS Health connector is US-only and mobile-only. HealthDock works in every country and outputs plain Markdown &amp; CSV for Claude Desktop, Claude Code, Codex, Cursor, ChatGPT, and Excel.
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="start" class="section-block card">
-      <h2>Get Started in 2 Minutes</h2>
-      <ol style="padding-left:20px;margin:12px 0 0;display:grid;gap:10px">
-        <li>
-          <strong>Install the free HealthDock for Mac</strong> from the Mac App Store.<br>
-          <a class="btn btn-secondary btn-sm" style="margin-top:8px" href="https://apps.apple.com/app/id6835271429">Download HealthDock for Mac (Free)</a>
-        </li>
-        <li><strong>Install HealthDock on your iPhone</strong> and allow Health access (we recommend tapping <em>Turn On All</em> and choosing <em>All</em> for history).</li>
-        <li><strong>Scan the QR code</strong>: click the HealthDock icon in your Mac menu bar, choose <em>Show Pairing QR Code</em>, and scan with your iPhone.</li>
-        <li><strong>Done</strong>: your 7-day free trial syncs the last 14 days in under a minute, then keeps your Mac updated automatically in the background every day.</li>
+    <section id="how-it-works" class="section-block card">
+      <h2>How to Export Apple Health Data from Your iPhone</h2>
+      <ol style="padding-left:20px;margin:10px 0 0;display:grid;gap:8px;font-size:14.5px;color:var(--ink2)">
+        <li>Open the Apple <strong>Health</strong> app on your iPhone and tap your profile icon in the top right.</li>
+        <li>Scroll to the bottom and tap <strong>Export All Health Data</strong> → <strong>Export</strong>.</li>
+        <li>AirDrop the resulting <code>export.zip</code> to your Mac (or save to Files / iCloud Drive).</li>
+        <li>Drop <code>export.zip</code> directly into the converter box at the top of this page—no unzipping needed.</li>
       </ol>
-      <p class="small" style="margin:14px 0 0">Requires iOS 17+ and macOS 14+ with Bluetooth on. For syncing years of history, keep both devices on the same Wi-Fi.</p>
+      <p class="small" style="margin:12px 0 0">Tip: Turn off Wi-Fi after loading this page if you want 100% proof that parsing happens strictly on your device.</p>
+    </section>
+
+    <section class="section-block">
+      <h2>Dedicated Free Tools</h2>
+      <div class="grid-2" style="margin-top:14px">
+        <div class="card">
+          <h3>Apple Health to Claude &amp; ChatGPT</h3>
+          <p class="muted">Generate <code>context.md</code> with custom baseline windows (30/60/90 days), optional self-reported profile notes, and 3 curated health-review prompts ready to paste.</p>
+          <div class="btn-row" style="margin-top:14px">
+            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-claude/">Open Claude Converter →</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Apple Health XML to CSV &amp; JSON</h3>
+          <p class="muted">Filter by custom date range and 15 metrics (Resting HR, HRV, Sleep stages, Steps, VO₂max, Weight, Blood Pressure) to download Daily CSV, Workouts CSV, or JSON.</p>
+          <div class="btn-row" style="margin-top:14px">
+            <a class="btn btn-secondary btn-sm" href="./tools/xml-to-csv/">Open CSV / JSON Converter →</a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="faq" class="section-block">
       <h2>Frequently Asked Questions</h2>
 
       <details class="faq-item">
-        <summary>Why is HealthDock different from Claude’s native Apple Health integration?</summary>
-        <p>Claude’s built-in Apple Health connector is currently limited to US accounts, requires a paid Claude plan, works only inside the iOS app, and sends data to the cloud. HealthDock works in every country, keeps 100% of your data in plain files on your own Mac, and works with Claude Desktop, Claude Code, Codex, Cursor, ChatGPT, and Obsidian.</p>
+        <summary>Does my Apple Health export.xml ever leave my computer?</summary>
+        <p>No. Parsing runs 100% locally in a browser Web Worker using 4MB file slices. There is no server, no API endpoint, no user account, and no tracking script.</p>
       </details>
 
       <details class="faq-item">
-        <summary>Where does my health data go? Do you run any servers?</summary>
-        <p>No servers, no accounts, no analytics. Data is encrypted end-to-end with keys generated on your iPhone and Mac during QR pairing and moves only over Bluetooth or your local Wi-Fi network.</p>
+        <summary>Which Apple Health metrics and workouts are supported?</summary>
+        <p>All 15 key daily indicators—Resting Heart Rate, HRV (SDNN), Walking Heart Rate, Sleep (total, Deep, REM), Steps, Active Energy, Exercise Minutes, Blood Oxygen (SpO₂), Respiratory Rate, VO₂max, Systolic &amp; Diastolic Blood Pressure, and Weight—plus 35 official Apple Health workout types with duration, active kcal, average heart rate, and distance.</p>
       </details>
 
       <details class="faq-item">
-        <summary>What files are saved on my Mac?</summary>
-        <p>Inside the Health Archive folder you choose (default <code>~/Documents/HealthDock</code>), you get <code>context.md</code> (AI-ready baseline &amp; anomaly summary), <code>daily/YYYY/YYYY-MM-DD.json</code>, <code>archive/YYYY.md</code>, raw <code>routes/</code> and <code>ecg/</code> JSON, plus optional <code>CLAUDE.md</code> and 6 health-analysis skills.</p>
+        <summary>Will it crash on a 500MB or 1GB Apple Health export?</summary>
+        <p>No. Unlike naive web converters that call <code>DOMParser</code> on the entire file, HealthDock streams 4MB chunks sequentially (and streams DEFLATE-compressed <code>export.zip</code> via the browser’s native <code>DecompressionStream</code>), keeping RAM usage low.</p>
       </details>
 
       <details class="faq-item">
-        <summary>How do pricing and the 7-day free trial work?</summary>
-        <p>HealthDock for Mac is free. The iPhone app includes a 7-day free trial that syncs your last 14 days—with zero automatic billing when the trial ends. Unlock full history and ongoing sync with a yearly plan or a one-time lifetime purchase via Apple In-App Purchase. Data already on your Mac always stays yours to view and export.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Why didn’t automatic sync run in the background?</summary>
-        <ul>
-          <li>Don’t swipe HealthDock closed in the iOS app switcher—iOS won’t wake force-quit apps in the background. Opening it once resumes background sync.</li>
-          <li>Keep Bluetooth on for both devices, keep HealthDock running in your Mac menu bar, and bring your iPhone near your Mac.</li>
-          <li>Enable <em>Sync Reminder</em> in iPhone Settings to get a local nudge if 3 days pass without a sync.</li>
-        </ul>
-      </details>
-
-      <details class="faq-item">
-        <summary>Only the last 30 days synced—how do I sync my full history?</summary>
-        <p>When granting Health permissions, 30 days was selected instead of All. Open iPhone <strong>Settings → Health → Data Access &amp; Devices → HealthDock</strong> and set History to <strong>All</strong>. Return to HealthDock and it will automatically read your earlier years.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>How do I delete my data?</summary>
-        <p>Unpair and delete HealthDock on your iPhone, and delete HealthDock and your Health Archive folder on your Mac. HealthDock is strictly read-only and never modifies Apple Health.</p>
+        <summary>Is this medical advice or a diagnostic tool?</summary>
+        <p>No. HealthDock only summarizes and formats your own Apple Health records so you and your chosen AI or spreadsheet tools can review trends. Always consult a qualified healthcare professional for medical decisions.</p>
       </details>
     </section>
 
     <section id="contact" class="section-block card">
       <h2>Contact &amp; Support</h2>
       <p class="muted" style="margin:0">
-        Questions or feedback? Email <strong>zhangxingyiopenclaw@gmail.com</strong>, or use <em>Settings → Feedback</em> inside the iPhone app (diagnostic logs contain zero health values).
+        Questions, feature requests, or launch notifications for the upcoming iPhone &amp; Mac auto-sync app? Email <strong>zhangxingyiopenclaw@gmail.com</strong>.
       </p>
     </section>
 
     <footer class="site-footer">
-      <div>© 2026 HealthDock · Local-only Apple Health sync for Mac</div>
+      <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
       <div class="footer-links">
         <a href="./tools/apple-health-to-claude/">Apple Health → Claude</a>
         <a href="./tools/xml-to-csv/">XML → CSV</a>
         <a href="privacy.html">Privacy Policy</a>
+        <a href="../llms.txt">llms.txt</a>
         <a href="../">中文</a>
       </div>
     </footer>
   </main>
+
+  <script>
+  (() => {
+    const worker = new Worker('../assets/health-worker.js');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const errorBox = document.getElementById('errorBox');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressFill = document.getElementById('progressFill');
+    const progressStatus = document.getElementById('progressStatus');
+    const progressStats = document.getElementById('progressStats');
+    const outputPanel = document.getElementById('outputPanel');
+    const renderedView = document.getElementById('renderedView');
+    const rawView = document.getElementById('rawView');
+    const rawPre = document.getElementById('rawPre');
+    const csvView = document.getElementById('csvView');
+    const csvTable = document.getElementById('csvTable');
+    const tabContext = document.getElementById('tabContext');
+    const tabRaw = document.getElementById('tabRaw');
+    const tabCsv = document.getElementById('tabCsv');
+    const copyBtn = document.getElementById('copyBtn');
+    const downloadMdBtn = document.getElementById('downloadMdBtn');
+    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+
+    let currentMarkdown = '';
+    let currentCsv = null;
+    let activeTab = 'context';
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function renderSimpleMarkdown(md) {
+      const lines = md.split('\n');
+      const out = [];
+      let i = 0;
+      while (i < lines.length) {
+        const line = lines[i];
+        if (!line.trim()) { i++; continue; }
+        if (line.startsWith('### ')) { out.push('<h3>' + escapeHtml(line.slice(4)) + '</h3>'); i++; }
+        else if (line.startsWith('## ')) { out.push('<h2>' + escapeHtml(line.slice(3)) + '</h2>'); i++; }
+        else if (line.startsWith('# ')) { out.push('<h1>' + escapeHtml(line.slice(2)) + '</h1>'); i++; }
+        else if (line.startsWith('|') && i + 1 < lines.length && lines[i + 1].startsWith('|---')) {
+          const headers = line.split('|').slice(1, -1).map(c => c.trim());
+          let html = '<div class="table-scroll"><table><thead><tr>' +
+            headers.map(h => '<th>' + escapeHtml(h) + '</th>').join('') +
+            '</tr></thead><tbody>';
+          i += 2;
+          while (i < lines.length && lines[i].startsWith('|')) {
+            const cells = lines[i].split('|').slice(1, -1).map(c => c.trim());
+            html += '<tr>' + cells.map(c => '<td>' + escapeHtml(c) + '</td>').join('') + '</tr>';
+            i++;
+          }
+          html += '</tbody></table></div>';
+          out.push(html);
+        } else {
+          out.push('<p>' + escapeHtml(line) + '</p>');
+          i++;
+        }
+      }
+      return out.join('');
+    }
+
+    function setTab(name) {
+      activeTab = name;
+      [
+        [tabContext, 'context', renderedView],
+        [tabRaw, 'raw', rawView],
+        [tabCsv, 'csv', csvView],
+      ].forEach(([btn, key, panel]) => {
+        const on = key === name;
+        btn.classList.toggle('active', on);
+        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+        panel.style.display = on ? 'block' : 'none';
+      });
+      copyBtn.textContent = name === 'csv' ? 'Copy CSV' : 'Copy context.md';
+    }
+
+    tabContext.addEventListener('click', () => setTab('context'));
+    tabRaw.addEventListener('click', () => setTab('raw'));
+    tabCsv.addEventListener('click', () => setTab('csv'));
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.add('visible');
+    }
+    function clearError() {
+      errorBox.textContent = '';
+      errorBox.classList.remove('visible');
+    }
+
+    function downloadBlob(text, filename, mime) {
+      const blob = new Blob([text], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    copyBtn.addEventListener('click', async () => {
+      const text = activeTab === 'csv' && currentCsv ? currentCsv.content : currentMarkdown;
+      if (!text) return;
+      const prev = copyBtn.textContent;
+      try { await navigator.clipboard.writeText(text); } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => { copyBtn.textContent = prev; }, 1600);
+    });
+
+    downloadMdBtn.addEventListener('click', () => {
+      if (currentMarkdown) downloadBlob(currentMarkdown, 'context.md', 'text/markdown;charset=utf-8');
+    });
+    downloadCsvBtn.addEventListener('click', () => {
+      if (currentCsv) downloadBlob(currentCsv.content, currentCsv.filename, currentCsv.mime);
+    });
+
+    function startFile(file) {
+      if (!file) return;
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '2%';
+      progressStatus.textContent = `Streaming ${file.name} locally…`;
+      progressStats.textContent = 'Starting…';
+      worker.postMessage({ action: 'parse', file, windowDays: 90, profile: '' });
+    }
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) startFile(e.target.files[0]);
+    });
+    ['dragenter', 'dragover'].forEach((ev) => {
+      dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    });
+    ['dragleave', 'drop'].forEach((ev) => {
+      dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); });
+    });
+    dropzone.addEventListener('drop', (e) => {
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+        startFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    sampleBtn.addEventListener('click', () => {
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '60%';
+      progressStatus.textContent = 'Generating synthetic demo dataset…';
+      progressStats.textContent = 'Sample';
+      worker.postMessage({ action: 'sample', windowDays: 90, profile: '' });
+    });
+
+    worker.onmessage = (e) => {
+      const data = e.data || {};
+      if (data.type === 'progress') {
+        progressFill.style.width = data.percent + '%';
+        const doneMB = (data.doneBytes / (1024 * 1024)).toFixed(1);
+        const totalMB = (data.totalBytes / (1024 * 1024)).toFixed(1);
+        progressStatus.textContent = `Scanned ${data.recordsScanned.toLocaleString('en-US')} records (${data.mbPerSec.toFixed(1)} MB/s)`;
+        progressStats.textContent = `${doneMB} / ${totalMB} MB (${data.percent}%)`;
+      } else if (data.type === 'done') {
+        progressFill.style.width = '100%';
+        progressStatus.textContent = data.isSample
+          ? 'Loaded synthetic sample data (not real user data)'
+          : `Finished streaming ${data.summary.sourceLabel} locally`;
+        progressStats.textContent = '100%';
+        document.getElementById('statRecords').textContent = data.summary.recordsScanned.toLocaleString('en-US');
+        document.getElementById('statDays').textContent = data.summary.daysCount.toLocaleString('en-US');
+        document.getElementById('statWorkouts').textContent = data.summary.workoutsCount.toLocaleString('en-US');
+        document.getElementById('statTime').textContent = data.summary.elapsedMs < 1000
+          ? `${data.summary.elapsedMs} ms`
+          : `${(data.summary.elapsedMs / 1000).toFixed(1)} s`;
+        currentMarkdown = data.markdown;
+        rawPre.textContent = data.markdown;
+        renderedView.innerHTML = renderSimpleMarkdown(data.markdown);
+        outputPanel.classList.add('visible');
+        // Pre-build daily CSV so tab switch & Download .csv are instant
+        worker.postMessage({
+          action: 'export',
+          options: {
+            format: 'daily-csv',
+            metrics: ['resting_hr_avg', 'hrv_sdnn_ms', 'sleep_min', 'steps', 'active_kcal', 'exercise_min', 'vo2max', 'weight_kg'],
+          },
+        });
+      } else if (data.type === 'exported') {
+        currentCsv = data;
+        const thead = '<thead><tr>' + data.headers.map(h => `<th>${escapeHtml(h)}</th>`).join('') + '</tr></thead>';
+        const tbody = '<tbody>' + data.preview.map(row =>
+          '<tr>' + row.map(c => `<td>${escapeHtml(c)}</td>`).join('') + '</tr>'
+        ).join('') + '</tbody>';
+        csvTable.innerHTML = thead + tbody;
+      } else if (data.type === 'error') {
+        progressWrap.classList.remove('visible');
+        showError(data.message);
+      }
+    };
+  })();
+  </script>
 </body>
 </html>

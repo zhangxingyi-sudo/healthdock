@@ -1,0 +1,20 @@
+# HealthDock (gethealthdock.com)
+
+> Free, 100% browser-local Apple Health export tools (zero upload, zero servers). Stream-parse Apple Health `export.zip` or `export.xml` files (500MB–2GB+) directly in your browser to generate an AI-ready `context.md` for Claude/ChatGPT or clean daily CSV/JSON files.
+
+## Free Local Web Tools
+
+- [HealthDock — Free Apple Health Converter (AI Context & CSV)](https://gethealthdock.com/en/): Instant browser-local converter turning `export.zip` or `export.xml` into `context.md` (7d/30d/90d baselines, ≥2 SD unusual days, yearly averages, 8-week training load) or CSV/JSON.
+- [Apple Health to Claude (`context.md` Generator)](https://gethealthdock.com/en/tools/apple-health-to-claude/): Dedicated streaming converter with 3 ready-to-paste Claude / ChatGPT health review prompts. Works worldwide (outside the US) and with Claude Desktop, Claude Code, Cursor, and ChatGPT.
+- [Apple Health XML to CSV & JSON Converter](https://gethealthdock.com/en/tools/xml-to-csv/): Filter by date range and 15 health metrics to export Daily Summary CSV, Workouts CSV, or Daily Summary JSON for Excel, Numbers, Python, or DuckDB.
+
+## Key Technical Properties
+
+- **Privacy**: 100% client-side JavaScript Web Worker. Zero server uploads, zero accounts, zero analytics.
+- **Large File Support**: Streams `export.xml` in 4MB slices and decompresses `export.zip` via native browser `DecompressionStream('deflate-raw')` without loading the XML DOM into RAM.
+- **Data Cleaning**: Merges overlapping sleep intervals (18:00–12:00 night windows), prevents Apple Watch + iPhone cumulative step double-counting, converts units (`lb` → `kg`, `kJ` → `kcal`, fractional `SpO2` → `%`), and filters anomalous future/zero-duration sleep records.
+
+## Privacy Policy
+
+- [Privacy Policy (English)](https://gethealthdock.com/en/privacy.html)
+- [隐私政策 (中文)](https://gethealthdock.com/privacy.html)
