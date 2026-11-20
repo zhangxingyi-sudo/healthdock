@@ -1,41 +1,250 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HealthDock · Help &amp; Support</title><link rel="stylesheet" href="../style.css"><link rel="icon" href="../icon.png"></head>
-<body><div class="wrap">
-<header><img src="../icon.png" alt=""><div><h1>HealthDock</h1><p>Sync the health data on your iPhone to your own Mac, automatically. No servers.</p></div></header>
-<nav><a href="#start">Get started</a><a href="#faq">FAQ</a><a href="#contact">Contact</a><a href="privacy.html">Privacy Policy</a><a href="../">中文</a></nav>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HealthDock — Sync Apple Health to Your Mac Automatically (Private &amp; AI-Ready)</title>
+  <meta name="description" content="Get Apple Health on your Mac automatically over Bluetooth and local Wi-Fi—zero cloud servers. HealthDock saves plain daily JSON, Markdown summaries, and an AI-ready context.md for Claude, Codex, and Cursor.">
+  <link rel="canonical" href="https://gethealthdock.com/en/">
+  <link rel="alternate" hreflang="en" href="https://gethealthdock.com/en/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://gethealthdock.com/">
+  <link rel="icon" href="../icon.png">
+  <link rel="stylesheet" href="../assets/site.css">
 
-<section id="start"><h2>Get started</h2>
-<ol>
-<li>Install the free HealthDock for Mac.<br><a class="btn" href="https://apps.apple.com/app/id6835271429">Download on the Mac App Store</a></li>
-<li>Open HealthDock on your iPhone and allow access to Health data. We recommend “Turn On All” and choosing “All” for history.</li>
-<li>On your Mac, click the HealthDock icon in the menu bar, choose “Show pairing QR code”, and scan the code with your iPhone.</li>
-<li>Your 7-day free trial starts after pairing and syncs your last 14 days. After that, HealthDock syncs in the background every day. You don't need to open it.</li>
-</ol>
-<p class="muted">Requires an iPhone with iOS 17 or later and a Mac with macOS 14 or later, with Bluetooth on. To move years of history, keep both on the same Wi‑Fi.</p>
-</section>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HealthDock — Sync Apple Health to Your Mac Automatically">
+  <meta property="og:description" content="Private iPhone-to-Mac Apple Health sync over Bluetooth and local Wi-Fi. Plain files + daily AI-ready context.md for Claude, Codex, and Obsidian.">
+  <meta property="og:url" content="https://gethealthdock.com/en/">
+  <meta property="og:image" content="https://gethealthdock.com/icon.png">
+  <meta name="twitter:card" content="summary">
 
-<section id="faq"><h2>FAQ</h2>
-<h3>Why didn't it sync automatically?</h3>
-<ul><li>Don't swipe HealthDock away in the app switcher. iOS won't wake it in the background after that. Opening it once fixes it.</li>
-<li>Keep Bluetooth on on both devices, keep HealthDock running on your Mac, and keep your iPhone nearby.</li>
-<li>Turn on “Sync Reminder” in Settings to get a nudge after 3 days without a sync.</li></ul>
-<h3>Full history is slow or stuck</h3>
-<p>Full history uses a direct local network connection to your Mac. Put both devices on the same Wi‑Fi and turn on Local Network in Settings → HealthDock. Keep HealthDock open while it transfers.</p>
-<h3>Only the last 30 days synced</h3>
-<p>You chose 30 days of history when granting access. Go to Settings → Health → Data Access &amp; Devices → HealthDock and change history to “All”. HealthDock reads the older data next time you open it.</p>
-<h3>Pricing and trial</h3>
-<p>The Mac app is free. The iPhone app includes a 7-day free trial that syncs your last 14 days. Full history and ongoing sync are available as a yearly subscription or a one-time purchase, priced as shown in the App Store. The trial never charges you. After switching phones or reinstalling, tap “Restore Purchases”.</p>
-<h3>Where is my data on the Mac?</h3>
-<p>Choose “Open Data Folder” in the Mac menu. You'll find plain files organized by day and month, including workouts and routes. <code>context.md</code> is a ready-made health summary (recent vs. baseline, unusual days, long-term trends) you can give to the AI you use.</p>
-<h3>How do I delete my data?</h3>
-<p>Unpair and delete HealthDock on your iPhone. On your Mac, delete HealthDock and its data folder. HealthDock never changes anything in the Health app.</p>
-<h3>When automatic sync isn't available</h3>
-<p>On your iPhone, go to Settings → Export to Mac and AirDrop the encrypted pack. Your Mac imports it automatically.</p>
-</section>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "HealthDock",
+    "operatingSystem": "iOS 17+, macOS 14+",
+    "applicationCategory": "HealthApplication",
+    "description": "Automatically sync Apple Health data from iPhone to Mac over Bluetooth and local Wi-Fi with zero cloud servers. Exports clean daily JSON, Markdown archives, and an AI-ready context.md summary.",
+    "url": "https://gethealthdock.com/en/",
+    "offers": [
+      {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free Mac companion app and 7-day iPhone free trial"
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./">
+        <img src="../icon.png" alt="HealthDock icon">
+        <span>HealthDock</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="./tools/apple-health-to-claude/">Apple Health → Claude</a>
+        <a href="./tools/xml-to-csv/">XML → CSV</a>
+        <a href="#start">Get Started</a>
+        <a href="#faq">FAQ</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="../">中文</a>
+        <a class="nav-cta" href="https://apps.apple.com/app/id6835271429">Mac App (Free)</a>
+      </nav>
+    </div>
+  </header>
 
-<section id="contact"><h2>Contact</h2>
-<p>Email <b>zhangxingyiopenclaw@gmail.com</b>, or use Settings → Feedback in the app. Feedback includes a diagnostic log with no health values.</p>
-</section>
-<footer>© 2026 Zhang Xingyi · <a href="privacy.html">Privacy Policy</a></footer>
-</div></body></html>
+  <main class="container">
+    <section class="hero">
+      <div class="eyebrow"><span class="dot"></span>Apple Health on Mac · 100% Local · Zero Servers</div>
+      <h1>Your Apple Health data, automatically on your Mac.</h1>
+      <p class="lead">
+        Apple still doesn’t make a Health app for macOS. HealthDock quietly syncs your iPhone’s full health history—sleep, HRV, heart rate, workouts, GPS routes, and ECG—straight to your Mac over Bluetooth and local Wi-Fi as plain files and an AI-ready <code>context.md</code>.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6835269846">Download for iPhone</a>
+        <a class="btn btn-secondary" href="https://apps.apple.com/app/id6835271429">Download Free Mac App</a>
+        <a class="btn btn-ghost" href="./tools/apple-health-to-claude/">Try Free Browser Tool →</a>
+      </div>
+      <div class="trust-strip">
+        <span>🔒 End-to-end encrypted device-to-device</span>
+        <span>🌍 Works globally (US, UK, EU, Canada &amp; more)</span>
+        <span>🤖 Ready for Claude Desktop, Claude Code, Codex &amp; Cursor</span>
+        <span>📁 Plain JSON &amp; Markdown you own forever</span>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>Stop manually exporting a 500MB XML file</h2>
+      <p class="muted" style="margin:0 0 18px">Compare Apple’s built-in manual export against HealthDock’s local automatic sync.</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Manual Apple Health Export</h3>
+          <ul class="compare-list">
+            <li><span class="tag-bad">✕</span><span>Export a massive 300MB–2GB <code>export.zip</code> by hand every time you want fresh data.</span></li>
+            <li><span class="tag-bad">✕</span><span>Wait minutes while your iPhone zips millions of raw XML lines, then AirDrop it yourself.</span></li>
+            <li><span class="tag-bad">✕</span><span>Unreadable raw XML—way too big to paste into Claude, ChatGPT, or spreadsheets.</span></li>
+            <li><span class="tag-bad">✕</span><span>Anthropic’s built-in Claude iOS Health connector is US-only, mobile-only, and cloud-routed.</span></li>
+          </ul>
+        </div>
+        <div class="card compare-good">
+          <h3>HealthDock (iPhone + Mac)</h3>
+          <ul class="compare-list">
+            <li><span class="tag-good">✓</span><span>Background daily sync over Bluetooth—plus fast local Wi-Fi catch-up for 10+ years of history.</span></li>
+            <li><span class="tag-good">✓</span><span>100% local: no cloud account, no servers, no third-party SDKs. Works in every country.</span></li>
+            <li><span class="tag-good">✓</span><span>Auto-refreshes a compact <code>context.md</code> with 7d/30d/90d baselines, ≥2 SD anomaly days, and trends.</span></li>
+            <li><span class="tag-good">✓</span><span>Ships with a local AI workspace (<code>CLAUDE.md</code> + 6 health skills) for Claude Code, Codex, and Obsidian.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="grid-2" style="align-items:center">
+        <div>
+          <div class="eyebrow"><span class="dot"></span>Built for AI &amp; Long-Term Tracking</div>
+          <h2>An AI-ready <code>context.md</code>, refreshed every day</h2>
+          <p class="muted">
+            Instead of dumping raw XML into a chat window, HealthDock distills your entire Apple Health archive into clean personal baselines—comparing your last 7 days against your own 90-day baseline, flagging statistical outliers (≥2 SD), and summarizing yearly trends and 8-week training load.
+          </p>
+          <p class="muted">
+            Click <strong>Copy for AI</strong> in the Mac menu bar to paste into Claude or ChatGPT, or open your Health Archive folder directly in <strong>Claude Code</strong>, <strong>Codex</strong>, <strong>Cursor</strong>, or <strong>Obsidian</strong>.
+          </p>
+          <div class="btn-row" style="margin-top:16px">
+            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-claude/">Generate one now in your browser →</a>
+          </div>
+        </div>
+        <div class="code-window" aria-label="Sample context.md generated by HealthDock">
+          <div class="code-window-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span>~/Documents/HealthDock/context.md</span>
+          </div>
+          <pre class="code-body"># My Health Context (for AI)
+
+Data through 2026-11-20 (up to date); 90 of the last 90 days have data.
+
+## Recent vs. Baseline
+
+| Metric | Last 7d | Last 30d | Last 90d | 7d vs. Baseline |
+|---|---|---|---|---|
+| Resting Heart Rate bpm | 60 | 58 | 58 | +3% |
+| HRV ms | 54 | 58 | 59 | -8% |
+| Sleep h | 7.1 | 7.3 | 7.3 | -3% |
+| Steps | 8,940 | 9,210 | 9,080 | -2% |
+| VO₂max ml/kg·min | 46.1 | 45.9 | 45.6 | +1% |
+
+## Unusual Days (last 14 days, ≥2 SD from baseline)
+
+| Date | Metric | Value | Baseline (±1 SD) |
+|---|---|---|---|
+| 2026-11-17 | Resting Heart Rate bpm | 68 | 58 (±2) |
+| 2026-11-17 | HRV ms | 34 | 59 (±6) |
+| 2026-11-17 | Sleep h | 5.2 | 7.3 (±0.6) |</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>Free 100% Local Browser Tools</h2>
+      <p class="muted" style="margin:0 0 18px">Already exported <code>export.zip</code> or <code>export.xml</code> from your iPhone? Convert it locally in your browser—nothing is ever uploaded.</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Apple Health to Claude (<code>context.md</code> Generator)</h3>
+          <p class="muted">
+            Stream-parse a 500MB+ <code>export.xml</code> or <code>export.zip</code> locally in seconds and generate the exact same <code>context.md</code> summary used by HealthDock for Mac—complete with 3 curated Claude analysis prompts.
+          </p>
+          <div class="btn-row" style="margin-top:16px">
+            <a class="btn btn-primary btn-sm" href="./tools/apple-health-to-claude/">Open Apple Health → Claude Tool</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Apple Health XML to CSV / JSON Converter</h3>
+          <p class="muted">
+            Filter by date range and metrics (HRV, sleep stages, resting HR, steps, VO₂max, workouts) and download clean daily CSV, workouts CSV, or JSON for Excel, Numbers, Python, or DuckDB.
+          </p>
+          <div class="btn-row" style="margin-top:16px">
+            <a class="btn btn-secondary btn-sm" href="./tools/xml-to-csv/">Open XML → CSV Converter</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="start" class="section-block card">
+      <h2>Get Started in 2 Minutes</h2>
+      <ol style="padding-left:20px;margin:12px 0 0;display:grid;gap:10px">
+        <li>
+          <strong>Install the free HealthDock for Mac</strong> from the Mac App Store.<br>
+          <a class="btn btn-secondary btn-sm" style="margin-top:8px" href="https://apps.apple.com/app/id6835271429">Download HealthDock for Mac (Free)</a>
+        </li>
+        <li><strong>Install HealthDock on your iPhone</strong> and allow Health access (we recommend tapping <em>Turn On All</em> and choosing <em>All</em> for history).</li>
+        <li><strong>Scan the QR code</strong>: click the HealthDock icon in your Mac menu bar, choose <em>Show Pairing QR Code</em>, and scan with your iPhone.</li>
+        <li><strong>Done</strong>: your 7-day free trial syncs the last 14 days in under a minute, then keeps your Mac updated automatically in the background every day.</li>
+      </ol>
+      <p class="small" style="margin:14px 0 0">Requires iOS 17+ and macOS 14+ with Bluetooth on. For syncing years of history, keep both devices on the same Wi-Fi.</p>
+    </section>
+
+    <section id="faq" class="section-block">
+      <h2>Frequently Asked Questions</h2>
+
+      <details class="faq-item">
+        <summary>Why is HealthDock different from Claude’s native Apple Health integration?</summary>
+        <p>Claude’s built-in Apple Health connector is currently limited to US accounts, requires a paid Claude plan, works only inside the iOS app, and sends data to the cloud. HealthDock works in every country, keeps 100% of your data in plain files on your own Mac, and works with Claude Desktop, Claude Code, Codex, Cursor, ChatGPT, and Obsidian.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Where does my health data go? Do you run any servers?</summary>
+        <p>No servers, no accounts, no analytics. Data is encrypted end-to-end with keys generated on your iPhone and Mac during QR pairing and moves only over Bluetooth or your local Wi-Fi network.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>What files are saved on my Mac?</summary>
+        <p>Inside the Health Archive folder you choose (default <code>~/Documents/HealthDock</code>), you get <code>context.md</code> (AI-ready baseline &amp; anomaly summary), <code>daily/YYYY/YYYY-MM-DD.json</code>, <code>archive/YYYY.md</code>, raw <code>routes/</code> and <code>ecg/</code> JSON, plus optional <code>CLAUDE.md</code> and 6 health-analysis skills.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do pricing and the 7-day free trial work?</summary>
+        <p>HealthDock for Mac is free. The iPhone app includes a 7-day free trial that syncs your last 14 days—with zero automatic billing when the trial ends. Unlock full history and ongoing sync with a yearly plan or a one-time lifetime purchase via Apple In-App Purchase. Data already on your Mac always stays yours to view and export.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Why didn’t automatic sync run in the background?</summary>
+        <ul>
+          <li>Don’t swipe HealthDock closed in the iOS app switcher—iOS won’t wake force-quit apps in the background. Opening it once resumes background sync.</li>
+          <li>Keep Bluetooth on for both devices, keep HealthDock running in your Mac menu bar, and bring your iPhone near your Mac.</li>
+          <li>Enable <em>Sync Reminder</em> in iPhone Settings to get a local nudge if 3 days pass without a sync.</li>
+        </ul>
+      </details>
+
+      <details class="faq-item">
+        <summary>Only the last 30 days synced—how do I sync my full history?</summary>
+        <p>When granting Health permissions, 30 days was selected instead of All. Open iPhone <strong>Settings → Health → Data Access &amp; Devices → HealthDock</strong> and set History to <strong>All</strong>. Return to HealthDock and it will automatically read your earlier years.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do I delete my data?</summary>
+        <p>Unpair and delete HealthDock on your iPhone, and delete HealthDock and your Health Archive folder on your Mac. HealthDock is strictly read-only and never modifies Apple Health.</p>
+      </details>
+    </section>
+
+    <section id="contact" class="section-block card">
+      <h2>Contact &amp; Support</h2>
+      <p class="muted" style="margin:0">
+        Questions or feedback? Email <strong>zhangxingyiopenclaw@gmail.com</strong>, or use <em>Settings → Feedback</em> inside the iPhone app (diagnostic logs contain zero health values).
+      </p>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 HealthDock · Local-only Apple Health sync for Mac</div>
+      <div class="footer-links">
+        <a href="./tools/apple-health-to-claude/">Apple Health → Claude</a>
+        <a href="./tools/xml-to-csv/">XML → CSV</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="../">中文</a>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

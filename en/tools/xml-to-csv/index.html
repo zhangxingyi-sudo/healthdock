@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apple Health XML to CSV &amp; JSON Converter — Free 100% Local Tool | HealthDock</title>
+  <meta name="description" content="Convert Apple Health export.xml or export.zip to clean CSV or JSON locally in your browser. Filter by date range and metrics (HRV, sleep, resting heart rate, steps, VO2max, workouts) with zero upload.">
+  <link rel="canonical" href="https://gethealthdock.com/en/tools/xml-to-csv/">
+  <link rel="icon" href="../../../icon.png">
+  <link rel="stylesheet" href="../../../assets/site.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Apple Health XML to CSV & JSON Converter — Free 100% Local Tool">
+  <meta property="og:description" content="Stream-parse 500MB+ Apple Health export.xml or export.zip into clean daily CSV, workouts CSV, or JSON right in your browser. Zero server uploads.">
+  <meta property="og:url" content="https://gethealthdock.com/en/tools/xml-to-csv/">
+  <meta property="og:image" content="https://gethealthdock.com/icon.png">
+  <meta name="twitter:card" content="summary">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Apple Health XML to CSV & JSON Converter",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any (Web Browser)",
+    "url": "https://gethealthdock.com/en/tools/xml-to-csv/",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free 100% local client-side streaming converter for Apple Health export.xml and export.zip to daily CSV, workouts CSV, and JSON."
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../">
+        <img src="../../../icon.png" alt="HealthDock icon">
+        <span>HealthDock</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../apple-health-to-claude/">Apple Health → Claude</a>
+        <a class="active" href="./">XML → CSV</a>
+        <a href="../../">Mac App</a>
+        <a href="../../privacy.html">Privacy</a>
+        <a href="../../../">中文</a>
+        <a class="nav-cta" href="https://apps.apple.com/app/id6835271429">Mac App (Free)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container container-narrow">
+    <section class="hero" style="padding-bottom:20px">
+      <div class="eyebrow"><span class="dot"></span>100% Browser-Local · Streams 500MB+ XML/ZIP · Free</div>
+      <h1>Apple Health XML to CSV &amp; JSON Converter</h1>
+      <p class="lead">
+        Turn Apple Health’s massive <code>export.zip</code> or <code>export.xml</code> into clean, analysis-ready daily CSV, workouts CSV, or JSON for Excel, Apple Numbers, Python, or DuckDB. Runs 100% locally in a Web Worker—your health records never leave your computer.
+      </p>
+      <div class="trust-strip" style="margin-top:0">
+        <span>🔒 Zero uploads or accounts</span>
+        <span>⚡ 4MB streaming chunks (won’t crash your tab)</span>
+        <span>📊 Merges overlapping sleep intervals automatically</span>
+      </div>
+    </section>
+
+    <section class="card" aria-label="XML to CSV Converter">
+      <div id="dropzone" class="dropzone">
+        <input id="fileInput" type="file" accept=".xml,.zip,application/xml,text/xml,application/zip" aria-label="Select Apple Health export.xml or export.zip">
+        <p class="dropzone-title">Drop <code>export.zip</code> or <code>export.xml</code> here</p>
+        <p class="dropzone-sub">Or click to pick a file · Supports multi-year exports without unzipping</p>
+      </div>
+
+      <div class="tool-controls">
+        <div class="btn-row">
+          <button id="sampleBtn" type="button" class="btn btn-secondary btn-sm">✨ Try Sample Data (1-click demo)</button>
+          <a class="btn btn-ghost btn-sm" href="../apple-health-to-claude/">Want Claude context.md instead? →</a>
+        </div>
+      </div>
+
+      <div id="errorBox" class="notice-error" role="alert"></div>
+
+      <div id="progressWrap" class="progress-wrap">
+        <div class="progress-bar-track">
+          <div id="progressFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progressStatus">Streaming…</span>
+          <span id="progressStats">0%</span>
+        </div>
+      </div>
+
+      <div id="outputPanel" class="output-panel">
+        <div class="stat-strip">
+          <div class="stat-box"><div class="k">Records Scanned</div><div id="statRecords" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Export Rows</div><div id="statRows" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Workouts</div><div id="statWorkouts" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Parse Time</div><div id="statTime" class="v">—</div></div>
+        </div>
+
+        <div class="card-subtle" style="margin-bottom:18px">
+          <div class="tool-controls" style="margin-top:0">
+            <div class="field-group">
+              <label for="formatSelect">Format:</label>
+              <select id="formatSelect">
+                <option value="daily-csv" selected>Daily Summary CSV</option>
+                <option value="workouts-csv">Workouts CSV</option>
+                <option value="daily-json">Daily Summary JSON</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="fromDate">From:</label>
+              <input id="fromDate" type="date">
+              <label for="toDate">To:</label>
+              <input id="toDate" type="date">
+            </div>
+          </div>
+
+          <div class="btn-row" style="margin-top:10px">
+            <button type="button" class="btn btn-ghost btn-sm range-btn" data-days="30">Last 30d</button>
+            <button type="button" class="btn btn-ghost btn-sm range-btn" data-days="90">Last 90d</button>
+            <button type="button" class="btn btn-ghost btn-sm range-btn" data-days="365">Last 1 year</button>
+            <button type="button" class="btn btn-ghost btn-sm range-btn" data-days="0">All time</button>
+          </div>
+
+          <div id="metricsSection" style="margin-top:14px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+              <span class="small" style="font-weight:600">Metrics to include:</span>
+              <span class="small">
+                <a href="#" id="selectAllMetrics">Select all</a> · <a href="#" id="selectCoreMetrics">Core only</a>
+              </span>
+            </div>
+            <div id="metricChips" class="chip-grid"></div>
+          </div>
+        </div>
+
+        <div class="toolbar-bar">
+          <span id="previewCaption" class="small">Showing newest rows</span>
+          <div class="btn-row">
+            <button id="downloadBtn" type="button" class="btn btn-primary btn-sm">Download CSV</button>
+            <button id="copyBtn" type="button" class="btn btn-secondary btn-sm">Copy</button>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+          <table id="previewTable"></table>
+        </div>
+
+        <div class="funnel-banner">
+          <div class="funnel-copy">
+            <h3>Want clean daily files on your Mac automatically?</h3>
+            <p>
+              Skip manual 500MB XML exports forever. <strong>HealthDock</strong> syncs your iPhone’s Apple Health history directly to your Mac over Bluetooth &amp; local Wi-Fi—writing structured daily JSON, Markdown archives, and an AI-ready <code>context.md</code> with zero cloud servers.
+            </p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6835269846">iPhone App (7-Day Free Trial)</a>
+            <a class="btn btn-secondary btn-sm" href="https://apps.apple.com/app/id6835271429">Free Mac App</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>FAQ</h2>
+      <details class="faq-item">
+        <summary>How are overlapping Apple Watch and iPhone step counts handled?</summary>
+        <p>When both your Apple Watch and iPhone record cumulative metrics (steps, active energy, exercise minutes) on the same day, the converter aggregates by device source and prioritizes your Apple Watch total to prevent 2× double-counting. Sleep intervals are also merged across overlapping segments using an 18:00–12:00 night window.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What columns are included in the Daily Summary CSV?</summary>
+        <p>Every row is one calendar date (<code>YYYY-MM-DD</code>) with your selected metrics (<code>resting_hr_avg</code>, <code>hrv_sdnn_ms</code>, <code>sleep_min</code>, <code>deep_min</code>, <code>rem_min</code>, <code>steps</code>, <code>active_kcal</code>, <code>exercise_min</code>, <code>spo2_pct</code>, <code>resp_rate</code>, <code>vo2max</code>, <code>bp_sys</code>, <code>bp_dia</code>, <code>weight_kg</code>) plus <code>workout_count</code> and <code>workout_min</code>.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is any of my health data sent over the internet?</summary>
+        <p>Never. All streaming and CSV/JSON generation happens strictly inside your local browser tab via a Web Worker.</p>
+      </details>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
+      <div class="footer-links">
+        <a href="../../">HealthDock Home</a>
+        <a href="../apple-health-to-claude/">Apple Health → Claude</a>
+        <a href="../../privacy.html">Privacy Policy</a>
+        <a href="../../../">中文</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+  (() => {
+    const METRIC_OPTIONS = [
+      { key: 'resting_hr_avg', label: 'Resting HR', core: true },
+      { key: 'hrv_sdnn_ms', label: 'HRV (ms)', core: true },
+      { key: 'walking_hr_avg', label: 'Walking HR', core: false },
+      { key: 'sleep_min', label: 'Sleep (min)', core: true },
+      { key: 'deep_min', label: 'Deep Sleep', core: true },
+      { key: 'rem_min', label: 'REM Sleep', core: true },
+      { key: 'steps', label: 'Steps', core: true },
+      { key: 'active_kcal', label: 'Active kcal', core: true },
+      { key: 'exercise_min', label: 'Exercise min', core: true },
+      { key: 'spo2_pct', label: 'Blood Oxygen %', core: false },
+      { key: 'resp_rate', label: 'Resp Rate', core: false },
+      { key: 'vo2max', label: 'VO₂max', core: true },
+      { key: 'bp_sys', label: 'Systolic BP', core: false },
+      { key: 'bp_dia', label: 'Diastolic BP', core: false },
+      { key: 'weight_kg', label: 'Weight (kg)', core: true },
+    ];
+
+    const worker = new Worker('../../../assets/health-worker.js');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const errorBox = document.getElementById('errorBox');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressFill = document.getElementById('progressFill');
+    const progressStatus = document.getElementById('progressStatus');
+    const progressStats = document.getElementById('progressStats');
+    const outputPanel = document.getElementById('outputPanel');
+    const formatSelect = document.getElementById('formatSelect');
+    const fromDate = document.getElementById('fromDate');
+    const toDate = document.getElementById('toDate');
+    const metricsSection = document.getElementById('metricsSection');
+    const metricChips = document.getElementById('metricChips');
+    const previewTable = document.getElementById('previewTable');
+    const previewCaption = document.getElementById('previewCaption');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const copyBtn = document.getElementById('copyBtn');
+
+    let hasData = false;
+    let dateBounds = { min: '', max: '' };
+    let currentExport = null;
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.add('visible');
+    }
+    function clearError() {
+      errorBox.textContent = '';
+      errorBox.classList.remove('visible');
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function renderChips() {
+      metricChips.innerHTML = '';
+      METRIC_OPTIONS.forEach((m) => {
+        const lbl = document.createElement('label');
+        lbl.className = 'chip';
+        lbl.innerHTML = `<input type="checkbox" value="${m.key}" ${m.core ? 'checked' : ''}><span>${m.label}</span>`;
+        lbl.querySelector('input').addEventListener('change', requestExport);
+        metricChips.appendChild(lbl);
+      });
+    }
+    renderChips();
+
+    function selectedMetrics() {
+      return Array.from(metricChips.querySelectorAll('input:checked')).map((el) => el.value);
+    }
+
+    function requestExport() {
+      if (!hasData) return;
+      const fmt = formatSelect.value;
+      metricsSection.style.display = fmt === 'workouts-csv' ? 'none' : 'block';
+      downloadBtn.textContent = fmt === 'daily-json' ? 'Download JSON' : 'Download CSV';
+      worker.postMessage({
+        action: 'export',
+        options: {
+          format: fmt,
+          from: fromDate.value || dateBounds.min,
+          to: toDate.value || dateBounds.max,
+          metrics: selectedMetrics(),
+        },
+      });
+    }
+
+    function shiftYmd(ymd, deltaDays) {
+      const d = new Date(Number(ymd.slice(0, 4)), Number(ymd.slice(5, 7)) - 1, Number(ymd.slice(8, 10)));
+      d.setDate(d.getDate() + deltaDays);
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    document.querySelectorAll('.range-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (!dateBounds.max) return;
+        const days = Number(btn.dataset.days);
+        toDate.value = dateBounds.max;
+        if (days === 0) {
+          fromDate.value = dateBounds.min;
+        } else {
+          const candidate = shiftYmd(dateBounds.max, -(days - 1));
+          fromDate.value = candidate < dateBounds.min ? dateBounds.min : candidate;
+        }
+        requestExport();
+      });
+    });
+
+    document.getElementById('selectAllMetrics').addEventListener('click', (e) => {
+      e.preventDefault();
+      metricChips.querySelectorAll('input').forEach((el) => { el.checked = true; });
+      requestExport();
+    });
+    document.getElementById('selectCoreMetrics').addEventListener('click', (e) => {
+      e.preventDefault();
+      const core = new Set(METRIC_OPTIONS.filter((m) => m.core).map((m) => m.key));
+      metricChips.querySelectorAll('input').forEach((el) => { el.checked = core.has(el.value); });
+      requestExport();
+    });
+
+    formatSelect.addEventListener('change', requestExport);
+    fromDate.addEventListener('change', requestExport);
+    toDate.addEventListener('change', requestExport);
+
+    function startFile(file) {
+      if (!file) return;
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '2%';
+      progressStatus.textContent = `Streaming ${file.name} locally…`;
+      progressStats.textContent = 'Starting…';
+      worker.postMessage({ action: 'parse', file, windowDays: 90, profile: '' });
+    }
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) startFile(e.target.files[0]);
+    });
+    ['dragenter', 'dragover'].forEach((ev) => {
+      dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    });
+    ['dragleave', 'drop'].forEach((ev) => {
+      dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); });
+    });
+    dropzone.addEventListener('drop', (e) => {
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+        startFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    sampleBtn.addEventListener('click', () => {
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '60%';
+      progressStatus.textContent = 'Generating synthetic demo dataset…';
+      progressStats.textContent = 'Sample';
+      worker.postMessage({ action: 'sample', windowDays: 90, profile: '' });
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      if (!currentExport) return;
+      const blob = new Blob([currentExport.content], { type: currentExport.mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = currentExport.filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      if (!currentExport) return;
+      const prev = copyBtn.textContent;
+      try {
+        await navigator.clipboard.writeText(currentExport.content);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = currentExport.content;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => { copyBtn.textContent = prev; }, 1600);
+    });
+
+    worker.onmessage = (e) => {
+      const data = e.data || {};
+      if (data.type === 'progress') {
+        progressFill.style.width = data.percent + '%';
+        const doneMB = (data.doneBytes / (1024 * 1024)).toFixed(1);
+        const totalMB = (data.totalBytes / (1024 * 1024)).toFixed(1);
+        progressStatus.textContent = `Scanned ${data.recordsScanned.toLocaleString('en-US')} records (${data.mbPerSec.toFixed(1)} MB/s)`;
+        progressStats.textContent = `${doneMB} / ${totalMB} MB (${data.percent}%)`;
+      } else if (data.type === 'done') {
+        hasData = true;
+        dateBounds = data.dateBounds || { min: '', max: '' };
+        fromDate.min = dateBounds.min;
+        fromDate.max = dateBounds.max;
+        toDate.min = dateBounds.min;
+        toDate.max = dateBounds.max;
+        toDate.value = dateBounds.max;
+        if (dateBounds.max) {
+          const ninety = shiftYmd(dateBounds.max, -89);
+          fromDate.value = ninety < dateBounds.min ? dateBounds.min : ninety;
+        }
+        progressFill.style.width = '100%';
+        progressStatus.textContent = data.isSample
+          ? 'Loaded synthetic sample data (not real user data)'
+          : `Finished streaming ${data.summary.sourceLabel} locally`;
+        progressStats.textContent = '100%';
+        document.getElementById('statRecords').textContent = data.summary.recordsScanned.toLocaleString('en-US');
+        document.getElementById('statWorkouts').textContent = data.summary.workoutsCount.toLocaleString('en-US');
+        document.getElementById('statTime').textContent = data.summary.elapsedMs < 1000
+          ? `${data.summary.elapsedMs} ms`
+          : `${(data.summary.elapsedMs / 1000).toFixed(1)} s`;
+        outputPanel.classList.add('visible');
+        requestExport();
+      } else if (data.type === 'exported') {
+        currentExport = data;
+        document.getElementById('statRows').textContent = data.rowCount.toLocaleString('en-US');
+        previewCaption.textContent = `Showing ${data.preview.length} of ${data.rowCount.toLocaleString('en-US')} rows (${data.filename})`;
+        if (!data.preview.length) {
+          previewTable.innerHTML = '<tbody><tr><td>No records match this date range.</td></tr></tbody>';
+        } else {
+          const thead = '<thead><tr>' + data.headers.map((h) => `<th>${escapeHtml(h)}</th>`).join('') + '</tr></thead>';
+          const tbody = '<tbody>' + data.preview.map((row) =>
+            '<tr>' + row.map((c) => `<td>${escapeHtml(c)}</td>`).join('') + '</tr>'
+          ).join('') + '</tbody>';
+          previewTable.innerHTML = thead + tbody;
+        }
+      } else if (data.type === 'error') {
+        progressWrap.classList.remove('visible');
+        showError(data.message);
+      }
+    };
+  })();
+  </script>
+</body>
+</html>
