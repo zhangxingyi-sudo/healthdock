@@ -4,7 +4,8 @@
 
 ## Free Local AI & Export Tools
 
-- [HealthDock — Universal Apple Health Converter (AI Context & CSV)](https://gethealthdock.com/en/): Instant browser-local converter turning `export.zip` or `export.xml` into `context.md` (7d/30d/90d baselines, ≥2 SD unusual days, yearly averages, 8-week training load) or CSV/JSON.
+- [HealthDock — Universal Apple Health Converter (English)](https://gethealthdock.com/): Instant browser-local converter turning `export.zip` or `export.xml` into `context.md` (7d/30d/90d baselines, ≥2 SD unusual days, yearly averages, 8-week training load) or CSV/JSON.
+- [健康坞 HealthDock — 免费本地 Apple 健康导出转换工具（简体中文）](https://gethealthdock.com/zh/): 100% 浏览器本地流式解析 Apple 健康 `export.zip` / `export.xml`，生成中文或英文 `context.md` 健康背景摘要与每日 CSV。
 - [Apple Health to ChatGPT Converter](https://gethealthdock.com/en/tools/apple-health-to-chatgpt/): Stream-parse huge Apple Health exports locally into a ~2KB `context.md` plus a Python-ready Daily CSV for ChatGPT Data Analysis charts, ChatGPT Projects, and Custom GPTs.
 - [Apple Health to Claude (`context.md` Generator)](https://gethealthdock.com/en/tools/apple-health-to-claude/): Dedicated streaming converter with ready-to-paste Claude health review prompts. Works worldwide (outside the US) and with Claude Web, Claude Desktop, Claude Code, and Cursor.
 - [Apple Health to Google Gemini & NotebookLM Converter](https://gethealthdock.com/en/tools/apple-health-to-gemini/): Generates `context.md`, a NotebookLM-compatible `.txt` source, and Multi-Year Daily JSON built for Gemini's 1M+ token context window and Gemini Gems.

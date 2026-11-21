@@ -10,22 +10,36 @@ const CHUNK_BYTES = 4 * 1024 * 1024;
 const PARTIAL_KEYS = new Set(['steps', 'active_kcal', 'exercise_min']);
 
 const METRICS = [
-  { key: 'resting_hr_avg', label: 'Resting Heart Rate', unit: 'bpm', divisor: 1, decimals: 0, longTerm: true, flagged: true },
-  { key: 'hrv_sdnn_ms', label: 'HRV', unit: 'ms', divisor: 1, decimals: 0, longTerm: true, flagged: true },
-  { key: 'walking_hr_avg', label: 'Walking Heart Rate', unit: 'bpm', divisor: 1, decimals: 0, longTerm: false, flagged: true },
-  { key: 'sleep_min', label: 'Sleep', unit: 'h', divisor: 60, decimals: 1, longTerm: true, flagged: true },
-  { key: 'deep_min', label: 'Deep Sleep', unit: 'min', divisor: 1, decimals: 0, longTerm: false, flagged: true },
-  { key: 'rem_min', label: 'REM Sleep', unit: 'min', divisor: 1, decimals: 0, longTerm: false, flagged: true },
-  { key: 'steps', label: 'Steps', unit: '', divisor: 1, decimals: 0, longTerm: true, flagged: false },
-  { key: 'active_kcal', label: 'Active Energy', unit: 'kcal', divisor: 1, decimals: 0, longTerm: false, flagged: false },
-  { key: 'exercise_min', label: 'Exercise', unit: 'min', divisor: 1, decimals: 0, longTerm: false, flagged: false },
-  { key: 'spo2_pct', label: 'Blood Oxygen', unit: '%', divisor: 1, decimals: 1, longTerm: false, flagged: true },
-  { key: 'resp_rate', label: 'Respiratory Rate', unit: '/min', divisor: 1, decimals: 1, longTerm: false, flagged: true },
-  { key: 'vo2max', label: 'VO₂max', unit: 'ml/kg·min', divisor: 1, decimals: 1, longTerm: true, flagged: false },
-  { key: 'bp_sys', label: 'Systolic BP', unit: 'mmHg', divisor: 1, decimals: 0, longTerm: false, flagged: true },
-  { key: 'bp_dia', label: 'Diastolic BP', unit: 'mmHg', divisor: 1, decimals: 0, longTerm: false, flagged: true },
-  { key: 'weight_kg', label: 'Weight', unit: 'kg', divisor: 1, decimals: 1, longTerm: true, flagged: false },
+  { key: 'resting_hr_avg', label: 'Resting Heart Rate', labelZh: '静息心率', unit: 'bpm', divisor: 1, decimals: 0, longTerm: true, flagged: true },
+  { key: 'hrv_sdnn_ms', label: 'HRV', labelZh: 'HRV', unit: 'ms', divisor: 1, decimals: 0, longTerm: true, flagged: true },
+  { key: 'walking_hr_avg', label: 'Walking Heart Rate', labelZh: '步行心率', unit: 'bpm', divisor: 1, decimals: 0, longTerm: false, flagged: true },
+  { key: 'sleep_min', label: 'Sleep', labelZh: '睡眠', unit: 'h', divisor: 60, decimals: 1, longTerm: true, flagged: true },
+  { key: 'deep_min', label: 'Deep Sleep', labelZh: '深睡', unit: 'min', divisor: 1, decimals: 0, longTerm: false, flagged: true },
+  { key: 'rem_min', label: 'REM Sleep', labelZh: 'REM 睡眠', unit: 'min', divisor: 1, decimals: 0, longTerm: false, flagged: true },
+  { key: 'steps', label: 'Steps', labelZh: '步数', unit: '', divisor: 1, decimals: 0, longTerm: true, flagged: false },
+  { key: 'active_kcal', label: 'Active Energy', labelZh: '活动能量', unit: 'kcal', divisor: 1, decimals: 0, longTerm: false, flagged: false },
+  { key: 'exercise_min', label: 'Exercise', labelZh: '锻炼时长', unit: 'min', divisor: 1, decimals: 0, longTerm: false, flagged: false },
+  { key: 'spo2_pct', label: 'Blood Oxygen', labelZh: '血氧', unit: '%', divisor: 1, decimals: 1, longTerm: false, flagged: true },
+  { key: 'resp_rate', label: 'Respiratory Rate', labelZh: '呼吸频率', unit: '/min', divisor: 1, decimals: 1, longTerm: false, flagged: true },
+  { key: 'vo2max', label: 'VO₂max', labelZh: '最大摄氧量', unit: 'ml/kg·min', divisor: 1, decimals: 1, longTerm: true, flagged: false },
+  { key: 'bp_sys', label: 'Systolic BP', labelZh: '收缩压', unit: 'mmHg', divisor: 1, decimals: 0, longTerm: false, flagged: true },
+  { key: 'bp_dia', label: 'Diastolic BP', labelZh: '舒张压', unit: 'mmHg', divisor: 1, decimals: 0, longTerm: false, flagged: true },
+  { key: 'weight_kg', label: 'Weight', labelZh: '体重', unit: 'kg', divisor: 1, decimals: 1, longTerm: true, flagged: false },
 ];
+
+const WORKOUT_ZH_BY_EN = {
+  Archery: '射箭', Badminton: '羽毛球', Basketball: '篮球', Boxing: '拳击', Climbing: '攀岩',
+  'Cross Training': '混合训练', Cycling: '骑行', Elliptical: '椭圆机',
+  'Functional Strength Training': '功能性力量训练', Hiking: '徒步', 'Martial Arts': '武术',
+  'Mind and Body': '身心训练', 'Preparation and Recovery': '热身与恢复', Rowing: '划船',
+  Running: '跑步', Soccer: '足球', Squash: '壁球', 'Stair Climbing': '爬楼梯',
+  Swimming: '游泳', 'Table Tennis': '乒乓球', Tennis: '网球',
+  'Traditional Strength Training': '传统力量训练', Walking: '步行', Yoga: '瑜伽',
+  'Core Training': '核心训练', Flexibility: '柔韧训练', HIIT: '高强度间歇训练',
+  'Jump Rope': '跳绳', Pilates: '普拉提', 'Mixed Cardio': '混合有氧',
+  'Fitness Gaming': '健身游戏', 'Cardio Dance': '有氧舞蹈', Pickleball: '匹克球',
+  Cooldown: '整理放松', Other: '其他训练',
+};
 
 const RECORD_TYPE_MAP = {
   HKQuantityTypeIdentifierRestingHeartRate: 'resting_hr_avg',
@@ -101,7 +115,8 @@ self.onmessage = async (event) => {
       cachedDataset = dataset;
       const windowDays = msg.windowDays || 90;
       const profile = msg.profile || '';
-      const markdown = renderContextMarkdown(dataset, windowDays, profile);
+      const lang = msg.lang || 'en';
+      const markdown = renderContextMarkdown(dataset, windowDays, profile, lang);
       self.postMessage({
         type: 'done',
         summary: datasetSummary(dataset),
@@ -115,7 +130,8 @@ self.onmessage = async (event) => {
       cachedDataset = dataset;
       const windowDays = msg.windowDays || 90;
       const profile = msg.profile || '';
-      const markdown = renderContextMarkdown(dataset, windowDays, profile);
+      const lang = msg.lang || 'en';
+      const markdown = renderContextMarkdown(dataset, windowDays, profile, lang);
       self.postMessage({
         type: 'done',
         summary: datasetSummary(dataset),
@@ -125,7 +141,7 @@ self.onmessage = async (event) => {
       });
     } else if (msg.action === 'rerender') {
       if (!cachedDataset) return;
-      const markdown = renderContextMarkdown(cachedDataset, msg.windowDays || 90, msg.profile || '');
+      const markdown = renderContextMarkdown(cachedDataset, msg.windowDays || 90, msg.profile || '', msg.lang || 'en');
       self.postMessage({ type: 'rendered', markdown });
     } else if (msg.action === 'export') {
       if (!cachedDataset) {
@@ -772,8 +788,9 @@ function formatNumber(value, divisor, decimals) {
   return scaled.toFixed(decimals);
 }
 
-function metricTitle(m) {
-  return m.unit ? `${m.label} ${m.unit}` : m.label;
+function metricTitle(m, isZh) {
+  const name = isZh ? (m.labelZh || m.label) : m.label;
+  return m.unit ? `${name} ${m.unit}` : name;
 }
 
 function windowRows(byDate, endDay, days, skip) {
@@ -820,10 +837,13 @@ function formatClock(d) {
   return `${y}-${m}-${day} ${hh}:${mm}`;
 }
 
-function renderContextMarkdown(dataset, windowDays, profile) {
+function renderContextMarkdown(dataset, windowDays, profile, lang) {
+  const isZh = lang === 'zh';
   const days = dataset.days;
   if (!days.length) {
-    return '# My Health Context (for AI)\n\nNo health data found in this file.\n';
+    return isZh
+      ? '# 我的健康背景（给 AI 参考）\n\n未在该文件中找到可解析的健康数据。\n'
+      : '# My Health Context (for AI)\n\nNo health data found in this file.\n';
   }
 
   const now = dataset.now || new Date();
@@ -846,29 +866,43 @@ function renderContextMarkdown(dataset, windowDays, profile) {
   const endDate = parseYMD(endText);
   const todayDate = parseYMD(todayStr);
   const staleDays = Math.round((todayDate - endDate) / 86400000);
-  const stale = staleDays <= 1 ? 'up to date' : `last synced ${staleDays} days ago`;
+  const stale = isZh
+    ? (staleDays <= 1 ? '数据最新' : `${staleDays} 天前更新`)
+    : (staleDays <= 1 ? 'up to date' : `last synced ${staleDays} days ago`);
   const covered = windowRows(byDate, endText, windowDays, 0).length;
   const clock = formatClock(now);
 
-  const lines = [
-    '# My Health Context (for AI)',
-    '',
-    'Below is personal health data summarized from Apple Health by HealthDock. Use it as background when answering my health questions.',
-    'This is not a medical diagnosis. Point out what warrants seeing a doctor, and say directly when data is insufficient.',
-    '',
-    `Data through ${endText} (${stale}); ${covered} of the last ${windowDays} days have data. Generated at ${clock}.`,
-    '',
-  ];
+  const lines = isZh
+    ? [
+        '# 我的健康背景（给 AI 参考）',
+        '',
+        '以下是由健康坞（HealthDock）从 Apple 健康数据汇总生成的个人健康背景，供你在回答我的健康问题时参考。',
+        '这不是医疗诊断。请明确指出哪些情况值得就医检查，并在数据不足时直接说明。',
+        '',
+        `数据截至 ${endText}（${stale}）；近 ${windowDays} 天中有 ${covered} 天有记录。生成时间 ${clock}。`,
+        '',
+      ]
+    : [
+        '# My Health Context (for AI)',
+        '',
+        'Below is personal health data summarized from Apple Health by HealthDock. Use it as background when answering my health questions.',
+        'This is not a medical diagnosis. Point out what warrants seeing a doctor, and say directly when data is insufficient.',
+        '',
+        `Data through ${endText} (${stale}); ${covered} of the last ${windowDays} days have data. Generated at ${clock}.`,
+        '',
+      ];
 
   const cleanProfile = (profile || '').replace(/<!--[\s\S]*?-->/g, '').trim();
   if (cleanProfile) {
-    lines.push('## About Me (self-reported)', '', cleanProfile, '');
+    lines.push(isZh ? '## 关于我（自填）' : '## About Me (self-reported)', '', cleanProfile, '');
   }
 
   lines.push(
-    '## Recent vs. Baseline',
+    isZh ? '## 近期与基线对比' : '## Recent vs. Baseline',
     '',
-    `| Metric | Last 7d | Last 30d | Last ${windowDays}d | 7d vs. Baseline |`,
+    isZh
+      ? `| 指标 | 近 7 天 | 近 30 天 | 近 ${windowDays} 天 | 近 7 天 vs 基线 |`
+      : `| Metric | Last 7d | Last 30d | Last ${windowDays}d | 7d vs. Baseline |`,
     '|---|---|---|---|---|'
   );
 
@@ -884,15 +918,17 @@ function renderContextMarkdown(dataset, windowDays, profile) {
     const spanMean = metricMean(span, m.key);
     const baseMean = metricMean(base, m.key);
     lines.push(
-      `| ${metricTitle(m)} | ${formatNumber(recentMean, m.divisor, m.decimals)} | ${formatNumber(monthMean, m.divisor, m.decimals)} | ${formatNumber(spanMean, m.divisor, m.decimals)} | ${deltaText(recentMean, baseMean)} |`
+      `| ${metricTitle(m, isZh)} | ${formatNumber(recentMean, m.divisor, m.decimals)} | ${formatNumber(monthMean, m.divisor, m.decimals)} | ${formatNumber(spanMean, m.divisor, m.decimals)} | ${deltaText(recentMean, baseMean)} |`
     );
   }
 
   lines.push(
     '',
-    `Baseline = last ${windowDays} days excluding the most recent 7 days. Today's partial steps, active energy, and exercise are excluded.`,
+    isZh
+      ? `基线 = 近 ${windowDays} 天扣除最近 7 天。当天尚未结束的步数、活动能量与锻炼时长已自动排除。`
+      : `Baseline = last ${windowDays} days excluding the most recent 7 days. Today's partial steps, active energy, and exercise are excluded.`,
     '',
-    '## Unusual Days (last 14 days, ≥2 SD from baseline)',
+    isZh ? '## 异常日（近 14 天，偏离基线 ≥2 SD）' : '## Unusual Days (last 14 days, ≥2 SD from baseline)',
     ''
   );
 
@@ -914,7 +950,7 @@ function renderContextMarkdown(dataset, windowDays, profile) {
       if (Math.abs(val - mu) / sd >= 2) {
         flags.push({
           date: day.date,
-          label: metricTitle(m),
+          label: metricTitle(m, isZh),
           value: formatNumber(val, m.divisor, m.decimals),
           base: `${formatNumber(mu, m.divisor, m.decimals)} (±${formatNumber(sd, m.divisor, m.decimals)})`,
         });
@@ -923,10 +959,13 @@ function renderContextMarkdown(dataset, windowDays, profile) {
   }
 
   if (!flags.length) {
-    lines.push('None.');
+    lines.push(isZh ? '无。' : 'None.');
   } else {
     flags.sort((a, b) => (b.date.localeCompare(a.date)) || (b.label.localeCompare(a.label)) || (b.value.localeCompare(a.value)));
-    lines.push('| Date | Metric | Value | Baseline (±1 SD) |', '|---|---|---|---|');
+    lines.push(
+      isZh ? '| 日期 | 指标 | 数值 | 基线（±1 SD） |' : '| Date | Metric | Value | Baseline (±1 SD) |',
+      '|---|---|---|---|'
+    );
     for (const f of flags) {
       lines.push(`| ${f.date} | ${f.label} | ${f.value} | ${f.base} |`);
     }
@@ -948,9 +987,9 @@ function renderContextMarkdown(dataset, windowDays, profile) {
     return false;
   });
   if (shownLongTerm.length > 0) {
-    const header = '| Year | ' + shownLongTerm.map(metricTitle).join(' | ') + ' |';
+    const header = (isZh ? '| 年份 | ' : '| Year | ') + shownLongTerm.map((m) => metricTitle(m, isZh)).join(' | ') + ' |';
     const sep = '|' + '---|'.repeat(shownLongTerm.length + 1);
-    lines.push('', '## Long-Term Trends (yearly averages)', '', header, sep);
+    lines.push('', isZh ? '## 长期趋势（年均值）' : '## Long-Term Trends (yearly averages)', '', header, sep);
     const sortedYears = Array.from(yearsMap.keys()).sort((a, b) => b.localeCompare(a)).slice(0, 10);
     for (const y of sortedYears) {
       const arr = yearsMap.get(y);
@@ -960,18 +999,19 @@ function renderContextMarkdown(dataset, windowDays, profile) {
   }
 
   // Workouts (last 30 days) & Weekly Training Volume (last 8 weeks)
-  lines.push('', '## Workouts (last 30 days)', '');
+  lines.push('', isZh ? '## 训练（近 30 天）' : '## Workouts (last 30 days)', '');
   const recent30 = windowRows(byDate, endText, 30, 0);
   const w30 = [];
   for (const r of recent30) for (const w of r.workouts) w30.push(w);
 
   if (!w30.length) {
-    lines.push('No workouts recorded.');
+    lines.push(isZh ? '暂无训练记录。' : 'No workouts recorded.');
   } else {
     const groups = new Map();
     for (const w of w30) {
-      let arr = groups.get(w.typeName);
-      if (!arr) { arr = []; groups.set(w.typeName, arr); }
+      const displayName = isZh ? (WORKOUT_ZH_BY_EN[w.typeName] || w.typeName) : w.typeName;
+      let arr = groups.get(displayName);
+      if (!arr) { arr = []; groups.set(displayName, arr); }
       arr.push(w);
     }
     const ranked = Array.from(groups.entries()).sort((a, b) => {
@@ -979,7 +1019,10 @@ function renderContextMarkdown(dataset, windowDays, profile) {
       const mB = b[1].reduce((s, w) => s + w.minutes, 0);
       return (mB - mA) || a[0].localeCompare(b[0]);
     });
-    lines.push('| Type | Count | Hours | Avg HR |', '|---|---|---|---|');
+    lines.push(
+      isZh ? '| 类型 | 次数 | 时长（小时） | 平均心率 |' : '| Type | Count | Hours | Avg HR |',
+      '|---|---|---|---|'
+    );
     for (const [name, list] of ranked) {
       const mins = list.reduce((s, w) => s + w.minutes, 0);
       const hrs = list.filter((w) => w.hrAvg && w.hrAvg > 0).map((w) => w.hrAvg);
@@ -993,9 +1036,9 @@ function renderContextMarkdown(dataset, windowDays, profile) {
     const mondayStr = addDaysYMD(endText, -mondayOffset);
     lines.push(
       '',
-      '### Weekly Training Volume (last 8 weeks)',
+      isZh ? '### 每周训练量（近 8 周）' : '### Weekly Training Volume (last 8 weeks)',
       '',
-      '| Week Starting | Count | Hours | Workout Active kcal |',
+      isZh ? '| 周起始日 | 次数 | 时长（小时） | 训练活动千卡 |' : '| Week Starting | Count | Hours | Workout Active kcal |',
       '|---|---|---|---|'
     );
     for (let i = 0; i < 8; i++) {
@@ -1020,9 +1063,13 @@ function renderContextMarkdown(dataset, windowDays, profile) {
   const ignoredKeys = Object.keys(dataset.ignoredSleep || {}).sort();
   const totalIgnored = ignoredKeys.reduce((s, k) => s + dataset.ignoredSleep[k], 0);
   if (totalIgnored > 0) {
-    const unit = totalIgnored === 1 ? 'record' : 'records';
     const parts = ignoredKeys.map((k) => `${k} ${dataset.ignoredSleep[k]}`).join(', ');
-    lines.push('', `Data quality: ignored ${totalIgnored} anomalous sleep ${unit} (${parts}).`);
+    if (isZh) {
+      lines.push('', `数据质量：已自动忽略 ${totalIgnored} 条异常睡眠记录（${parts}）。`);
+    } else {
+      const unit = totalIgnored === 1 ? 'record' : 'records';
+      lines.push('', `Data quality: ignored ${totalIgnored} anomalous sleep ${unit} (${parts}).`);
+    }
   }
 
   return lines.join('\n') + '\n';

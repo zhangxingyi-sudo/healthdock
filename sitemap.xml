@@ -3,12 +3,12 @@
   <url>
     <loc>https://gethealthdock.com/</loc>
     <lastmod>2026-11-21</lastmod>
-    <priority>0.8</priority>
+    <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://gethealthdock.com/en/</loc>
+    <loc>https://gethealthdock.com/zh/</loc>
     <lastmod>2026-11-21</lastmod>
-    <priority>1.0</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://gethealthdock.com/en/tools/apple-health-to-chatgpt/</loc>
