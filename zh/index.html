@@ -16,8 +16,9 @@
   <meta property="og:title" content="健康坞 HealthDock — 免费本地 Apple 健康导出转换工具（AI 摘要 & CSV）">
   <meta property="og:description" content="拖入 iPhone 导出的 500MB+ Apple 健康 export.zip / export.xml，零上传、纯浏览器本地流式解析，几秒生成给 AI 看的 context.md 或干净 CSV。">
   <meta property="og:url" content="https://gethealthdock.com/zh/">
-  <meta property="og:image" content="https://gethealthdock.com/icon.png">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://gethealthdock.com/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gethealthdock.com/og.png">
 
   <script type="application/ld+json">
   {
@@ -192,9 +193,14 @@
               不想每次手动导出几百 MB 的压缩包？我们正在准备 <strong>健康坞（HealthDock）iPhone 与 Mac 客户端</strong>，通过蓝牙与局域网直连每天自动在后台同步，持续刷新本地 <code>context.md</code> 与健康档案，全程不经过服务器。
             </p>
           </div>
-          <div class="btn-row">
-            <a class="btn btn-secondary btn-sm" href="mailto:zhangxingyiopenclaw@gmail.com?subject=%E5%81%A5%E5%BA%B7%E5%9D%9E%E4%B8%8A%E7%BA%BF%E9%80%9A%E7%9F%A5&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E5%81%A5%E5%BA%B7%E5%9D%9E%20iPhone%20%E4%B8%8E%20Mac%20%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8A%E6%9E%B6%E5%90%8E%E8%AF%B7%E9%82%AE%E4%BB%B6%E9%80%9A%E7%9F%A5%E6%88%91%E3%80%82">预约上架邮件通知</a>
-          </div>
+          <form class="waitlist-form" data-waitlist data-lang="zh">
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+            <div class="waitlist-row">
+              <input type="email" name="email" required placeholder="输入你的邮箱" aria-label="预约上线通知邮箱" autocomplete="email">
+              <button type="submit" class="btn btn-primary btn-sm">上架通知我</button>
+            </div>
+            <p class="waitlist-note" role="status" aria-live="polite">仅在客户端正式上架时发送一封通知邮件，绝不群发垃圾邮件。</p>
+          </form>
         </div>
       </div>
     </section>
@@ -253,7 +259,7 @@
     <section id="contact" class="section-block card">
       <h2>联系与反馈</h2>
       <p class="muted" style="margin:0">
-        使用中有任何问题或功能建议，欢迎发邮件到 <strong>zhangxingyiopenclaw@gmail.com</strong>。
+        使用中有任何问题或功能建议，欢迎发邮件到 <strong>support@gethealthdock.com</strong>。
       </p>
     </section>
 
@@ -508,5 +514,6 @@
     };
   })();
   </script>
+  <script src="../assets/waitlist.js" defer></script>
 </body>
 </html>

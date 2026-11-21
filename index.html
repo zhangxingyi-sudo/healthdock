@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>HealthDock — Free Local Apple Health Converter (ChatGPT, Claude, Gemini, Grok &amp; CSV)</title>
+  <title>Apple Health to AI &amp; CSV Converter (100% Local) | HealthDock</title>
   <meta name="description" content="Convert Apple Health export.zip or export.xml locally in your browser—zero upload. Generate an AI-ready context.md for ChatGPT, Claude, Google Gemini, NotebookLM, Grok, Perplexity &amp; DeepSeek (7d/30d/90d baselines + anomaly days) or clean CSV/JSON in seconds.">
   <link rel="canonical" href="https://gethealthdock.com/">
   <link rel="alternate" hreflang="en" href="https://gethealthdock.com/">
@@ -16,8 +16,9 @@
   <meta property="og:title" content="HealthDock — Free 100% Local Apple Health to ChatGPT, Claude, Gemini, Grok & CSV">
   <meta property="og:description" content="Drop a 500MB+ Apple Health export.zip or export.xml in your browser. Zero upload—get an AI-ready context.md for ChatGPT, Claude, Gemini & Grok or clean daily CSV/JSON in seconds.">
   <meta property="og:url" content="https://gethealthdock.com/">
-  <meta property="og:image" content="https://gethealthdock.com/icon.png">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://gethealthdock.com/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gethealthdock.com/og.png">
 
   <script type="application/ld+json">
   {
@@ -76,13 +77,11 @@
         <span>HealthDock</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a class="active" href="./">Converter</a>
-        <a href="./en/tools/apple-health-to-chatgpt/">ChatGPT</a>
         <a href="./en/tools/apple-health-to-claude/">Claude</a>
-        <a href="./en/tools/apple-health-to-gemini/">Gemini</a>
-        <a href="./en/tools/apple-health-to-grok/">Grok</a>
+        <a href="./en/tools/apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="./en/apple-health-on-mac/">On Mac</a>
+        <a href="./en/tools/xml-to-csv/">XML → CSV</a>
         <a href="#all-tools">All Tools</a>
-        <a href="./en/privacy.html">Privacy</a>
         <a href="./zh/" hreflang="zh-Hans">中文</a>
       </nav>
     </div>
@@ -170,9 +169,14 @@
               We’re building the <strong>HealthDock iPhone &amp; Mac companion apps</strong> to sync Apple Health automatically over Bluetooth &amp; local Wi-Fi—keeping your <code>context.md</code>, daily JSON, and local AI workspace refreshed without ever exporting a 500MB XML by hand.
             </p>
           </div>
-          <div class="btn-row">
-            <a class="btn btn-secondary btn-sm" href="mailto:zhangxingyiopenclaw@gmail.com?subject=Notify%20me%20when%20HealthDock%20launches&body=Hi%2C%20please%20let%20me%20know%20when%20HealthDock%20for%20iPhone%20%26%20Mac%20is%20live%20on%20the%20App%20Store.">Get Launch Notification</a>
-          </div>
+          <form class="waitlist-form" data-waitlist data-lang="en">
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+            <div class="waitlist-row">
+              <input type="email" name="email" required placeholder="you@example.com" aria-label="Email for launch notification" autocomplete="email">
+              <button type="submit" class="btn btn-primary btn-sm">Notify Me</button>
+            </div>
+            <p class="waitlist-note" role="status" aria-live="polite">One email on launch day. No spam, no newsletters.</p>
+          </form>
         </div>
       </div>
     </section>
@@ -262,8 +266,15 @@
         </div>
       </div>
 
-      <h3 style="margin:26px 0 10px;font-size:15px;text-transform:uppercase;letter-spacing:0.04em;color:var(--ink2)">Data Conversion, Vaults &amp; Dashboards</h3>
+      <h3 style="margin:26px 0 10px;font-size:15px;text-transform:uppercase;letter-spacing:0.04em;color:var(--ink2)">Apple Health on Mac &amp; Data Tools</h3>
       <div class="grid-2">
+        <div class="card">
+          <h3>Apple Health on Mac (Auto-Sync)</h3>
+          <p class="muted">No native macOS Health app? Sync your iPhone’s Apple Health locally over Bluetooth &amp; Wi-Fi into plain Markdown, daily JSON, ECG &amp; GPX files.</p>
+          <div class="btn-row" style="margin-top:14px">
+            <a class="btn btn-secondary btn-sm" href="./en/apple-health-on-mac/">Learn About Apple Health on Mac →</a>
+          </div>
+        </div>
         <div class="card">
           <h3>Apple Health Sleep &amp; HRV Analyzer</h3>
           <p class="muted">Visualize last 30 nights of Total/Deep/REM sleep and HRV (SDNN) vs. your 90-day personal baseline band, with ≥2 SD unusual night detection.</p>
@@ -322,15 +333,16 @@
     <section id="contact" class="section-block card">
       <h2>Contact &amp; Support</h2>
       <p class="muted" style="margin:0">
-        Questions, feedback, or support inquiries? Email <strong>zhangxingyiopenclaw@gmail.com</strong>.
+        Questions, feedback, or support inquiries? Email <strong>support@gethealthdock.com</strong>.
       </p>
     </section>
 
     <footer class="site-footer">
       <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
       <div class="footer-links">
-        <a href="./en/tools/apple-health-to-chatgpt/">ChatGPT</a>
         <a href="./en/tools/apple-health-to-claude/">Claude</a>
+        <a href="./en/tools/apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="./en/apple-health-on-mac/">On Mac</a>
         <a href="./en/tools/apple-health-to-gemini/">Gemini</a>
         <a href="./en/tools/apple-health-to-grok/">Grok</a>
         <a href="./en/tools/apple-health-to-perplexity/">Perplexity</a>
@@ -551,5 +563,6 @@
     };
   })();
   </script>
+  <script src="assets/waitlist.js" defer></script>
 </body>
 </html>

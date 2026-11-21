@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Apple Health to Grok — Free Local export.xml &amp; export.zip Converter | HealthDock</title>
+  <title>Apple Health to Grok — Local export.xml Converter | HealthDock</title>
   <meta name="description" content="Convert your Apple Health export.zip or export.xml locally in your browser into a clean, compact context.md or daily CSV for Grok (grok.com &amp; X). Zero upload, handles 500MB+ files in seconds.">
   <link rel="canonical" href="https://gethealthdock.com/en/tools/apple-health-to-grok/">
   <link rel="icon" href="../../../icon.png">
@@ -13,8 +13,9 @@
   <meta property="og:title" content="Apple Health to Grok — Free 100% Local export.xml Converter">
   <meta property="og:description" content="Turn 500MB+ Apple Health exports into a compact ~2KB Markdown context.md and clean CSV for Grok without uploading raw health records to any server.">
   <meta property="og:url" content="https://gethealthdock.com/en/tools/apple-health-to-grok/">
-  <meta property="og:image" content="https://gethealthdock.com/icon.png">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://gethealthdock.com/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gethealthdock.com/og.png">
 
   <script type="application/ld+json">
   {
@@ -69,13 +70,11 @@
         <span>HealthDock</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="../../../">Converter</a>
-        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
         <a href="../apple-health-to-claude/">Claude</a>
-        <a href="../apple-health-to-gemini/">Gemini</a>
-        <a class="active" href="./">Grok</a>
-        <a href="../../../#all-tools">All Tools</a>
-        <a href="../../privacy.html">Privacy</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../../apple-health-on-mac/">On Mac</a>
+        <a href="../xml-to-csv/">XML → CSV</a>
+        <a class="active" href="../../../#all-tools">All Tools</a>
         <a href="../../../zh/" hreflang="zh-Hans">中文</a>
       </nav>
     </div>
@@ -178,9 +177,14 @@
               Tired of manually exporting a 500MB ZIP from iPhone Health? We’re building the <strong>HealthDock iPhone &amp; Mac companion apps</strong> to keep your <code>context.md</code> and local daily files synced automatically over Bluetooth &amp; local Wi-Fi—zero cloud servers.
             </p>
           </div>
-          <div class="btn-row">
-            <a class="btn btn-secondary btn-sm" href="mailto:zhangxingyiopenclaw@gmail.com?subject=Notify%20me%20when%20HealthDock%20launches&body=Hi%2C%20please%20let%20me%20know%20when%20HealthDock%20for%20iPhone%20%26%20Mac%20is%20live%20on%20the%20App%20Store.">Get Launch Notification</a>
-          </div>
+          <form class="waitlist-form" data-waitlist data-lang="en">
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+            <div class="waitlist-row">
+              <input type="email" name="email" required placeholder="you@example.com" aria-label="Email for launch notification" autocomplete="email">
+              <button type="submit" class="btn btn-primary btn-sm">Notify Me</button>
+            </div>
+            <p class="waitlist-note" role="status" aria-live="polite">One email on launch day. No spam, no newsletters.</p>
+          </form>
         </div>
       </div>
     </section>
@@ -223,6 +227,7 @@
       <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
       <div class="footer-links">
         <a href="../../../">Home</a>
+        <a href="../../apple-health-on-mac/">On Mac</a>
         <a href="../apple-health-to-chatgpt/">ChatGPT</a>
         <a href="../apple-health-to-claude/">Claude</a>
         <a href="../apple-health-to-gemini/">Gemini</a>
@@ -502,5 +507,6 @@
     };
   })();
   </script>
+  <script src="../../../assets/waitlist.js" defer></script>
 </body>
 </html>
