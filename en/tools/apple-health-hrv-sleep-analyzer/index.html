@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Free Local Apple Health Sleep &amp; HRV Analyzer — Stages, Baselines &amp; Anomalies | HealthDock</title>
+  <meta name="description" content="Analyze Apple Health sleep stages (Deep, REM, Total), HRV (SDNN), and Resting Heart Rate locally in your browser. Interactive 30-day trend charts, 90-day personal baselines, and ≥2 SD anomaly detection with zero upload.">
+  <link rel="canonical" href="https://gethealthdock.com/en/tools/apple-health-hrv-sleep-analyzer/">
+  <link rel="icon" href="../../../icon.png">
+  <link rel="stylesheet" href="../../../assets/site.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Apple Health Sleep & HRV Analyzer — Free 100% Browser-Local Dashboard">
+  <meta property="og:description" content="Drop Apple Health export.zip to visualize 30-night Sleep (Deep/REM), HRV (SDNN) vs. 90-day personal baseline band, and ≥2 SD recovery dips—zero cloud upload.">
+  <meta property="og:url" content="https://gethealthdock.com/en/tools/apple-health-hrv-sleep-analyzer/">
+  <meta property="og:image" content="https://gethealthdock.com/icon.png">
+  <meta name="twitter:card" content="summary">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Apple Health Sleep & HRV Local Analyzer",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any (Web Browser)",
+    "url": "https://gethealthdock.com/en/tools/apple-health-hrv-sleep-analyzer/",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free 100% client-side Apple Health Sleep & HRV analyzer that merges overlapping sleep segments across 18:00–12:00 night windows, charts 30-day Deep/REM sleep and HRV SDNN trends against your 90-day baseline, and flags ≥2 SD unusual nights."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why do many Apple Health CSV tools show 12–16 hours of sleep per night?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Apple Health stores overlapping sleep intervals from Apple Watch, iPhone, and third-party sleep trackers (plus separate Core, Deep, REM, and InBed rows). Summing raw rows double-counts sleep. HealthDock merges overlapping Asleep intervals inside each 18:00–12:00 night window and ignores non-sleep InBed and zero-duration records."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does HealthDock calculate personal HRV and Sleep baselines?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Rather than judging you against a one-size-fits-all score, HealthDock computes your own 90-day mean and standard deviation for HRV (SDNN), Resting Heart Rate, and Sleep duration—highlighting days that deviate by ≥2 standard deviations from your normal range."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does my sleep or HRV data leave my computer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Parsing and SVG charting run 100% inside your browser. Zero bytes are uploaded, stored, or tracked."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../">
+        <img src="../../../icon.png" alt="HealthDock icon">
+        <span>HealthDock</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../../">Converter</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a class="active" href="../../#all-tools">All Tools</a>
+        <a href="../../privacy.html">Privacy</a>
+        <a href="../../../">中文</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container container-narrow">
+    <section class="hero" style="padding-bottom:20px">
+      <div class="eyebrow"><span class="dot"></span>100% Browser-Local Dashboard · Personal 90-Day Baselines · Zero Upload</div>
+      <h1>Apple Health Sleep &amp; HRV Analyzer</h1>
+      <p class="lead">
+        Drop your iPhone’s <code>export.zip</code> or <code>export.xml</code> to inspect your last 30 nights of <strong>Sleep (Total, Deep &amp; REM)</strong>, <strong>HRV (SDNN)</strong>, and <strong>Resting Heart Rate</strong> against your own 90-day personal baseline—with automatic overlapping-sleep merging and ≥2 SD anomaly detection, right inside your browser.
+      </p>
+      <div class="trust-strip" style="margin-top:0">
+        <span>🌙 Merges overlapping sleep segments (18:00–12:00 windows)</span>
+        <span>📈 Personal 90-day HRV &amp; RHR baseline charts</span>
+        <span>🔒 Zero cloud servers or accounts</span>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Apple Health Sleep and HRV Analyzer">
+      <div id="dropzone" class="dropzone">
+        <input id="fileInput" type="file" accept=".xml,.zip,application/xml,text/xml,application/zip" aria-label="Select Apple Health export.xml or export.zip">
+        <p class="dropzone-title">Drop <code>export.zip</code> or <code>export.xml</code> here</p>
+        <p class="dropzone-sub">No unzipping required · Computes charts and baselines strictly on your device</p>
+      </div>
+
+      <div class="tool-controls">
+        <div class="btn-row">
+          <button id="sampleBtn" type="button" class="btn btn-primary btn-sm">✨ Try Sample Data (Instant Dashboard)</button>
+          <a class="btn btn-ghost btn-sm" href="../apple-health-to-claude/">Full AI Prompt Studio →</a>
+        </div>
+      </div>
+
+      <div id="errorBox" class="notice-error" role="alert"></div>
+
+      <div id="progressWrap" class="progress-wrap">
+        <div class="progress-bar-track">
+          <div id="progressFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progressStatus">Streaming locally…</span>
+          <span id="progressStats">0%</span>
+        </div>
+      </div>
+
+      <div id="outputPanel" class="output-panel">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">7d Sleep Avg</div>
+            <div id="kpiSleep" class="kpi-val">—</div>
+            <div id="kpiSleepBase" class="kpi-sub">90d baseline: —</div>
+            <div id="kpiSleepDelta" class="delta-pill delta-neutral">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">7d Deep + REM</div>
+            <div id="kpiStages" class="kpi-val">—</div>
+            <div id="kpiStagesSub" class="kpi-sub">Deep — · REM —</div>
+            <div id="kpiStagesDelta" class="delta-pill delta-neutral">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">7d HRV (SDNN)</div>
+            <div id="kpiHrv" class="kpi-val">—</div>
+            <div id="kpiHrvBase" class="kpi-sub">90d baseline: —</div>
+            <div id="kpiHrvDelta" class="delta-pill delta-neutral">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">7d Resting HR</div>
+            <div id="kpiRhr" class="kpi-val">—</div>
+            <div id="kpiRhrBase" class="kpi-sub">90d baseline: —</div>
+            <div id="kpiRhrDelta" class="delta-pill delta-neutral">—</div>
+          </div>
+        </div>
+
+        <div class="btn-row" style="margin-bottom:10px">
+          <button id="copyRecoveryBtn" type="button" class="btn btn-primary btn-sm">Copy Sleep &amp; HRV Context for AI</button>
+          <button id="downloadCsvBtn" type="button" class="btn btn-secondary btn-sm">Download Sleep &amp; HRV CSV</button>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Last 30 Nights — Sleep Duration &amp; Stages</h3>
+            <div class="chart-legend">
+              <span><i style="background:#4f6bff"></i>Deep</span>
+              <span><i style="background:#14c1b2"></i>REM</span>
+              <span><i style="background:#8aa4c8"></i>Core / Other</span>
+              <span><i style="background:#f59e0b;height:2px"></i>90d Baseline</span>
+            </div>
+          </div>
+          <div id="sleepChartWrap"></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Last 30 Days — HRV (SDNN ms) vs. 90-Day Personal Range</h3>
+            <div class="chart-legend">
+              <span><i style="background:#14c1b2"></i>Daily HRV</span>
+              <span><i style="background:rgba(20,193,178,0.22)"></i>90d Mean ± 1 SD</span>
+              <span><i style="background:#ef4444"></i>≥2 SD Dip / Spike</span>
+            </div>
+          </div>
+          <div id="hrvChartWrap"></div>
+        </div>
+
+        <div style="margin-top:20px">
+          <h3>Flagged Unusual Nights &amp; Recovery Dips (≥2 SD vs. 90-Day Baseline)</h3>
+          <p id="anomalyNote" class="small" style="margin:0 0 10px">—</p>
+          <div class="table-scroll"><table id="anomalyTable"></table></div>
+        </div>
+
+        <div class="funnel-banner">
+          <div class="funnel-copy">
+            <h3>Coming Soon: Daily Automatic Sleep &amp; HRV Sync to Your Mac</h3>
+            <p>
+              We’re building the <strong>HealthDock iPhone &amp; Mac apps</strong> to sync your Apple Watch sleep stages, HRV, and resting heart rate automatically every morning over Bluetooth &amp; local Wi-Fi—zero cloud servers, zero manual ZIP exports.
+            </p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-secondary btn-sm" href="mailto:zhangxingyiopenclaw@gmail.com?subject=Notify%20me%20when%20HealthDock%20launches&body=Hi%2C%20please%20let%20me%20know%20when%20HealthDock%20for%20iPhone%20%26%20Mac%20is%20live%20on%20the%20App%20Store.">Get Launch Notification</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block card">
+      <h2>How HealthDock Cleans Apple Watch Sleep &amp; HRV Data</h2>
+      <div class="grid-3" style="margin-top:12px">
+        <div>
+          <h3>18:00–12:00 Night Windows</h3>
+          <p class="muted" style="margin:0;font-size:14px">Sleep that starts at 11:15 PM and ends at 6:45 AM belongs to one night—not split across two dates. Overlapping Watch/iPhone/app intervals are merged before summing minutes.</p>
+        </div>
+        <div>
+          <h3>Anomalous Record Filtering</h3>
+          <p class="muted" style="margin:0;font-size:14px">Third-party apps occasionally write zero-duration or future-dated sleep rows into Apple Health. HealthDock filters corrupted timestamps automatically so your baseline stays clean.</p>
+        </div>
+        <div>
+          <h3>Personal Baseline First</h3>
+          <p class="muted" style="margin:0;font-size:14px">HRV (SDNN) varies hugely from person to person (20 ms to 120+ ms can all be normal). Comparing your last 7 days to your own 90-day mean ± SD surfaces real recovery shifts.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>Sleep &amp; HRV Analyzer FAQ</h2>
+      <details class="faq-item">
+        <summary>Why is my Deep or REM sleep blank on older dates?</summary>
+        <p>Apple introduced native WatchOS sleep stages (Core, Deep, REM) in watchOS 9 (late 2022). Older nights—or nights tracked without an Apple Watch—only record total asleep duration, which HealthDock still charts cleanly.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does Apple Watch report HRV as SDNN or RMSSD?</summary>
+        <p>Apple Health stores HRV natively as <code>HKQuantityTypeIdentifierHeartRateVariabilitySDNN</code> (SDNN in milliseconds). HealthDock preserves the exact Apple Health SDNN numbers without proprietary black-box “readiness” formulas.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is this medical or sleep-disorder diagnosis?</summary>
+        <p>No. Consumer wearables estimate sleep stages and HRV for personal wellness tracking only. Consult a qualified physician or sleep specialist for medical evaluation.</p>
+      </details>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
+      <div class="footer-links">
+        <a href="../../">Home</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a href="../apple-health-export-xml-too-large/">Large XML Fixer</a>
+        <a href="../xml-to-csv/">XML → CSV</a>
+        <a href="../../privacy.html">Privacy</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+  (() => {
+    const worker = new Worker('../../../assets/health-worker.js');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const errorBox = document.getElementById('errorBox');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressFill = document.getElementById('progressFill');
+    const progressStatus = document.getElementById('progressStatus');
+    const progressStats = document.getElementById('progressStats');
+    const outputPanel = document.getElementById('outputPanel');
+    const sleepChartWrap = document.getElementById('sleepChartWrap');
+    const hrvChartWrap = document.getElementById('hrvChartWrap');
+    const anomalyTable = document.getElementById('anomalyTable');
+    const anomalyNote = document.getElementById('anomalyNote');
+    const copyRecoveryBtn = document.getElementById('copyRecoveryBtn');
+    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+
+    let currentMarkdown = '';
+    let sleepCsvData = null;
+
+    function showError(msg) { errorBox.textContent = msg; errorBox.classList.add('visible'); }
+    function clearError() { errorBox.textContent = ''; errorBox.classList.remove('visible'); }
+    function escapeHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+    function stats(nums) {
+      if (!nums.length) return null;
+      const mean = nums.reduce((a, b) => a + b, 0) / nums.length;
+      const sd = nums.length >= 2
+        ? Math.sqrt(nums.reduce((s, x) => s + (x - mean) * (x - mean), 0) / nums.length)
+        : 0;
+      return { mean, sd, n: nums.length };
+    }
+
+    function setDelta(el, diff, unit, higherIsBetter, decimals) {
+      if (diff === null || !Number.isFinite(diff)) {
+        el.textContent = 'Not enough baseline';
+        el.className = 'delta-pill delta-neutral';
+        return;
+      }
+      const sign = diff > 0 ? '+' : '';
+      el.textContent = `${sign}${diff.toFixed(decimals)}${unit} vs 90d`;
+      const significant = Math.abs(diff) >= (unit === 'h' ? 0.25 : unit === ' ms' ? 3 : 1.5);
+      if (!significant) {
+        el.className = 'delta-pill delta-neutral';
+      } else {
+        const good = higherIsBetter ? diff > 0 : diff < 0;
+        el.className = 'delta-pill ' + (good ? 'delta-good' : 'delta-warn');
+      }
+    }
+
+    function renderSleepSvg(days30, baselineHours) {
+      const W = 720, H = 200, padL = 38, padR = 12, padT = 14, padB = 28;
+      const maxH = Math.max(9.5, ...days30.map(d => ((d.values.sleep_min || 0) / 60) + 0.5));
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+      const stepX = plotW / Math.max(1, days30.length);
+      const barW = Math.max(6, Math.min(16, stepX * 0.68));
+      const yOf = (h) => padT + plotH * (1 - Math.min(h, maxH) / maxH);
+
+      let svg = `<svg class="chart-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Last 30 nights sleep duration chart">`;
+      [0, 3, 6, 8, 10].filter(v => v <= maxH + 0.1).forEach((h) => {
+        const y = yOf(h).toFixed(1);
+        svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="currentColor" stroke-opacity="0.12" stroke-width="1"/>`;
+        svg += `<text x="${padL - 6}" y="${Number(y) + 4}" text-anchor="end" font-size="10.5" fill="currentColor" fill-opacity="0.55">${h}h</text>`;
+      });
+
+      days30.forEach((d, idx) => {
+        const v = d.values || {};
+        const totalH = (v.sleep_min || 0) / 60;
+        const x = padL + idx * stepX + (stepX - barW) / 2;
+        if (totalH > 0) {
+          const deepH = Math.min(totalH, (v.deep_min || 0) / 60);
+          const remH = Math.min(totalH - deepH, (v.rem_min || 0) / 60);
+          const coreH = Math.max(0, totalH - deepH - remH);
+
+          const yTotal = yOf(totalH);
+          const hCore = Math.max(0, yOf(deepH + remH) - yTotal);
+          const hRem = Math.max(0, yOf(deepH) - yOf(deepH + remH));
+          const hDeep = Math.max(0, yOf(0) - yOf(deepH));
+          const tip = `${d.date}: ${totalH.toFixed(1)}h (Deep ${Math.round(v.deep_min || 0)}m, REM ${Math.round(v.rem_min || 0)}m)`;
+
+          svg += `<g><title>${escapeHtml(tip)}</title>`;
+          if (hCore > 0) svg += `<rect x="${x.toFixed(1)}" y="${yTotal.toFixed(1)}" width="${barW.toFixed(1)}" height="${hCore.toFixed(1)}" rx="2" fill="#8aa4c8"/>`;
+          if (hRem > 0) svg += `<rect x="${x.toFixed(1)}" y="${yOf(deepH + remH).toFixed(1)}" width="${barW.toFixed(1)}" height="${hRem.toFixed(1)}" fill="#14c1b2"/>`;
+          if (hDeep > 0) svg += `<rect x="${x.toFixed(1)}" y="${yOf(deepH).toFixed(1)}" width="${barW.toFixed(1)}" height="${hDeep.toFixed(1)}" fill="#4f6bff"/>`;
+          svg += `</g>`;
+        }
+        if (idx === 0 || idx === Math.floor(days30.length / 2) || idx === days30.length - 1) {
+          svg += `<text x="${(x + barW / 2).toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity="0.6">${d.date.slice(5)}</text>`;
+        }
+      });
+
+      if (baselineHours && Number.isFinite(baselineHours)) {
+        const by = yOf(baselineHours).toFixed(1);
+        svg += `<line x1="${padL}" y1="${by}" x2="${W - padR}" y2="${by}" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 4"/>`;
+      }
+      svg += '</svg>';
+      sleepChartWrap.innerHTML = svg;
+    }
+
+    function renderHrvSvg(days30, hrvBase) {
+      const pts = days30.map((d, idx) => ({ idx, date: d.date, v: d.values.hrv_sdnn_ms })).filter(p => p.v != null);
+      if (pts.length < 2) {
+        hrvChartWrap.innerHTML = '<p class="small" style="margin:0">Not enough HRV (SDNN) samples in the last 30 days to plot a trend.</p>';
+        return;
+      }
+      const W = 720, H = 195, padL = 40, padR = 14, padT = 14, padB = 28;
+      const vals = pts.map(p => p.v);
+      const minV = Math.max(0, Math.floor(Math.min(...vals, hrvBase ? hrvBase.mean - hrvBase.sd * 1.5 : 20) / 10) * 10);
+      const maxV = Math.ceil(Math.max(...vals, hrvBase ? hrvBase.mean + hrvBase.sd * 1.5 : 80) / 10) * 10;
+      const range = Math.max(10, maxV - minV);
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+      const xOf = (idx) => padL + (idx / Math.max(1, days30.length - 1)) * plotW;
+      const yOf = (v) => padT + plotH * (1 - (v - minV) / range);
+
+      let svg = `<svg class="chart-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Last 30 days HRV trend chart">`;
+      for (let t = 0; t <= 4; t++) {
+        const val = minV + (range * t) / 4;
+        const y = yOf(val).toFixed(1);
+        svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="currentColor" stroke-opacity="0.12" stroke-width="1"/>`;
+        svg += `<text x="${padL - 6}" y="${Number(y) + 4}" text-anchor="end" font-size="10.5" fill="currentColor" fill-opacity="0.55">${Math.round(val)}</text>`;
+      }
+      if (hrvBase && hrvBase.sd > 0) {
+        const yHi = yOf(Math.min(maxV, hrvBase.mean + hrvBase.sd));
+        const yLo = yOf(Math.max(minV, hrvBase.mean - hrvBase.sd));
+        svg += `<rect x="${padL}" y="${yHi.toFixed(1)}" width="${plotW}" height="${Math.max(2, yLo - yHi).toFixed(1)}" fill="#14c1b2" fill-opacity="0.14"/>`;
+        const yMean = yOf(hrvBase.mean).toFixed(1);
+        svg += `<line x1="${padL}" y1="${yMean}" x2="${W - padR}" y2="${yMean}" stroke="#14c1b2" stroke-opacity="0.55" stroke-dasharray="4 4"/>`;
+      }
+      const dPath = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${xOf(p.idx).toFixed(1)},${yOf(p.v).toFixed(1)}`).join(' ');
+      svg += `<path d="${dPath}" fill="none" stroke="#14c1b2" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>`;
+
+      pts.forEach((p) => {
+        const isAnom = hrvBase && hrvBase.sd > 0 && Math.abs(p.v - hrvBase.mean) >= 2 * hrvBase.sd;
+        const fill = isAnom ? '#ef4444' : '#4f6bff';
+        const r = isAnom ? 4.8 : 3.2;
+        svg += `<circle cx="${xOf(p.idx).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="${r}" fill="${fill}"><title>${escapeHtml(p.date + ': ' + Math.round(p.v) + ' ms')}</title></circle>`;
+      });
+
+      [0, Math.floor(days30.length / 2), days30.length - 1].forEach((idx) => {
+        if (days30[idx]) {
+          svg += `<text x="${xOf(idx).toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity="0.6">${days30[idx].date.slice(5)}</text>`;
+        }
+      });
+      svg += '</svg>';
+      hrvChartWrap.innerHTML = svg;
+    }
+
+    function renderDashboard(days) {
+      if (!days.length) return;
+      const last90 = days.slice(-90);
+      const last30 = days.slice(-30);
+      const last7 = days.slice(-7);
+
+      const sleep90 = stats(last90.map(d => d.values.sleep_min).filter(v => v != null).map(v => v / 60));
+      const sleep7 = stats(last7.map(d => d.values.sleep_min).filter(v => v != null).map(v => v / 60));
+      const deep7 = stats(last7.map(d => d.values.deep_min).filter(v => v != null));
+      const rem7 = stats(last7.map(d => d.values.rem_min).filter(v => v != null));
+      const hrv90 = stats(last90.map(d => d.values.hrv_sdnn_ms).filter(v => v != null));
+      const hrv7 = stats(last7.map(d => d.values.hrv_sdnn_ms).filter(v => v != null));
+      const rhr90 = stats(last90.map(d => d.values.resting_hr_avg).filter(v => v != null));
+      const rhr7 = stats(last7.map(d => d.values.resting_hr_avg).filter(v => v != null));
+
+      document.getElementById('kpiSleep').textContent = sleep7 ? `${sleep7.mean.toFixed(1)} h` : '—';
+      document.getElementById('kpiSleepBase').textContent = sleep90 ? `90d baseline: ${sleep90.mean.toFixed(1)} h` : '90d baseline: —';
+      setDelta(document.getElementById('kpiSleepDelta'), sleep7 && sleep90 ? sleep7.mean - sleep90.mean : null, 'h', true, 1);
+
+      const stageShare = (sleep7 && deep7 && rem7 && sleep7.mean > 0)
+        ? ((deep7.mean + rem7.mean) / (sleep7.mean * 60)) * 100
+        : null;
+      document.getElementById('kpiStages').textContent = stageShare !== null ? `${Math.round(stageShare)}%` : '—';
+      document.getElementById('kpiStagesSub').textContent = `Deep ${deep7 ? Math.round(deep7.mean) + 'm' : '—'} · REM ${rem7 ? Math.round(rem7.mean) + 'm' : '—'}`;
+      const stageBadge = document.getElementById('kpiStagesDelta');
+      if (stageShare !== null) {
+        stageBadge.textContent = stageShare >= 35 ? 'Solid restorative share' : 'Below 35% restorative share';
+        stageBadge.className = 'delta-pill ' + (stageShare >= 35 ? 'delta-good' : 'delta-warn');
+      } else {
+        stageBadge.textContent = 'WatchOS 9+ stages needed';
+        stageBadge.className = 'delta-pill delta-neutral';
+      }
+
+      document.getElementById('kpiHrv').textContent = hrv7 ? `${Math.round(hrv7.mean)} ms` : '—';
+      document.getElementById('kpiHrvBase').textContent = hrv90 ? `90d baseline: ${Math.round(hrv90.mean)} ± ${Math.round(hrv90.sd)} ms` : '90d baseline: —';
+      setDelta(document.getElementById('kpiHrvDelta'), hrv7 && hrv90 ? hrv7.mean - hrv90.mean : null, ' ms', true, 0);
+
+      document.getElementById('kpiRhr').textContent = rhr7 ? `${Math.round(rhr7.mean)} bpm` : '—';
+      document.getElementById('kpiRhrBase').textContent = rhr90 ? `90d baseline: ${Math.round(rhr90.mean)} ± ${Math.round(rhr90.sd)} bpm` : '90d baseline: —';
+      setDelta(document.getElementById('kpiRhrDelta'), rhr7 && rhr90 ? rhr7.mean - rhr90.mean : null, ' bpm', false, 0);
+
+      renderSleepSvg(last30, sleep90 ? sleep90.mean : null);
+      renderHrvSvg(last30, hrv90);
+
+      const anomalies = [];
+      last30.slice().reverse().forEach((d) => {
+        const flags = [];
+        const v = d.values || {};
+        if (sleep90 && sleep90.sd > 0 && v.sleep_min != null) {
+          const z = (v.sleep_min / 60 - sleep90.mean) / sleep90.sd;
+          if (Math.abs(z) >= 2) flags.push(`Sleep ${(v.sleep_min / 60).toFixed(1)}h (${z > 0 ? '+' : ''}${z.toFixed(1)} SD)`);
+        }
+        if (hrv90 && hrv90.sd > 0 && v.hrv_sdnn_ms != null) {
+          const z = (v.hrv_sdnn_ms - hrv90.mean) / hrv90.sd;
+          if (Math.abs(z) >= 2) flags.push(`HRV ${Math.round(v.hrv_sdnn_ms)} ms (${z > 0 ? '+' : ''}${z.toFixed(1)} SD)`);
+        }
+        if (rhr90 && rhr90.sd > 0 && v.resting_hr_avg != null) {
+          const z = (v.resting_hr_avg - rhr90.mean) / rhr90.sd;
+          if (Math.abs(z) >= 2) flags.push(`RHR ${Math.round(v.resting_hr_avg)} bpm (${z > 0 ? '+' : ''}${z.toFixed(1)} SD)`);
+        }
+        if (flags.length) {
+          anomalies.push({
+            date: d.date,
+            sleep: v.sleep_min != null ? (v.sleep_min / 60).toFixed(1) + ' h' : '—',
+            hrv: v.hrv_sdnn_ms != null ? Math.round(v.hrv_sdnn_ms) + ' ms' : '—',
+            rhr: v.resting_hr_avg != null ? Math.round(v.resting_hr_avg) + ' bpm' : '—',
+            flags: flags.join(' · '),
+          });
+        }
+      });
+
+      if (!anomalies.length) {
+        anomalyNote.textContent = 'No ≥2 SD Sleep, HRV, or Resting HR anomalies detected in the last 30 days—your recovery metrics stayed consistent.';
+        anomalyTable.innerHTML = '';
+      } else {
+        anomalyNote.textContent = `Found ${anomalies.length} day(s) in the last 30 days that deviated ≥2 SD from your 90-day personal baseline:`;
+        anomalyTable.innerHTML =
+          '<thead><tr><th>Date</th><th>Sleep</th><th>HRV</th><th>Resting HR</th><th>Flagged Deviation</th></tr></thead><tbody>' +
+          anomalies.map(a => `<tr><td>${escapeHtml(a.date)}</td><td>${escapeHtml(a.sleep)}</td><td>${escapeHtml(a.hrv)}</td><td>${escapeHtml(a.rhr)}</td><td>${escapeHtml(a.flags)}</td></tr>`).join('') +
+          '</tbody>';
+      }
+    }
+
+    function flashButton(btn, label) {
+      const prev = btn.textContent; btn.textContent = label;
+      setTimeout(() => { btn.textContent = prev; }, 1800);
+    }
+    copyRecoveryBtn.addEventListener('click', async () => {
+      if (!currentMarkdown) return;
+      const prompt = 'Focus strictly on my Sleep (Total, Deep, REM), HRV (SDNN), and Resting Heart Rate in the Apple Health context below. Evaluate recovery vs my 90-day personal baseline, explain any ≥2 SD unusual nights, and suggest 3 conservative sleep/recovery habits for next week (not medical advice).\n\n---\n\n' + currentMarkdown;
+      try { await navigator.clipboard.writeText(prompt); flashButton(copyRecoveryBtn, 'Copied for AI!'); }
+      catch {
+        const ta = document.createElement('textarea');
+        ta.value = prompt; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove(); flashButton(copyRecoveryBtn, 'Copied for AI!');
+      }
+    });
+    downloadCsvBtn.addEventListener('click', () => {
+      if (!sleepCsvData) return;
+      const blob = new Blob([sleepCsvData.content], { type: sleepCsvData.mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'apple-health-sleep-hrv.csv';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+    function startFile(file) {
+      if (!file) return;
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '2%';
+      progressStatus.textContent = `Streaming ${file.name} locally…`;
+      progressStats.textContent = 'Starting…';
+      worker.postMessage({ action: 'parse', file, windowDays: 90, profile: '' });
+    }
+    fileInput.addEventListener('change', (e) => { if (e.target.files && e.target.files[0]) startFile(e.target.files[0]); });
+    ['dragenter', 'dragover'].forEach((ev) => dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); }));
+    ['dragleave', 'drop'].forEach((ev) => dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); }));
+    dropzone.addEventListener('drop', (e) => { if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) startFile(e.dataTransfer.files[0]); });
+    sampleBtn.addEventListener('click', () => {
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '60%';
+      progressStatus.textContent = 'Generating synthetic Sleep & HRV dataset…';
+      progressStats.textContent = 'Sample';
+      worker.postMessage({ action: 'sample', windowDays: 90, profile: '' });
+    });
+
+    let exportStage = 'json';
+    worker.onmessage = (e) => {
+      const data = e.data || {};
+      if (data.type === 'progress') {
+        progressFill.style.width = data.percent + '%';
+        progressStatus.textContent = `Scanned ${data.recordsScanned.toLocaleString('en-US')} records (${data.mbPerSec.toFixed(1)} MB/s)`;
+        progressStats.textContent = `${(data.doneBytes / (1024 * 1024)).toFixed(1)} / ${(data.totalBytes / (1024 * 1024)).toFixed(1)} MB (${data.percent}%)`;
+      } else if (data.type === 'done') {
+        progressFill.style.width = '100%';
+        progressStatus.textContent = data.isSample ? 'Loaded synthetic Sleep & HRV demo data' : `Finished analyzing ${data.summary.sourceLabel} locally`;
+        progressStats.textContent = '100%';
+        currentMarkdown = data.markdown;
+        exportStage = 'json';
+        worker.postMessage({
+          action: 'export',
+          options: { format: 'daily-json', metrics: ['sleep_min', 'deep_min', 'rem_min', 'hrv_sdnn_ms', 'resting_hr_avg', 'resp_rate', 'spo2_pct'] },
+        });
+      } else if (data.type === 'exported') {
+        if (exportStage === 'json') {
+          const parsed = JSON.parse(data.content);
+          renderDashboard(parsed.days || []);
+          outputPanel.classList.add('visible');
+          exportStage = 'csv';
+          worker.postMessage({
+            action: 'export',
+            options: { format: 'daily-csv', metrics: ['sleep_min', 'deep_min', 'rem_min', 'hrv_sdnn_ms', 'resting_hr_avg', 'resp_rate', 'spo2_pct'] },
+          });
+        } else {
+          sleepCsvData = data;
+        }
+      } else if (data.type === 'error') {
+        progressWrap.classList.remove('visible');
+        showError(data.message);
+      }
+    };
+  })();
+  </script>
+</body>
+</html>

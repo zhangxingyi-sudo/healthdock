@@ -80,7 +80,7 @@
         <a href="./tools/apple-health-to-claude/">Claude</a>
         <a href="./tools/apple-health-to-gemini/">Gemini</a>
         <a href="./tools/apple-health-to-grok/">Grok</a>
-        <a href="./tools/xml-to-csv/">XML → CSV</a>
+        <a href="#all-tools">All Tools</a>
         <a href="privacy.html">Privacy</a>
         <a href="../">中文</a>
       </nav>
@@ -211,9 +211,12 @@
       <p class="small" style="margin:12px 0 0">Tip: Turn off Wi-Fi after loading this page if you want 100% proof that parsing happens strictly on your device.</p>
     </section>
 
-    <section class="section-block">
-      <h2>Dedicated Free AI &amp; Export Tools</h2>
-      <div class="grid-3" style="margin-top:14px">
+    <section id="all-tools" class="section-block">
+      <h2>All Free Local Apple Health Tools</h2>
+      <p class="muted" style="margin:6px 0 14px">Every tool runs 100% offline in your browser Web Worker—zero server upload, zero accounts.</p>
+
+      <h3 style="margin:18px 0 10px;font-size:15px;text-transform:uppercase;letter-spacing:0.04em;color:var(--ink2)">For AI Assistants</h3>
+      <div class="grid-3">
         <div class="card">
           <h3>Apple Health → ChatGPT</h3>
           <p class="muted">Generate <code>context.md</code> plus a Python-ready Daily CSV for ChatGPT Data Analysis charts, ChatGPT Projects, and Custom GPTs.</p>
@@ -235,13 +238,50 @@
             <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-gemini/">Open Gemini Tool →</a>
           </div>
         </div>
-      </div>
-      <div class="grid-2" style="margin-top:16px">
         <div class="card">
           <h3>Apple Health → Grok</h3>
           <p class="muted">Create a tight ~2KB <code>context.md</code> and Daily CSV with tailored Grok Think &amp; DeepSearch prompts for direct recovery and norm benchmarking.</p>
           <div class="btn-row" style="margin-top:14px">
             <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-grok/">Open Grok Tool →</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Apple Health → Perplexity</h3>
+          <p class="muted">Prepare <code>context.md</code> for Perplexity Spaces and Academic-source prompts to benchmark VO₂max, HRV, and sleep with peer-reviewed citations.</p>
+          <div class="btn-row" style="margin-top:14px">
+            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-perplexity/">Open Perplexity Tool →</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Apple Health → DeepSeek &amp; Ollama</h3>
+          <p class="muted">Generate ~600-token <code>context.md</code> plus copy-paste local <code>ollama run deepseek-r1</code> commands for 100% air-gapped health AI on Mac.</p>
+          <div class="btn-row" style="margin-top:14px">
+            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-deepseek/">Open DeepSeek / Ollama Tool →</a>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin:26px 0 10px;font-size:15px;text-transform:uppercase;letter-spacing:0.04em;color:var(--ink2)">Data Conversion, Vaults &amp; Dashboards</h3>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Apple Health Sleep &amp; HRV Analyzer</h3>
+          <p class="muted">Visualize last 30 nights of Total/Deep/REM sleep and HRV (SDNN) vs. your 90-day personal baseline band, with ≥2 SD unusual night detection.</p>
+          <div class="btn-row" style="margin-top:14px">
+            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-hrv-sleep-analyzer/">Open Sleep &amp; HRV Analyzer →</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Fix Large <code>export.xml</code> (500MB–2GB+)</h3>
+          <p class="muted">Excel or Chrome freezing? Stream 500MB–2GB+ exports in 4MB chunks, slice by year, and shrink your file by 99.9% into clean Excel-ready CSV.</p>
+          <div class="btn-row" style="margin-top:14px">
+            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-export-xml-too-large/">Open Large XML Fixer →</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Apple Health → Obsidian Markdown</h3>
+          <p class="muted">Generate Obsidian Properties YAML frontmatter for Daily Notes, a Health MOC note, a wiki-linked 90-day log, and ready-to-paste Dataview queries.</p>
+          <div class="btn-row" style="margin-top:14px">
+            <a class="btn btn-secondary btn-sm" href="./tools/apple-health-to-obsidian/">Open Obsidian Exporter →</a>
           </div>
         </div>
         <div class="card">
@@ -292,8 +332,13 @@
         <a href="./tools/apple-health-to-claude/">Claude</a>
         <a href="./tools/apple-health-to-gemini/">Gemini</a>
         <a href="./tools/apple-health-to-grok/">Grok</a>
+        <a href="./tools/apple-health-to-perplexity/">Perplexity</a>
+        <a href="./tools/apple-health-to-deepseek/">DeepSeek</a>
+        <a href="./tools/apple-health-to-obsidian/">Obsidian</a>
+        <a href="./tools/apple-health-hrv-sleep-analyzer/">Sleep &amp; HRV</a>
+        <a href="./tools/apple-health-export-xml-too-large/">Large XML</a>
         <a href="./tools/xml-to-csv/">XML → CSV</a>
-        <a href="privacy.html">Privacy Policy</a>
+        <a href="privacy.html">Privacy</a>
         <a href="../llms.txt">llms.txt</a>
         <a href="../">中文</a>
       </div>

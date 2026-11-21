@@ -634,3 +634,78 @@ footer.site-footer {
   display: none;
 }
 .notice-error.visible { display: block; }
+
+/* Analyzer KPIs, SVG Charts & Filter Chips */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+@media (max-width: 780px) {
+  .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.kpi-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+.kpi-card .kpi-label { font-size: 12px; color: var(--ink2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+.kpi-card .kpi-val { font-size: 24px; font-weight: 700; margin: 4px 0 2px; letter-spacing: -0.02em; }
+.kpi-card .kpi-sub { font-size: 12.5px; color: var(--ink2); }
+.delta-pill {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-top: 6px;
+}
+.delta-good { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); }
+.delta-warn { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); }
+.delta-neutral { background: color-mix(in srgb, var(--ink2) 12%, transparent); color: var(--ink2); }
+
+.chart-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-top: 14px;
+}
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.chart-header h3 { margin: 0; font-size: 15.5px; }
+.chart-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--ink2); }
+.chart-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.chart-legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.chart-svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.chip-btn {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  color: var(--ink2);
+  font: 600 13px/1.2 inherit;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+.chip-btn:hover { color: var(--ink); border-color: color-mix(in srgb, var(--b) 45%, var(--line)); }
+.chip-btn.active {
+  background: color-mix(in srgb, var(--b) 14%, var(--bg-elev));
+  color: var(--b);
+  border-color: color-mix(in srgb, var(--b) 55%, var(--line));
+}

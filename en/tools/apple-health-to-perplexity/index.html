@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apple Health to Perplexity — Free Local export.xml Converter &amp; Research Prompts | HealthDock</title>
+  <meta name="description" content="Convert your Apple Health export.zip or export.xml locally in your browser into a compact context.md for Perplexity and Perplexity Spaces. Benchmark sleep, HRV, resting HR, and VO2max with cited clinical literature—zero upload.">
+  <link rel="canonical" href="https://gethealthdock.com/en/tools/apple-health-to-perplexity/">
+  <link rel="icon" href="../../../icon.png">
+  <link rel="stylesheet" href="../../../assets/site.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Apple Health to Perplexity — Free 100% Local Converter for Perplexity Spaces">
+  <meta property="og:description" content="Stream-parse 500MB+ Apple Health exports locally into a ~2KB context.md ready for Perplexity Spaces and peer-reviewed benchmark research. Zero server uploads.">
+  <meta property="og:url" content="https://gethealthdock.com/en/tools/apple-health-to-perplexity/">
+  <meta property="og:image" content="https://gethealthdock.com/icon.png">
+  <meta name="twitter:card" content="summary">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Apple Health to Perplexity Converter",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any (Web Browser)",
+    "url": "https://gethealthdock.com/en/tools/apple-health-to-perplexity/",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free 100% browser-local streaming converter that turns Apple Health export.zip or export.xml into a structured context.md built for Perplexity Spaces and citation-backed health literature reviews."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I use my Apple Health data inside a Perplexity Space?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Drop your iPhone's export.zip into HealthDock's local converter to generate a compact ~2KB context.md file. Upload context.md to a Perplexity Space's Files panel and select Academic / Web sources so every follow-up question automatically compares your real baselines against peer-reviewed clinical studies."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why not upload export.xml directly to Perplexity?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Perplexity's file upload limits reject 300MB–2GB Apple Health XML exports immediately. HealthDock parses your export 100% locally in your browser in 4MB slices and condenses millions of raw rows into clean 7d/30d/90d baselines, ≥2 SD unusual days, yearly averages, and 8-week workout volume."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I stop Perplexity from retaining my health summary for AI training?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HealthDock never uploads your file anywhere—all parsing stays in your browser Web Worker. In Perplexity, open Settings → Account and turn off AI Data Retention before pasting or uploading health files."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../">
+        <img src="../../../icon.png" alt="HealthDock icon">
+        <span>HealthDock</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../../">Converter</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a class="active" href="../../#all-tools">All Tools</a>
+        <a href="../../privacy.html">Privacy</a>
+        <a href="../../../">中文</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container container-narrow">
+    <section class="hero" style="padding-bottom:20px">
+      <div class="eyebrow"><span class="dot"></span>100% Local in Your Browser · Built for Perplexity Spaces &amp; Academic Citations · Zero Upload</div>
+      <h1>Analyze Apple Health Data with Perplexity</h1>
+      <p class="lead">
+        Pair your personal Apple Watch &amp; iPhone baselines with Perplexity’s live peer-reviewed citations. Drop your 500MB+ <code>export.zip</code> below to condense it locally into a ~2KB <code>context.md</code> ready for <strong>Perplexity Pro Search, Research, and Spaces</strong>—without uploading raw XML to any server.
+      </p>
+      <div class="trust-strip" style="margin-top:0">
+        <span>🔒 Zero upload (offline Web Worker)</span>
+        <span>🔬 Citation-ready prompts for Academic / PubMed focus</span>
+        <span>📂 Ready for Perplexity Spaces file uploads</span>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Apple Health to Perplexity Converter">
+      <div id="dropzone" class="dropzone">
+        <input id="fileInput" type="file" accept=".xml,.zip,application/xml,text/xml,application/zip" aria-label="Select Apple Health export.xml or export.zip">
+        <p class="dropzone-title">Drop <code>export.zip</code> or <code>export.xml</code> here</p>
+        <p class="dropzone-sub">No unzipping needed · Runs locally in your browser · Zero bytes leave your computer</p>
+      </div>
+
+      <div class="tool-controls">
+        <div class="btn-row">
+          <button id="sampleBtn" type="button" class="btn btn-primary btn-sm">✨ Try Sample Data (1-click demo)</button>
+          <a class="btn btn-ghost btn-sm" href="../xml-to-csv/">Need CSV or JSON? →</a>
+        </div>
+        <div class="field-group">
+          <label for="windowSelect">Baseline window:</label>
+          <select id="windowSelect">
+            <option value="90" selected>Last 90 days (recommended)</option>
+            <option value="60">Last 60 days</option>
+            <option value="30">Last 30 days</option>
+          </select>
+        </div>
+      </div>
+
+      <details style="margin-top:14px">
+        <summary class="small" style="cursor:pointer;font-weight:600">+ Optional: add age, sex, and research questions so Perplexity finds exact population norms</summary>
+        <div style="margin-top:8px">
+          <textarea id="profileNotes" placeholder="Example: 38M, endurance runner. Interested in peer-reviewed norms for HRV (SDNN), resting HR, and VO2max for my age group."></textarea>
+        </div>
+      </details>
+
+      <div id="errorBox" class="notice-error" role="alert"></div>
+
+      <div id="progressWrap" class="progress-wrap">
+        <div class="progress-bar-track">
+          <div id="progressFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progressStatus">Streaming locally…</span>
+          <span id="progressStats">0%</span>
+        </div>
+      </div>
+
+      <div id="outputPanel" class="output-panel">
+        <div class="stat-strip">
+          <div class="stat-box"><div class="k">Records Scanned</div><div id="statRecords" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Days Summarized</div><div id="statDays" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Workouts</div><div id="statWorkouts" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Parse Time</div><div id="statTime" class="v">—</div></div>
+        </div>
+
+        <div class="toolbar-bar">
+          <div class="tabs" role="tablist">
+            <button id="tabRendered" type="button" class="tab-btn active" role="tab" aria-selected="true">Perplexity Context (context.md)</button>
+            <button id="tabRaw" type="button" class="tab-btn" role="tab" aria-selected="false">Raw Markdown</button>
+          </div>
+          <div class="btn-row">
+            <button id="copyMdBtn" type="button" class="btn btn-primary btn-sm">Copy context.md</button>
+            <button id="downloadMdBtn" type="button" class="btn btn-secondary btn-sm">Download for Perplexity Space (.md)</button>
+          </div>
+        </div>
+
+        <div id="renderedView" class="md-view"></div>
+        <div id="rawView" class="code-window" style="display:none">
+          <div class="code-window-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span>context.md</span>
+          </div>
+          <pre id="rawPre" class="code-body"></pre>
+        </div>
+
+        <div style="margin-top:26px">
+          <h3>Evidence-Cited Perplexity Prompts</h3>
+          <p class="small" style="margin:0 0 12px">Switch Perplexity’s source toggle to <strong>Academic</strong> + <strong>Web</strong> for cited PubMed and clinical guideline links.</p>
+          <div class="grid-3" id="promptGrid"></div>
+        </div>
+
+        <div class="funnel-banner">
+          <div class="funnel-copy">
+            <h3>Coming Soon: Automatic iPhone → Mac Sync</h3>
+            <p>
+              We’re building the <strong>HealthDock iPhone &amp; Mac apps</strong> to sync Apple Health automatically over Bluetooth &amp; local Wi-Fi—refreshing your local <code>context.md</code> daily so you never manually export a 500MB ZIP again.
+            </p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-secondary btn-sm" href="mailto:zhangxingyiopenclaw@gmail.com?subject=Notify%20me%20when%20HealthDock%20launches&body=Hi%2C%20please%20let%20me%20know%20when%20HealthDock%20for%20iPhone%20%26%20Mac%20is%20live%20on%20the%20App%20Store.">Get Launch Notification</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block card">
+      <h2>Why Perplexity + HealthDock Works So Well</h2>
+      <div class="grid-3" style="margin-top:12px">
+        <div>
+          <h3>1. Cited Benchmarks</h3>
+          <p class="muted" style="margin:0;font-size:14px">Instead of vague guesses, Perplexity cites real ACSM, AHA, and PubMed reference tables when evaluating your VO₂max, resting HR, and SDNN HRV.</p>
+        </div>
+        <div>
+          <h3>2. Perplexity Spaces</h3>
+          <p class="muted" style="margin:0;font-size:14px">Upload <code>context.md</code> as a Space file once so every future fitness, sleep, or nutrition search is grounded in your personal baselines.</p>
+        </div>
+        <div>
+          <h3>3. Clean Privacy Boundary</h3>
+          <p class="muted" style="margin:0;font-size:14px">Keep your 500MB raw XML strictly on your computer—and turn off <strong>AI Data Retention</strong> in Perplexity Settings → Account before pasting summaries.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>Perplexity &amp; Privacy FAQ</h2>
+      <details class="faq-item">
+        <summary>Why does Perplexity reject Apple Health export.zip directly?</summary>
+        <p>Perplexity Spaces and chat uploads cap individual files far below a typical 300MB–2GB Apple Health export. HealthDock locally aggregates millions of raw samples into ~2KB of clean Markdown that fits effortlessly in any prompt or Space.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I combine context.md with Academic source filtering?</summary>
+        <p>Yes—that is Perplexity’s strongest advantage. Turn on <strong>Academic</strong> sources in the Perplexity search bar so every threshold or recommendation links directly to peer-reviewed papers.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is this medical advice?</summary>
+        <p>No. HealthDock formats your Apple Health metrics for self-tracking and literature research only. Always consult a qualified physician for medical diagnosis or treatment.</p>
+      </details>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
+      <div class="footer-links">
+        <a href="../../">Home</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a href="../apple-health-to-deepseek/">DeepSeek</a>
+        <a href="../apple-health-to-obsidian/">Obsidian</a>
+        <a href="../xml-to-csv/">XML → CSV</a>
+        <a href="../../privacy.html">Privacy</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+  (() => {
+    const PROMPTS = [
+      {
+        title: 'Cited Peer-Reviewed Norm Check',
+        desc: 'Benchmark your VO₂max, resting HR, HRV (SDNN), and sleep against cited ACSM/AHA/PubMed ranges.',
+        text: 'Using peer-reviewed academic sources and clinical guidelines (cite every source), evaluate my Apple Health baselines below (taking into account any age/sex in Personal Notes). Compare my resting heart rate, HRV (SDNN), VO2max, sleep duration, and deep/REM split against published population percentiles, explain Apple Watch measurement caveats, and highlight which metrics deserve follow-up with a doctor.'
+      },
+      {
+        title: 'Evidence-Backed Recovery Literature Review',
+        desc: 'Find cited sports-science and sleep-medicine interventions matched to your actual bottlenecks.',
+        text: 'Review the Apple Health baselines, ≥2 SD unusual days, and 8-week training load below. Identify the 2 most notable recovery or sleep bottlenecks in the data, then synthesize evidence-based, non-pharmacological interventions from recent peer-reviewed studies (with citations) that specifically address those patterns. Clearly distinguish educational literature from medical advice.'
+      },
+      {
+        title: 'Perplexity Space Baseline Setup',
+        desc: 'Upload context.md to a Perplexity Space and initialize custom health research context.',
+        text: 'Use the Apple Health context.md below as the personal baseline for this Perplexity Space. Summarize my core 90-day baselines, recent 7-day shifts, and training profile in a compact reference card, then list 4 high-value research questions I should explore next using Academic sources.'
+      }
+    ];
+
+    const worker = new Worker('../../../assets/health-worker.js');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const windowSelect = document.getElementById('windowSelect');
+    const profileNotes = document.getElementById('profileNotes');
+    const errorBox = document.getElementById('errorBox');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressFill = document.getElementById('progressFill');
+    const progressStatus = document.getElementById('progressStatus');
+    const progressStats = document.getElementById('progressStats');
+    const outputPanel = document.getElementById('outputPanel');
+    const renderedView = document.getElementById('renderedView');
+    const rawView = document.getElementById('rawView');
+    const rawPre = document.getElementById('rawPre');
+    const tabRendered = document.getElementById('tabRendered');
+    const tabRaw = document.getElementById('tabRaw');
+    const copyMdBtn = document.getElementById('copyMdBtn');
+    const downloadMdBtn = document.getElementById('downloadMdBtn');
+    const promptGrid = document.getElementById('promptGrid');
+
+    let currentMarkdown = '';
+    let hasData = false;
+
+    function showError(msg) { errorBox.textContent = msg; errorBox.classList.add('visible'); }
+    function clearError() { errorBox.textContent = ''; errorBox.classList.remove('visible'); }
+    function escapeHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function renderSimpleMarkdown(md) {
+      const lines = md.split('\n');
+      const out = [];
+      let i = 0;
+      while (i < lines.length) {
+        const line = lines[i];
+        if (!line.trim()) { i++; continue; }
+        if (line.startsWith('### ')) { out.push('<h3>' + escapeHtml(line.slice(4)) + '</h3>'); i++; }
+        else if (line.startsWith('## ')) { out.push('<h2>' + escapeHtml(line.slice(3)) + '</h2>'); i++; }
+        else if (line.startsWith('# ')) { out.push('<h1>' + escapeHtml(line.slice(2)) + '</h1>'); i++; }
+        else if (line.startsWith('|') && i + 1 < lines.length && lines[i + 1].startsWith('|---')) {
+          const headers = line.split('|').slice(1, -1).map(c => c.trim());
+          let html = '<div class="table-scroll"><table><thead><tr>' + headers.map(h => '<th>' + escapeHtml(h) + '</th>').join('') + '</tr></thead><tbody>';
+          i += 2;
+          while (i < lines.length && lines[i].startsWith('|')) {
+            const cells = lines[i].split('|').slice(1, -1).map(c => c.trim());
+            html += '<tr>' + cells.map(c => '<td>' + escapeHtml(c) + '</td>').join('') + '</tr>';
+            i++;
+          }
+          html += '</tbody></table></div>';
+          out.push(html);
+        } else { out.push('<p>' + escapeHtml(line) + '</p>'); i++; }
+      }
+      return out.join('');
+    }
+    function displayMarkdown(md) {
+      currentMarkdown = md;
+      rawPre.textContent = md;
+      renderedView.innerHTML = renderSimpleMarkdown(md);
+    }
+    function flashButton(btn, label) {
+      const prev = btn.textContent;
+      btn.textContent = label;
+      setTimeout(() => { btn.textContent = prev; }, 1800);
+    }
+    async function copyText(text, btn, doneLabel) {
+      try { await navigator.clipboard.writeText(text); flashButton(btn, doneLabel); }
+      catch {
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove(); flashButton(btn, doneLabel);
+      }
+    }
+    function buildPromptCards() {
+      promptGrid.innerHTML = '';
+      PROMPTS.forEach((p) => {
+        const card = document.createElement('div');
+        card.className = 'prompt-card';
+        card.innerHTML = `
+          <div><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.desc)}</p></div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-primary btn-sm copy-both">Copy Prompt + Context</button>
+            <button type="button" class="btn btn-ghost btn-sm copy-only">Prompt Only</button>
+          </div>`;
+        card.querySelector('.copy-both').addEventListener('click', (e) => copyText(p.text + '\n\n---\n\n' + currentMarkdown, e.currentTarget, 'Copied!'));
+        card.querySelector('.copy-only').addEventListener('click', (e) => copyText(p.text, e.currentTarget, 'Copied!'));
+        promptGrid.appendChild(card);
+      });
+    }
+    buildPromptCards();
+
+    function startFile(file) {
+      if (!file) return;
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '2%';
+      progressStatus.textContent = `Streaming ${file.name} locally…`;
+      progressStats.textContent = 'Starting…';
+      worker.postMessage({ action: 'parse', file, windowDays: Number(windowSelect.value) || 90, profile: profileNotes.value || '' });
+    }
+    fileInput.addEventListener('change', (e) => { if (e.target.files && e.target.files[0]) startFile(e.target.files[0]); });
+    ['dragenter', 'dragover'].forEach((ev) => dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); }));
+    ['dragleave', 'drop'].forEach((ev) => dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); }));
+    dropzone.addEventListener('drop', (e) => { if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) startFile(e.dataTransfer.files[0]); });
+    sampleBtn.addEventListener('click', () => {
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '60%';
+      progressStatus.textContent = 'Generating synthetic demo dataset…';
+      progressStats.textContent = 'Sample';
+      worker.postMessage({ action: 'sample', windowDays: Number(windowSelect.value) || 90, profile: profileNotes.value || '' });
+    });
+
+    function triggerRerender() {
+      if (!hasData) return;
+      worker.postMessage({ action: 'rerender', windowDays: Number(windowSelect.value) || 90, profile: profileNotes.value || '' });
+    }
+    windowSelect.addEventListener('change', triggerRerender);
+    let profileTimer = null;
+    profileNotes.addEventListener('input', () => { clearTimeout(profileTimer); profileTimer = setTimeout(triggerRerender, 220); });
+
+    tabRendered.addEventListener('click', () => {
+      tabRendered.classList.add('active'); tabRaw.classList.remove('active');
+      tabRendered.setAttribute('aria-selected', 'true'); tabRaw.setAttribute('aria-selected', 'false');
+      renderedView.style.display = 'block'; rawView.style.display = 'none';
+    });
+    tabRaw.addEventListener('click', () => {
+      tabRaw.classList.add('active'); tabRendered.classList.remove('active');
+      tabRaw.setAttribute('aria-selected', 'true'); tabRendered.setAttribute('aria-selected', 'false');
+      renderedView.style.display = 'none'; rawView.style.display = 'block';
+    });
+    copyMdBtn.addEventListener('click', () => copyText(currentMarkdown, copyMdBtn, 'Copied!'));
+    downloadMdBtn.addEventListener('click', () => {
+      if (!currentMarkdown) return;
+      const blob = new Blob([currentMarkdown], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'context.md';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+    worker.onmessage = (e) => {
+      const data = e.data || {};
+      if (data.type === 'progress') {
+        progressFill.style.width = data.percent + '%';
+        progressStatus.textContent = `Scanned ${data.recordsScanned.toLocaleString('en-US')} records (${data.mbPerSec.toFixed(1)} MB/s)`;
+        progressStats.textContent = `${(data.doneBytes / (1024 * 1024)).toFixed(1)} / ${(data.totalBytes / (1024 * 1024)).toFixed(1)} MB (${data.percent}%)`;
+      } else if (data.type === 'done') {
+        hasData = true;
+        progressFill.style.width = '100%';
+        progressStatus.textContent = data.isSample ? 'Loaded synthetic sample data (not real user data)' : `Finished streaming ${data.summary.sourceLabel} locally`;
+        progressStats.textContent = '100%';
+        document.getElementById('statRecords').textContent = data.summary.recordsScanned.toLocaleString('en-US');
+        document.getElementById('statDays').textContent = data.summary.daysCount.toLocaleString('en-US');
+        document.getElementById('statWorkouts').textContent = data.summary.workoutsCount.toLocaleString('en-US');
+        document.getElementById('statTime').textContent = data.summary.elapsedMs < 1000 ? `${data.summary.elapsedMs} ms` : `${(data.summary.elapsedMs / 1000).toFixed(1)} s`;
+        displayMarkdown(data.markdown);
+        outputPanel.classList.add('visible');
+      } else if (data.type === 'rendered') {
+        displayMarkdown(data.markdown);
+      } else if (data.type === 'error') {
+        progressWrap.classList.remove('visible');
+        showError(data.message);
+      }
+    };
+  })();
+  </script>
+</body>
+</html>

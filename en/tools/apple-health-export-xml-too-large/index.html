@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fix Apple Health export.xml Too Large (500MB–2GB+) — Open &amp; Slice Locally | HealthDock</title>
+  <meta name="description" content="Apple Health export.xml too large to open in Excel, Numbers, or your browser? Stream-parse 500MB–2GB+ export.zip or export.xml in 4MB chunks, slice by year, and shrink it by 99.9% into clean Excel-ready CSV—100% locally.">
+  <link rel="canonical" href="https://gethealthdock.com/en/tools/apple-health-export-xml-too-large/">
+  <link rel="icon" href="../../../icon.png">
+  <link rel="stylesheet" href="../../../assets/site.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Apple Health export.xml Too Large? Open, Slice & Shrink 500MB–2GB+ Files Locally">
+  <meta property="og:description" content="Excel and browsers freeze on huge Apple Health XML exports. Stream-parse export.zip in 4MB chunks locally, slice by year, and download clean CSV files 99.9% smaller.">
+  <meta property="og:url" content="https://gethealthdock.com/en/tools/apple-health-export-xml-too-large/">
+  <meta property="og:image" content="https://gethealthdock.com/icon.png">
+  <meta name="twitter:card" content="summary">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Large Apple Health export.xml Opener & Slicer",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any (Web Browser)",
+    "url": "https://gethealthdock.com/en/tools/apple-health-export-xml-too-large/",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free 100% browser-local streaming tool that opens, slices by year, and shrinks 500MB–2GB+ Apple Health export.xml and export.zip files into clean, Excel-ready CSV and ~2KB Markdown summaries without crashing."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why is my Apple Health export.xml 500MB, 1GB, or larger?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Apple Watch logs heart rate, step bursts, active/basal energy, and accelerometer events thousands of times per day—each wrapped in verbose XML attributes like HKQuantityTypeIdentifierStepCount and source device metadata. Over 3–8 years, millions of tiny rows easily reach 500MB to 2GB+."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does Excel or Chrome freeze when opening Apple Health export.xml?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Excel, Apple Numbers, and standard browser XML parsers attempt to build a full in-memory DOM tree of every row at once—requiring 10x–20x the file size in RAM and hitting Excel's 1,048,576-row worksheet cap. HealthDock streams 4MB slices sequentially inside a Web Worker so RAM stays low and aggregates daily rows cleanly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to unzip export.zip before dropping it here?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Drop export.zip directly. HealthDock locates apple_health_export/export.xml inside the ZIP and streams DEFLATE decompression natively in your browser via DecompressionStream—saving both disk space and time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I extract just one year (like 2025 or 2026) from a multi-year export.xml?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Once the local streaming pass finishes, click any detected year button (or Last 90 / 365 Days) to download a tiny, Excel-ready Daily CSV or Workouts CSV for that exact time window."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../">
+        <img src="../../../icon.png" alt="HealthDock icon">
+        <span>HealthDock</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../../">Converter</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a class="active" href="../../#all-tools">All Tools</a>
+        <a href="../../privacy.html">Privacy</a>
+        <a href="../../../">中文</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container container-narrow">
+    <section class="hero" style="padding-bottom:20px">
+      <div class="eyebrow"><span class="dot"></span>4MB Streaming Web Worker · Handles 500MB–2GB+ Files · Zero Upload</div>
+      <h1>Apple Health <code>export.xml</code> Too Large to Open?</h1>
+      <p class="lead">
+        Excel hits its 1,048,576-row limit, Numbers hangs, and online converters reject 500MB–2GB Apple Health exports. Drop your <code>export.zip</code> or <code>export.xml</code> below—our local browser streamer reads it in 4MB chunks, slices it by year, and shrinks it by <strong>99.9%</strong> into clean CSV or a ~2KB AI summary without crashing your tab.
+      </p>
+      <div class="trust-strip" style="margin-top:0">
+        <span>⚡ ~50–150 MB/s local streaming (no DOM crash)</span>
+        <span>🗜️ No unzipping needed (streams <code>export.zip</code> directly)</span>
+        <span>🔒 Zero server upload—works completely offline</span>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Large Apple Health export.xml Opener and Slicer">
+      <div id="dropzone" class="dropzone">
+        <input id="fileInput" type="file" accept=".xml,.zip,application/xml,text/xml,application/zip" aria-label="Select large Apple Health export.xml or export.zip">
+        <p class="dropzone-title">Drop your huge <code>export.zip</code> or <code>export.xml</code> here</p>
+        <p class="dropzone-sub">Tested on 500MB–2GB+ multi-year exports · Never leaves your device</p>
+      </div>
+
+      <div class="tool-controls">
+        <div class="btn-row">
+          <button id="sampleBtn" type="button" class="btn btn-primary btn-sm">✨ Try Sample Data (48 MB demo)</button>
+          <a class="btn btn-ghost btn-sm" href="../xml-to-csv/">Choose Exact Metrics →</a>
+        </div>
+      </div>
+
+      <div id="errorBox" class="notice-error" role="alert"></div>
+
+      <div id="progressWrap" class="progress-wrap">
+        <div class="progress-bar-track">
+          <div id="progressFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progressStatus">Streaming in 4MB slices…</span>
+          <span id="progressStats">0%</span>
+        </div>
+      </div>
+
+      <div id="outputPanel" class="output-panel">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Raw XML Size</div>
+            <div id="kpiRawSize" class="kpi-val">—</div>
+            <div id="kpiRecords" class="kpi-sub">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Clean CSV Size</div>
+            <div id="kpiCsvSize" class="kpi-val">—</div>
+            <div id="kpiReduction" class="delta-pill delta-good">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Date Span</div>
+            <div id="kpiSpan" class="kpi-val" style="font-size:18px;margin-top:8px">—</div>
+            <div id="kpiDays" class="kpi-sub">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Stream Speed</div>
+            <div id="kpiTime" class="kpi-val">—</div>
+            <div class="kpi-sub">100% browser-local</div>
+          </div>
+        </div>
+
+        <div class="card-subtle">
+          <div style="font-size:13.5px;font-weight:600">Slice by Year or Time Window (for Excel / Numbers / Google Sheets)</div>
+          <div id="sliceChips" class="chip-row"></div>
+          <div class="btn-row" style="margin-top:14px">
+            <button id="downloadCsvBtn" type="button" class="btn btn-primary btn-sm">Download Excel-Ready Daily CSV</button>
+            <button id="downloadWorkoutsBtn" type="button" class="btn btn-secondary btn-sm">Download Workouts CSV</button>
+            <button id="downloadMdBtn" type="button" class="btn btn-secondary btn-sm">Download ~2KB Summary (.md)</button>
+          </div>
+        </div>
+
+        <div style="margin-top:18px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+            <h3 style="margin:0">Latest Clean Rows Preview</h3>
+            <span id="previewMeta" class="small">—</span>
+          </div>
+          <div class="table-scroll"><table id="previewTable"></table></div>
+        </div>
+
+        <div class="funnel-banner">
+          <div class="funnel-copy">
+            <h3>Coming Soon: Never Deal With a 1GB <code>export.xml</code> Again</h3>
+            <p>
+              We’re building the <strong>HealthDock iPhone &amp; Mac apps</strong> to sync Apple Health incrementally every day over Bluetooth &amp; local Wi-Fi—saving tiny, clean daily JSON/Markdown files directly on your Mac with zero cloud servers.
+            </p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-secondary btn-sm" href="mailto:zhangxingyiopenclaw@gmail.com?subject=Notify%20me%20when%20HealthDock%20launches&body=Hi%2C%20please%20let%20me%20know%20when%20HealthDock%20for%20iPhone%20%26%20Mac%20is%20live%20on%20the%20App%20Store.">Get Launch Notification</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block card">
+      <h2>Why Apple Health <code>export.xml</code> Crashes Excel &amp; Browsers</h2>
+      <div class="grid-3" style="margin-top:12px">
+        <div>
+          <h3>1. 1,048,576-Row Excel Cap</h3>
+          <p class="muted" style="margin:0;font-size:14px">An Apple Watch easily produces 2–10 million individual heart rate, step, and calorie XML tags over a few years—blowing past Excel’s hard row ceiling immediately.</p>
+        </div>
+        <div>
+          <h3>2. RAM Explosion in DOM Parsers</h3>
+          <p class="muted" style="margin:0;font-size:14px">Opening a 1GB XML file in Chrome, VS Code, or naive web tools builds a ~10GB DOM tree in memory and kills the tab. Streaming 4MB slices keeps memory flat.</p>
+        </div>
+        <div>
+          <h3>3. Duplicate Watch + iPhone Rows</h3>
+          <p class="muted" style="margin:0;font-size:14px">Even if you manage to split raw XML manually, raw rows double-count steps across iPhone and Apple Watch and split sleep across midnight. HealthDock cleans both automatically.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>Large Export Troubleshooting FAQ</h2>
+      <details class="faq-item">
+        <summary>My iPhone gets stuck on “Exporting Health Data…” — any tips?</summary>
+        <p>Keep the Health app open on screen and disable Auto-Lock temporarily (Settings → Display &amp; Brightness → Auto-Lock → Never) while exporting multi-year history. Once the share sheet appears, AirDrop <code>export.zip</code> directly to your Mac rather than emailing it.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What if my browser doesn’t support streaming ZIP decompression?</summary>
+        <p>Modern Chrome, Safari (16.4+), Edge, and Firefox all support native <code>DecompressionStream</code>. If you’re on an older browser, simply double-click <code>export.zip</code> in Finder and drop the inner <code>export.xml</code> file here.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Are all 15 core health metrics included in the clean Daily CSV?</summary>
+        <p>Yes—Resting HR, HRV, Walking HR, Sleep (total/deep/REM), Steps, Active kcal, Exercise min, Blood Oxygen, Respiratory Rate, VO₂max, Blood Pressure, Weight, plus daily workout counts &amp; duration. Need custom columns or JSON? Use our <a href="../xml-to-csv/">full CSV/JSON filter tool</a>.</p>
+      </details>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
+      <div class="footer-links">
+        <a href="../../">Home</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a href="../apple-health-hrv-sleep-analyzer/">Sleep &amp; HRV</a>
+        <a href="../xml-to-csv/">XML → CSV</a>
+        <a href="../../privacy.html">Privacy</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+  (() => {
+    const ALL_METRICS = [
+      'resting_hr_avg', 'hrv_sdnn_ms', 'walking_hr_avg', 'sleep_min', 'deep_min', 'rem_min',
+      'steps', 'active_kcal', 'exercise_min', 'spo2_pct', 'resp_rate', 'vo2max', 'bp_sys', 'bp_dia', 'weight_kg'
+    ];
+
+    const worker = new Worker('../../../assets/health-worker.js');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const errorBox = document.getElementById('errorBox');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressFill = document.getElementById('progressFill');
+    const progressStatus = document.getElementById('progressStatus');
+    const progressStats = document.getElementById('progressStats');
+    const outputPanel = document.getElementById('outputPanel');
+    const sliceChips = document.getElementById('sliceChips');
+    const previewTable = document.getElementById('previewTable');
+    const previewMeta = document.getElementById('previewMeta');
+    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+    const downloadWorkoutsBtn = document.getElementById('downloadWorkoutsBtn');
+    const downloadMdBtn = document.getElementById('downloadMdBtn');
+
+    let rawBytes = 0;
+    let currentMarkdown = '';
+    let currentDailyCsv = null;
+    let currentWorkoutsCsv = null;
+    let dateBounds = { min: '', max: '' };
+    let activeSlice = { id: 'all', from: '', to: '', label: 'All Years' };
+    let pendingFormat = 'daily-csv';
+
+    function formatBytes(b) {
+      if (b >= 1024 * 1024 * 1024) return (b / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
+      if (b >= 1024 * 1024) return (b / (1024 * 1024)).toFixed(1) + ' MB';
+      return (b / 1024).toFixed(1) + ' KB';
+    }
+    function addDays(ymd, delta) {
+      const [y, m, d] = ymd.split('-').map(Number);
+      const dt = new Date(Date.UTC(y, m - 1, d + delta));
+      return dt.toISOString().slice(0, 10);
+    }
+    function escapeHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function showError(msg) { errorBox.textContent = msg; errorBox.classList.add('visible'); }
+    function clearError() { errorBox.textContent = ''; errorBox.classList.remove('visible'); }
+
+    function downloadBlob(content, filename, mime) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function requestSlice(slice) {
+      activeSlice = slice;
+      sliceChips.querySelectorAll('.chip-btn').forEach((b) => b.classList.toggle('active', b.dataset.id === slice.id));
+      pendingFormat = 'daily-csv';
+      worker.postMessage({
+        action: 'export',
+        options: { format: 'daily-csv', from: slice.from, to: slice.to, metrics: ALL_METRICS },
+      });
+    }
+
+    function buildSliceChips() {
+      sliceChips.innerHTML = '';
+      const slices = [{ id: 'all', from: dateBounds.min, to: dateBounds.max, label: 'All Years' }];
+      if (dateBounds.max) {
+        slices.push({ id: '90d', from: addDays(dateBounds.max, -89), to: dateBounds.max, label: 'Last 90 Days' });
+        slices.push({ id: '365d', from: addDays(dateBounds.max, -364), to: dateBounds.max, label: 'Last 365 Days' });
+        const minY = Number(dateBounds.min.slice(0, 4));
+        const maxY = Number(dateBounds.max.slice(0, 4));
+        for (let y = maxY; y >= minY && maxY - y < 8; y--) {
+          slices.push({ id: `y-${y}`, from: `${y}-01-01`, to: `${y}-12-31`, label: String(y) });
+        }
+      }
+      slices.forEach((s) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chip-btn' + (s.id === 'all' ? ' active' : '');
+        btn.dataset.id = s.id;
+        btn.textContent = s.label;
+        btn.addEventListener('click', () => requestSlice(s));
+        sliceChips.appendChild(btn);
+      });
+    }
+
+    function startFile(file) {
+      if (!file) return;
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '2%';
+      progressStatus.textContent = `Streaming ${file.name} in 4MB chunks…`;
+      progressStats.textContent = 'Starting…';
+      worker.postMessage({ action: 'parse', file, windowDays: 90, profile: '' });
+    }
+    fileInput.addEventListener('change', (e) => { if (e.target.files && e.target.files[0]) startFile(e.target.files[0]); });
+    ['dragenter', 'dragover'].forEach((ev) => dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); }));
+    ['dragleave', 'drop'].forEach((ev) => dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); }));
+    dropzone.addEventListener('drop', (e) => { if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) startFile(e.dataTransfer.files[0]); });
+    sampleBtn.addEventListener('click', () => {
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '60%';
+      progressStatus.textContent = 'Generating synthetic 48 MB demo dataset…';
+      progressStats.textContent = 'Sample';
+      worker.postMessage({ action: 'sample', windowDays: 90, profile: '' });
+    });
+
+    downloadCsvBtn.addEventListener('click', () => {
+      if (currentDailyCsv) downloadBlob(currentDailyCsv.content, currentDailyCsv.filename, currentDailyCsv.mime);
+    });
+    downloadWorkoutsBtn.addEventListener('click', () => {
+      if (currentWorkoutsCsv) {
+        downloadBlob(currentWorkoutsCsv.content, currentWorkoutsCsv.filename, currentWorkoutsCsv.mime);
+      } else {
+        pendingFormat = 'workouts-download';
+        worker.postMessage({
+          action: 'export',
+          options: { format: 'workouts-csv', from: activeSlice.from, to: activeSlice.to, metrics: ALL_METRICS },
+        });
+      }
+    });
+    downloadMdBtn.addEventListener('click', () => {
+      if (currentMarkdown) downloadBlob(currentMarkdown, 'context.md', 'text/markdown;charset=utf-8');
+    });
+
+    worker.onmessage = (e) => {
+      const data = e.data || {};
+      if (data.type === 'progress') {
+        progressFill.style.width = data.percent + '%';
+        progressStatus.textContent = `Scanned ${data.recordsScanned.toLocaleString('en-US')} XML records (${data.mbPerSec.toFixed(1)} MB/s)`;
+        progressStats.textContent = `${(data.doneBytes / (1024 * 1024)).toFixed(1)} / ${(data.totalBytes / (1024 * 1024)).toFixed(1)} MB (${data.percent}%)`;
+      } else if (data.type === 'done') {
+        progressFill.style.width = '100%';
+        progressStatus.textContent = data.isSample ? 'Loaded synthetic 48 MB sample export' : `Finished streaming ${data.summary.sourceLabel} locally`;
+        progressStats.textContent = '100%';
+        rawBytes = data.summary.bytesTotal || 0;
+        currentMarkdown = data.markdown;
+        dateBounds = data.summary.dateBounds || { min: '', max: '' };
+        currentWorkoutsCsv = null;
+        document.getElementById('kpiRawSize').textContent = formatBytes(rawBytes);
+        document.getElementById('kpiRecords').textContent = `${data.summary.recordsScanned.toLocaleString('en-US')} raw records`;
+        document.getElementById('kpiSpan').textContent = dateBounds.min ? `${dateBounds.min.slice(0, 4)} – ${dateBounds.max.slice(0, 4)}` : '—';
+        document.getElementById('kpiDays').textContent = `${data.summary.daysCount.toLocaleString('en-US')} days · ${data.summary.workoutsCount.toLocaleString('en-US')} workouts`;
+        document.getElementById('kpiTime').textContent = data.summary.elapsedMs < 1000 ? `${data.summary.elapsedMs} ms` : `${(data.summary.elapsedMs / 1000).toFixed(1)} s`;
+        buildSliceChips();
+        outputPanel.classList.add('visible');
+        requestSlice({ id: 'all', from: dateBounds.min, to: dateBounds.max, label: 'All Years' });
+      } else if (data.type === 'exported') {
+        if (pendingFormat === 'workouts-download') {
+          currentWorkoutsCsv = data;
+          pendingFormat = 'daily-csv';
+          downloadBlob(data.content, data.filename, data.mime);
+          return;
+        }
+        currentDailyCsv = data;
+        currentWorkoutsCsv = null;
+        const csvBytes = new Blob([data.content]).size;
+        document.getElementById('kpiCsvSize').textContent = formatBytes(csvBytes);
+        const pct = rawBytes > 0 ? Math.max(0, (1 - csvBytes / rawBytes) * 100).toFixed(2) : '99.9';
+        document.getElementById('kpiReduction').textContent = `${pct}% smaller`;
+        previewMeta.textContent = `${activeSlice.label}: ${data.rowCount.toLocaleString('en-US')} clean daily rows (showing latest ${data.preview.length})`;
+        const cols = data.headers.slice(0, 9);
+        const thead = '<thead><tr>' + cols.map(h => `<th>${escapeHtml(h)}</th>`).join('') + '</tr></thead>';
+        const tbody = '<tbody>' + data.preview.slice(0, 15).map(r => '<tr>' + r.slice(0, 9).map(c => `<td>${escapeHtml(c)}</td>`).join('') + '</tr>').join('') + '</tbody>';
+        previewTable.innerHTML = thead + tbody;
+      } else if (data.type === 'error') {
+        progressWrap.classList.remove('visible');
+        showError(data.message);
+      }
+    };
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apple Health to Obsidian — Free Local YAML Frontmatter &amp; Markdown Exporter | HealthDock</title>
+  <meta name="description" content="Convert Apple Health export.zip or export.xml locally in your browser into Obsidian Markdown notes with YAML frontmatter Properties, Dataview queries, and a Health Dashboard note. Zero upload.">
+  <link rel="canonical" href="https://gethealthdock.com/en/tools/apple-health-to-obsidian/">
+  <link rel="icon" href="../../../icon.png">
+  <link rel="stylesheet" href="../../../assets/site.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Apple Health to Obsidian — Free Local YAML Frontmatter & Markdown Tool">
+  <meta property="og:description" content="Turn 500MB+ Apple Health exports into Obsidian Properties YAML frontmatter, a Health Baseline MOC note, and ready-to-paste Dataview queries—100% locally in your browser.">
+  <meta property="og:url" content="https://gethealthdock.com/en/tools/apple-health-to-obsidian/">
+  <meta property="og:image" content="https://gethealthdock.com/icon.png">
+  <meta name="twitter:card" content="summary">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Apple Health to Obsidian Markdown & YAML Converter",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any (Web Browser)",
+    "url": "https://gethealthdock.com/en/tools/apple-health-to-obsidian/",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free 100% browser-local streaming converter that turns Apple Health export.zip or export.xml into Obsidian Markdown notes with clean YAML frontmatter Properties, daily log tables, and Dataview queries."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I import Apple Health data into Obsidian with YAML Properties?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Drop your iPhone's Apple Health export.zip into HealthDock's local converter. It generates an Obsidian-ready Health-Baseline.md note with YAML frontmatter, copyable Daily Note YAML Properties for any recent date, a multi-day Markdown log table, and ready-to-paste Dataview queries—100% locally in your browser."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this work with Obsidian Dataview and Obsidian Properties?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Every generated YAML property uses clean snake_case numeric keys (sleep_hours, resting_hr, hrv_ms, steps, active_kcal, vo2max, weight_kg) so Obsidian Properties renders native number fields and Dataview TABLE/TASK queries work out of the box."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does my health vault data ever touch a cloud server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Never. Just like Obsidian's local-first philosophy, HealthDock runs strictly inside your browser's Web Worker with zero backend servers, zero accounts, and zero telemetry."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../">
+        <img src="../../../icon.png" alt="HealthDock icon">
+        <span>HealthDock</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../../">Converter</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a class="active" href="../../#all-tools">All Tools</a>
+        <a href="../../privacy.html">Privacy</a>
+        <a href="../../../">中文</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container container-narrow">
+    <section class="hero" style="padding-bottom:20px">
+      <div class="eyebrow"><span class="dot"></span>100% Local-First · YAML Frontmatter Properties + Dataview Queries · Zero Upload</div>
+      <h1>Export Apple Health to Obsidian Markdown</h1>
+      <p class="lead">
+        Build a local-first health vault in Obsidian without cloud third-party bridges. Drop your Apple Health <code>export.zip</code> below to generate an Obsidian-ready <strong>Health Baseline MOC (<code>.md</code>)</strong> with clean <strong>YAML Properties</strong>, copyable <strong>Daily Note frontmatter</strong>, a <strong>90-day Markdown log</strong>, and ready-to-paste <strong>Dataview</strong> queries.
+      </p>
+      <div class="trust-strip" style="margin-top:0">
+        <span>🔒 Local-first (zero server upload)</span>
+        <span>🗂️ Native Obsidian Properties YAML (snake_case numbers)</span>
+        <span>📐 Ready-to-paste Dataview TABLE queries</span>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Apple Health to Obsidian Converter">
+      <div id="dropzone" class="dropzone">
+        <input id="fileInput" type="file" accept=".xml,.zip,application/xml,text/xml,application/zip" aria-label="Select Apple Health export.xml or export.zip">
+        <p class="dropzone-title">Drop <code>export.zip</code> or <code>export.xml</code> here</p>
+        <p class="dropzone-sub">No unzipping needed · Streams 500MB+ exports locally inside a Web Worker</p>
+      </div>
+
+      <div class="tool-controls">
+        <div class="btn-row">
+          <button id="sampleBtn" type="button" class="btn btn-primary btn-sm">✨ Try Sample Data (1-click demo)</button>
+          <a class="btn btn-ghost btn-sm" href="../xml-to-csv/">Need CSV or JSON? →</a>
+        </div>
+        <div class="field-group">
+          <label for="daySelect">Preview Daily Note YAML:</label>
+          <select id="daySelect" disabled>
+            <option>Load data first…</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="errorBox" class="notice-error" role="alert"></div>
+
+      <div id="progressWrap" class="progress-wrap">
+        <div class="progress-bar-track">
+          <div id="progressFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progressStatus">Streaming locally…</span>
+          <span id="progressStats">0%</span>
+        </div>
+      </div>
+
+      <div id="outputPanel" class="output-panel">
+        <div class="stat-strip">
+          <div class="stat-box"><div class="k">Records Scanned</div><div id="statRecords" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Daily Notes Ready</div><div id="statDays" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Workouts</div><div id="statWorkouts" class="v">—</div></div>
+          <div class="stat-box"><div class="k">Parse Time</div><div id="statTime" class="v">—</div></div>
+        </div>
+
+        <div class="toolbar-bar">
+          <div class="tabs" role="tablist">
+            <button id="tabDailyYaml" type="button" class="tab-btn active" role="tab" aria-selected="true">Daily Note YAML</button>
+            <button id="tabMoc" type="button" class="tab-btn" role="tab" aria-selected="false">Health MOC (.md)</button>
+            <button id="tabLog" type="button" class="tab-btn" role="tab" aria-selected="false">90-Day Log Table</button>
+            <button id="tabDataview" type="button" class="tab-btn" role="tab" aria-selected="false">Dataview Queries</button>
+          </div>
+          <div class="btn-row">
+            <button id="copyActiveBtn" type="button" class="btn btn-primary btn-sm">Copy Current Tab</button>
+            <button id="downloadMocBtn" type="button" class="btn btn-secondary btn-sm">Download Health-MOC.md</button>
+            <button id="downloadLogBtn" type="button" class="btn btn-secondary btn-sm">Download 90-Day-Log.md</button>
+          </div>
+        </div>
+
+        <div class="code-window">
+          <div class="code-window-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span id="codeTabTitle">YYYY-MM-DD.md</span>
+          </div>
+          <pre id="codeOutput" class="code-body"></pre>
+        </div>
+
+        <div class="funnel-banner">
+          <div class="funnel-copy">
+            <h3>Coming Soon: Local-First Auto-Sync Straight Into Your Vault</h3>
+            <p>
+              We’re building the <strong>HealthDock iPhone &amp; Mac apps</strong> to sync Apple Health every day over Bluetooth &amp; local Wi-Fi into a plain folder of Markdown &amp; JSON files on your Mac—just point Obsidian at that folder with zero cloud plugins or manual exports.
+            </p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-secondary btn-sm" href="mailto:zhangxingyiopenclaw@gmail.com?subject=Notify%20me%20when%20HealthDock%20launches&body=Hi%2C%20please%20let%20me%20know%20when%20HealthDock%20for%20iPhone%20%26%20Mac%20is%20live%20on%20the%20App%20Store.">Get Launch Notification</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block card">
+      <h2>Recommended Obsidian Vault Structure for Apple Health</h2>
+      <div class="grid-3" style="margin-top:12px">
+        <div>
+          <h3><code>Health/Health-MOC.md</code></h3>
+          <p class="muted" style="margin:0;font-size:14px">Drop the downloaded MOC note into your vault for instant 7d/30d/90d baselines, ≥2 SD unusual days, and yearly trends—compatible with Obsidian Copilot &amp; Smart Connections.</p>
+        </div>
+        <div>
+          <h3><code>Daily Notes/YYYY-MM-DD.md</code></h3>
+          <p class="muted" style="margin:0;font-size:14px">Paste the clean numeric YAML properties (`sleep_hours`, `hrv_ms`, `resting_hr`, `steps`, `workouts`) into your Daily Note template for native Obsidian Properties filtering.</p>
+        </div>
+        <div>
+          <h3><code>Dataview</code> Dashboards</h3>
+          <p class="muted" style="margin:0;font-size:14px">Copy our ready-made Dataview tab snippets to automatically list low-HRV recovery days, weekly sleep averages, and workout logs across your Daily Notes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>Obsidian &amp; Privacy FAQ</h2>
+      <details class="faq-item">
+        <summary>Why are all YAML property values pure numbers instead of strings with units?</summary>
+        <p>Obsidian Properties and Dataview math functions (`average()`, `sum()`, sorting, and comparison filters like `WHERE sleep_hours &lt; 6.5`) require numeric YAML values rather than strings like `"6.5h"`. Units are encoded clearly in the key names (`sleep_hours`, `hrv_ms`, `resting_hr`, `weight_kg`).</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does this fix Apple Watch + iPhone step double-counting and split sleep segments?</summary>
+        <p>Yes. HealthDock’s local Web Worker merges overlapping sleep intervals across each 18:00–12:00 night window and deduplicates Apple Watch + iPhone cumulative step/calorie totals before generating your Obsidian Markdown.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is any data sent to a server?</summary>
+        <p>Zero bytes. Parsing happens entirely offline inside your browser—matching Obsidian’s local-first philosophy.</p>
+      </details>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 HealthDock · 100% browser-local Apple Health tools</div>
+      <div class="footer-links">
+        <a href="../../">Home</a>
+        <a href="../apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-to-claude/">Claude</a>
+        <a href="../apple-health-to-gemini/">Gemini</a>
+        <a href="../apple-health-to-grok/">Grok</a>
+        <a href="../apple-health-to-perplexity/">Perplexity</a>
+        <a href="../apple-health-to-deepseek/">DeepSeek</a>
+        <a href="../xml-to-csv/">XML → CSV</a>
+        <a href="../../privacy.html">Privacy</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+  (() => {
+    const worker = new Worker('../../../assets/health-worker.js');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const daySelect = document.getElementById('daySelect');
+    const errorBox = document.getElementById('errorBox');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressFill = document.getElementById('progressFill');
+    const progressStatus = document.getElementById('progressStatus');
+    const progressStats = document.getElementById('progressStats');
+    const outputPanel = document.getElementById('outputPanel');
+    const codeOutput = document.getElementById('codeOutput');
+    const codeTabTitle = document.getElementById('codeTabTitle');
+    const copyActiveBtn = document.getElementById('copyActiveBtn');
+    const downloadMocBtn = document.getElementById('downloadMocBtn');
+    const downloadLogBtn = document.getElementById('downloadLogBtn');
+
+    const tabs = {
+      daily: document.getElementById('tabDailyYaml'),
+      moc: document.getElementById('tabMoc'),
+      log: document.getElementById('tabLog'),
+      dataview: document.getElementById('tabDataview'),
+    };
+
+    let activeTab = 'daily';
+    let currentMarkdown = '';
+    let parsedDays = [];
+
+    const DATAVIEW_SNIPPET = `# Apple Health Dataview Snippets
+
+## 1. Last 14 Days Health Table
+\`\`\`dataview
+TABLE
+  sleep_hours AS "Sleep (h)",
+  deep_sleep_min AS "Deep (m)",
+  resting_hr AS "RHR",
+  hrv_ms AS "HRV (ms)",
+  steps AS "Steps",
+  workouts AS "Workouts"
+FROM "Daily Notes"
+WHERE sleep_hours != null OR resting_hr != null
+SORT file.name DESC
+LIMIT 14
+\`\`\`
+
+## 2. Low-Sleep or Recovery Watch Days
+\`\`\`dataview
+TABLE
+  sleep_hours AS "Sleep (h)",
+  resting_hr AS "RHR",
+  hrv_ms AS "HRV (ms)"
+FROM "Daily Notes"
+WHERE (sleep_hours != null AND sleep_hours < 6.5) OR (hrv_ms != null AND hrv_ms < 45)
+SORT file.name DESC
+LIMIT 20
+\`\`\`
+
+## 3. Workout Days Log
+\`\`\`dataview
+TABLE
+  workouts AS "Session",
+  workout_minutes AS "Minutes",
+  active_kcal AS "Active kcal",
+  vo2max AS "VO2max"
+FROM "Daily Notes"
+WHERE workout_minutes > 0
+SORT file.name DESC
+LIMIT 20
+\`\`\`
+`;
+
+    function buildDailyNoteYaml(day) {
+      if (!day) return '# Load an Apple Health export to preview Daily Note YAML.';
+      const v = day.values || {};
+      const lines = ['---', `date: ${day.date}`, 'tags:', '  - daily-note', '  - apple-health'];
+      if (v.sleep_min != null) lines.push(`sleep_hours: ${(v.sleep_min / 60).toFixed(2)}`);
+      if (v.deep_min != null) lines.push(`deep_sleep_min: ${Math.round(v.deep_min)}`);
+      if (v.rem_min != null) lines.push(`rem_sleep_min: ${Math.round(v.rem_min)}`);
+      if (v.resting_hr_avg != null) lines.push(`resting_hr: ${Math.round(v.resting_hr_avg)}`);
+      if (v.hrv_sdnn_ms != null) lines.push(`hrv_ms: ${Math.round(v.hrv_sdnn_ms)}`);
+      if (v.steps != null) lines.push(`steps: ${Math.round(v.steps)}`);
+      if (v.active_kcal != null) lines.push(`active_kcal: ${Math.round(v.active_kcal)}`);
+      if (v.exercise_min != null) lines.push(`exercise_min: ${Math.round(v.exercise_min)}`);
+      if (v.spo2_pct != null) lines.push(`spo2_pct: ${Number(v.spo2_pct).toFixed(1)}`);
+      if (v.resp_rate != null) lines.push(`resp_rate: ${Number(v.resp_rate).toFixed(1)}`);
+      if (v.vo2max != null) lines.push(`vo2max: ${Number(v.vo2max).toFixed(1)}`);
+      if (v.weight_kg != null) lines.push(`weight_kg: ${Number(v.weight_kg).toFixed(1)}`);
+      const ws = day.workouts || [];
+      if (ws.length) {
+        const totalMin = ws.reduce((s, w) => s + (w.minutes || 0), 0);
+        lines.push(`workout_minutes: ${Math.round(totalMin)}`);
+        lines.push('workouts:');
+        ws.forEach((w) => lines.push(`  - "${w.type} (${Math.round(w.minutes)}m)"`));
+      }
+      lines.push('---', '', `# ${day.date}`, '', '## Health Snapshot', '');
+      if (v.sleep_min != null) lines.push(`- **Sleep**: ${(v.sleep_min / 60).toFixed(1)} h` + (v.deep_min != null ? ` (Deep ${Math.round(v.deep_min)}m, REM ${Math.round(v.rem_min || 0)}m)` : ''));
+      if (v.resting_hr_avg != null || v.hrv_sdnn_ms != null) lines.push(`- **Recovery**: RHR ${v.resting_hr_avg != null ? Math.round(v.resting_hr_avg) + ' bpm' : '—'} · HRV ${v.hrv_sdnn_ms != null ? Math.round(v.hrv_sdnn_ms) + ' ms' : '—'}`);
+      if (v.steps != null) lines.push(`- **Activity**: ${Math.round(v.steps).toLocaleString('en-US')} steps · ${v.active_kcal != null ? Math.round(v.active_kcal) + ' kcal' : '—'}`);
+      if (ws.length) lines.push(`- **Workouts**: ${ws.map(w => `${w.type} (${Math.round(w.minutes)} min)`).join(', ')}`);
+      lines.push('', '## Notes', '- ');
+      return lines.join('\n') + '\n';
+    }
+
+    function buildObsidianMoc() {
+      const latest = parsedDays.length ? parsedDays[parsedDays.length - 1].date : new Date().toISOString().slice(0, 10);
+      const frontmatter = [
+        '---',
+        'type: health-moc',
+        `updated: ${latest}`,
+        `days_recorded: ${parsedDays.length}`,
+        'source: Apple Health (via HealthDock local tool)',
+        'tags:',
+        '  - health',
+        '  - apple-health',
+        '  - moc',
+        '---',
+        ''
+      ].join('\n');
+      return frontmatter + currentMarkdown;
+    }
+
+    function build90DayLogMarkdown() {
+      const slice = parsedDays.slice(-90).reverse();
+      const latest = slice.length ? slice[0].date : '';
+      const lines = [
+        '---',
+        'type: health-daily-log',
+        `updated: ${latest}`,
+        `rows: ${slice.length}`,
+        'tags:',
+        '  - health',
+        '  - apple-health',
+        '---',
+        '',
+        '# Apple Health — Last 90 Days Log',
+        '',
+        '| Date | Sleep (h) | Deep (m) | REM (m) | RHR (bpm) | HRV (ms) | Steps | Active kcal | Workouts |',
+        '|---|---:|---:|---:|---:|---:|---:|---:|---|',
+      ];
+      slice.forEach((d) => {
+        const v = d.values || {};
+        const wStr = (d.workouts || []).map((w) => `${w.type} ${Math.round(w.minutes)}m`).join('; ') || '—';
+        lines.push(`| [[${d.date}]] | ${v.sleep_min != null ? (v.sleep_min / 60).toFixed(1) : '—'} | ${v.deep_min != null ? Math.round(v.deep_min) : '—'} | ${v.rem_min != null ? Math.round(v.rem_min) : '—'} | ${v.resting_hr_avg != null ? Math.round(v.resting_hr_avg) : '—'} | ${v.hrv_sdnn_ms != null ? Math.round(v.hrv_sdnn_ms) : '—'} | ${v.steps != null ? Math.round(v.steps).toLocaleString('en-US') : '—'} | ${v.active_kcal != null ? Math.round(v.active_kcal) : '—'} | ${wStr} |`);
+      });
+      return lines.join('\n') + '\n';
+    }
+
+    function renderActiveTab() {
+      Object.entries(tabs).forEach(([k, btn]) => {
+        const on = k === activeTab;
+        btn.classList.toggle('active', on);
+        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      if (activeTab === 'daily') {
+        const day = parsedDays.find((d) => d.date === daySelect.value) || parsedDays[parsedDays.length - 1];
+        codeTabTitle.textContent = day ? `${day.date}.md (Obsidian Daily Note)` : 'Daily Note YAML';
+        codeOutput.textContent = buildDailyNoteYaml(day);
+      } else if (activeTab === 'moc') {
+        codeTabTitle.textContent = 'Health-MOC.md (Obsidian Properties + Baselines)';
+        codeOutput.textContent = buildObsidianMoc();
+      } else if (activeTab === 'log') {
+        codeTabTitle.textContent = 'Apple-Health-90-Day-Log.md (Wiki-linked to [[YYYY-MM-DD]])';
+        codeOutput.textContent = build90DayLogMarkdown();
+      } else {
+        codeTabTitle.textContent = 'Dataview-Dashboard.md';
+        codeOutput.textContent = DATAVIEW_SNIPPET;
+      }
+    }
+
+    Object.entries(tabs).forEach(([k, btn]) => btn.addEventListener('click', () => { activeTab = k; renderActiveTab(); }));
+    daySelect.addEventListener('change', () => { if (activeTab === 'daily') renderActiveTab(); });
+
+    function downloadBlob(content, filename) {
+      const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    function flashButton(btn, label) {
+      const prev = btn.textContent; btn.textContent = label;
+      setTimeout(() => { btn.textContent = prev; }, 1800);
+    }
+    async function copyText(text, btn) {
+      try { await navigator.clipboard.writeText(text); flashButton(btn, 'Copied!'); }
+      catch {
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove(); flashButton(btn, 'Copied!');
+      }
+    }
+
+    copyActiveBtn.addEventListener('click', () => copyText(codeOutput.textContent, copyActiveBtn));
+    downloadMocBtn.addEventListener('click', () => downloadBlob(buildObsidianMoc(), 'Health-MOC.md'));
+    downloadLogBtn.addEventListener('click', () => downloadBlob(build90DayLogMarkdown(), 'Apple-Health-90-Day-Log.md'));
+
+    function showError(msg) { errorBox.textContent = msg; errorBox.classList.add('visible'); }
+    function clearError() { errorBox.textContent = ''; errorBox.classList.remove('visible'); }
+
+    function startFile(file) {
+      if (!file) return;
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '2%';
+      progressStatus.textContent = `Streaming ${file.name} locally…`;
+      progressStats.textContent = 'Starting…';
+      worker.postMessage({ action: 'parse', file, windowDays: 90, profile: '' });
+    }
+    fileInput.addEventListener('change', (e) => { if (e.target.files && e.target.files[0]) startFile(e.target.files[0]); });
+    ['dragenter', 'dragover'].forEach((ev) => dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); }));
+    ['dragleave', 'drop'].forEach((ev) => dropzone.addEventListener(ev, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); }));
+    dropzone.addEventListener('drop', (e) => { if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) startFile(e.dataTransfer.files[0]); });
+    sampleBtn.addEventListener('click', () => {
+      clearError();
+      progressWrap.classList.add('visible');
+      progressFill.style.width = '60%';
+      progressStatus.textContent = 'Generating synthetic demo dataset…';
+      progressStats.textContent = 'Sample';
+      worker.postMessage({ action: 'sample', windowDays: 90, profile: '' });
+    });
+
+    worker.onmessage = (e) => {
+      const data = e.data || {};
+      if (data.type === 'progress') {
+        progressFill.style.width = data.percent + '%';
+        progressStatus.textContent = `Scanned ${data.recordsScanned.toLocaleString('en-US')} records (${data.mbPerSec.toFixed(1)} MB/s)`;
+        progressStats.textContent = `${(data.doneBytes / (1024 * 1024)).toFixed(1)} / ${(data.totalBytes / (1024 * 1024)).toFixed(1)} MB (${data.percent}%)`;
+      } else if (data.type === 'done') {
+        progressFill.style.width = '100%';
+        progressStatus.textContent = data.isSample ? 'Loaded synthetic sample data (not real user data)' : `Finished streaming ${data.summary.sourceLabel} locally`;
+        progressStats.textContent = '100%';
+        document.getElementById('statRecords').textContent = data.summary.recordsScanned.toLocaleString('en-US');
+        document.getElementById('statDays').textContent = data.summary.daysCount.toLocaleString('en-US');
+        document.getElementById('statWorkouts').textContent = data.summary.workoutsCount.toLocaleString('en-US');
+        document.getElementById('statTime').textContent = data.summary.elapsedMs < 1000 ? `${data.summary.elapsedMs} ms` : `${(data.summary.elapsedMs / 1000).toFixed(1)} s`;
+        currentMarkdown = data.markdown;
+        worker.postMessage({
+          action: 'export',
+          options: {
+            format: 'daily-json',
+            metrics: ['resting_hr_avg', 'hrv_sdnn_ms', 'sleep_min', 'deep_min', 'rem_min', 'steps', 'active_kcal', 'exercise_min', 'spo2_pct', 'resp_rate', 'vo2max', 'weight_kg'],
+          },
+        });
+      } else if (data.type === 'exported') {
+        const parsed = JSON.parse(data.content);
+        parsedDays = parsed.days || [];
+        daySelect.innerHTML = '';
+        parsedDays.slice(-60).reverse().forEach((d) => {
+          const opt = document.createElement('option');
+          opt.value = d.date;
+          opt.textContent = d.date;
+          daySelect.appendChild(opt);
+        });
+        daySelect.disabled = parsedDays.length === 0;
+        outputPanel.classList.add('visible');
+        renderActiveTab();
+      } else if (data.type === 'error') {
+        progressWrap.classList.remove('visible');
+        showError(data.message);
+      }
+    };
+  })();
+  </script>
+</body>
+</html>
