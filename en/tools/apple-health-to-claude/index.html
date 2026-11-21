@@ -46,7 +46,7 @@
         "name": "Why use this instead of Claude's built-in Apple Health connector?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Claude's built-in Apple Health integration is currently limited to US accounts on iOS with a paid Claude plan. This tool works in every country (UK, EU, Canada, Australia, Asia), works with Claude Desktop, Claude Code, Cursor, and ChatGPT, and keeps raw records off the cloud."
+          "text": "According to Anthropic's official documentation, Claude's native Apple Health integration on iOS is in beta for Pro, Max, and Ultra plans only and currently limited to users in the US. This tool works in every country on any Claude plan (including Free), works with Claude Web, Claude Desktop, Claude Code, and Cursor, and parses your export 100% locally."
         }
       },
       {
@@ -205,8 +205,12 @@
         <p>A typical Apple Health export contains millions of raw rows (300MB–2GB), which exceeds every LLM context window. HealthDock’s <code>context.md</code> condenses years of records into ~2KB of high-signal Markdown: 7d/30d/90d rolling baselines, statistically unusual days (≥2 SD), yearly trends, and 8-week training load.</p>
       </details>
       <details class="faq-item">
-        <summary>Does it work if I’m outside the US or using Claude Desktop / Claude Code?</summary>
-        <p>Yes. Unlike Anthropic’s US-only mobile Apple Health connector, <code>context.md</code> is plain Markdown—paste it into Claude web, Claude Desktop, ChatGPT, or Gemini anywhere in the world, or let HealthDock for Mac maintain a full local workspace for Claude Code and Codex.</p>
+        <summary>Does it work if I’m outside the US or using Claude Free / Desktop / Claude Code?</summary>
+        <p>Yes. Per <a href="https://support.claude.com/en/articles/11869619-use-claude-with-ios-apps" target="_blank" rel="noopener noreferrer">Anthropic’s official iOS integration docs</a>, Claude’s native Apple Health feature is in beta on <strong>Pro, Max, and Ultra</strong> plans and currently limited to users in the <strong>US</strong> on iOS (policies may expand over time). HealthDock’s plain Markdown <code>context.md</code> works on every plan in every country—including Claude Web, Claude Desktop, and Claude Code.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I opt out of model training before pasting my health summary into Claude?</summary>
+        <p>HealthDock never uploads your Apple Health export. On consumer Claude plans (Free, Pro, Max), you can turn off <strong>Help improve our AI models</strong> under <strong>Settings → Privacy</strong>—see <a href="https://privacy.claude.com/en/articles/12109829-how-do-i-change-my-model-improvement-privacy-settings" target="_blank" rel="noopener noreferrer">Anthropic’s official Privacy Settings guide</a>.</p>
       </details>
       <details class="faq-item">
         <summary>Is this medical advice?</summary>

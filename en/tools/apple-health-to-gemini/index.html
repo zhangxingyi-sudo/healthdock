@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Apple Health to Google Gemini &amp; NotebookLM — Free Local Converter | HealthDock</title>
-  <meta name="description" content="Convert Apple Health export.zip or export.xml locally in your browser into a structured context.md, NotebookLM .txt source, and multi-year daily JSON for Google Gemini's 1M+ token context window. Zero upload.">
+  <meta name="description" content="Convert Apple Health export.zip or export.xml locally in your browser into a structured context.md, NotebookLM (Gemini Notebook) .txt source, and multi-year daily JSON tailored for Google Gemini (32k Free up to 1M tokens on AI Pro &amp; Ultra). Zero upload.">
   <link rel="canonical" href="https://gethealthdock.com/en/tools/apple-health-to-gemini/">
   <link rel="icon" href="../../../icon.png">
   <link rel="stylesheet" href="../../../assets/site.css">
@@ -25,7 +25,7 @@
     "operatingSystem": "Any (Web Browser)",
     "url": "https://gethealthdock.com/en/tools/apple-health-to-gemini/",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "description": "Free 100% browser-local streaming converter that prepares Apple Health export.zip or export.xml for Google Gemini (1M+ context window), Gemini Gems, and NotebookLM with zero server upload."
+    "description": "Free 100% browser-local streaming converter that prepares Apple Health export.zip or export.xml for Google Gemini (32k Free, 128k AI Plus, up to 1M tokens on AI Pro & AI Ultra), Gemini Gems, and NotebookLM (Gemini Notebook) with zero server upload."
   }
   </script>
   <script type="application/ld+json">
@@ -35,18 +35,18 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Why not upload Apple Health export.xml directly to Google Gemini's 1M token context?",
+        "name": "Why not upload Apple Health export.xml directly to Google Gemini?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Even Gemini's 1M–2M token window cannot hold a raw 500MB Apple Health XML file (which equals 100M+ tokens of repetitive XML attributes). HealthDock locally strips the noise and outputs a ~2KB baseline context.md plus a clean multi-year daily JSON file that fits comfortably inside Gemini's long context window."
+          "text": "According to Google's official Gemini Apps limits, context windows range from 32k tokens (Free) and 128k tokens (AI Plus) up to 1 million tokens (AI Pro and AI Ultra). Even 1 million tokens cannot hold a raw 500MB Apple Health XML file (100M+ tokens). HealthDock locally strips noise into a ~2KB context.md (fits every tier, including Free) plus a clean multi-year daily JSON for AI Pro/Ultra."
         }
       },
       {
         "@type": "Question",
-        "name": "Can I upload my Apple Health summary into Google NotebookLM?",
+        "name": "Can I upload my Apple Health summary into Google NotebookLM (Gemini Notebook)?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Click 'Download .txt for NotebookLM' after parsing your export locally, then add that file as a source inside NotebookLM to run grounded Q&A or generate a personalized Audio Overview alongside your lab reports."
+          "text": "Yes. Google NotebookLM (also called Gemini Notebook) accepts .txt, .md, and .csv sources up to 500,000 words or 200 MB per file. Click 'Download .txt (NotebookLM)' after parsing your export locally, then add it as a source for grounded Q&A or an Audio Overview."
         }
       },
       {
@@ -54,15 +54,15 @@
         "name": "How do I protect my privacy when sharing health summaries with Google Gemini?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "HealthDock never uploads your Apple Health export—everything parses locally in your browser Web Worker. In Google Gemini, open Activity (myactivity.google.com/product/gemini) to turn off Gemini Apps Activity if you do not want chats reviewed or used to improve models."
+          "text": "HealthDock never uploads your Apple Health export—everything parses locally in your browser Web Worker. In Google Gemini, open your Gemini Apps History / Keep Activity setting (formerly Gemini Apps Activity) to turn off saved history if you do not want chats retained for model improvement."
         }
       },
       {
         "@type": "Question",
-        "name": "What makes Gemini especially strong for Apple Health analysis?",
+        "name": "What makes Gemini strong for multi-year Apple Health analysis?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Gemini's massive long-context window excels when you pair HealthDock's compact context.md with the full multi-year daily JSON—letting Gemini spot seasonal shifts, year-over-year fitness trajectories, and long-term sleep/HRV patterns in a single prompt."
+          "text": "On Google AI Pro and AI Ultra plans (1 million token context window), pairing HealthDock's compact context.md with the full multi-year daily JSON lets Gemini scan years of daily sleep, HRV, VO2max, and workouts in a single prompt—while Free (32k) and AI Plus (128k) users get instant insights from the ~2KB context.md."
         }
       }
     ]
@@ -91,10 +91,10 @@
 
   <main class="container container-narrow">
     <section class="hero" style="padding-bottom:20px">
-      <div class="eyebrow"><span class="dot"></span>100% Local in Your Browser · Built for Gemini 1M Context &amp; NotebookLM · Zero Upload</div>
+      <div class="eyebrow"><span class="dot"></span>100% Local in Your Browser · Built for Gemini (Free–1M) &amp; NotebookLM · Zero Upload</div>
       <h1>Analyze Apple Health Data with Google Gemini &amp; NotebookLM</h1>
       <p class="lead">
-        Even Gemini’s 1M+ token context window gets overwhelmed by a 500MB Apple Health <code>export.xml</code>. Drop your iPhone’s <code>export.zip</code> below to stream-parse it locally into a high-signal <code>context.md</code>, a <strong>NotebookLM-ready <code>.txt</code></strong>, and a clean <strong>Multi-Year Daily JSON</strong> built for Gemini’s long-context trend analysis.
+        Even Google AI Pro/Ultra’s <strong>1 million token</strong> context window gets overwhelmed by a raw 500MB Apple Health <code>export.xml</code>—and Free (32k) or AI Plus (128k) plans hit limits even sooner. Drop your iPhone’s <code>export.zip</code> below to stream-parse it locally into a ~2KB <code>context.md</code>, a <strong>NotebookLM-ready <code>.txt</code></strong>, and a clean <strong>Multi-Year Daily JSON</strong>.
       </p>
       <div class="trust-strip" style="margin-top:0">
         <span>🔒 100% offline Web Worker parsing</span>
@@ -197,8 +197,8 @@
       <h2>3 Workflows Tailored for Google Gemini &amp; NotebookLM</h2>
       <div class="grid-3" style="margin-top:12px">
         <div>
-          <h3>1. Multi-Year Deep Dive (Gemini Pro)</h3>
-          <p class="muted" style="margin:0;font-size:14px">Download the clean <strong>Multi-Year JSON</strong> and attach it alongside <code>context.md</code> in Gemini. Gemini’s 1M+ token window can scan every single day across 5+ years to uncover seasonal patterns.</p>
+          <h3>1. Multi-Year Deep Dive (AI Pro / Ultra)</h3>
+          <p class="muted" style="margin:0;font-size:14px">Download the clean <strong>Multi-Year JSON</strong> and attach it alongside <code>context.md</code> in Gemini. On AI Pro/Ultra’s 1 million token window, Gemini can scan years of daily records to uncover seasonal patterns.</p>
         </div>
         <div>
           <h3>2. NotebookLM Source + Audio</h3>
@@ -214,16 +214,16 @@
     <section class="section-block">
       <h2>Gemini &amp; Privacy FAQ</h2>
       <details class="faq-item">
-        <summary>Why does raw export.xml still fail in Gemini’s 1M token window?</summary>
-        <p>A multi-year <code>export.xml</code> is often 500MB–2GB of verbose XML attributes—more than 100 million tokens. HealthDock strips duplicates and verbose metadata locally, producing a ~2KB baseline summary and a clean daily JSON (typically 100–400KB for multiple years) that Gemini ingests effortlessly.</p>
+        <summary>What are Google Gemini’s actual context window limits by plan?</summary>
+        <p>Per <a href="https://support.google.com/gemini/answer/16275805?hl=en" target="_blank" rel="noopener noreferrer">Google’s official Gemini Apps limits page</a>, context capacity is <strong>32k tokens</strong> without an AI plan, <strong>128k tokens</strong> on AI Plus, and <strong>1 million tokens</strong> on AI Pro &amp; AI Ultra (subject to updates). Raw 500MB XML exceeds even 1M tokens—whereas HealthDock’s ~2KB <code>context.md</code> (~600 tokens) fits every tier, and the clean Multi-Year JSON fits comfortably on AI Pro/Ultra.</p>
       </details>
       <details class="faq-item">
-        <summary>How do I turn off Gemini Apps Activity before pasting health data?</summary>
-        <p>Visit your Google <strong>Gemini Apps Activity</strong> settings and pause activity tracking if you prefer not to have chats saved or reviewed. HealthDock itself is a static browser-only tool with zero backend servers.</p>
+        <summary>How do I manage Gemini Apps history before pasting health data?</summary>
+        <p>Follow <a href="https://support.google.com/gemini/answer/13278892?hl=en" target="_blank" rel="noopener noreferrer">Google’s official Gemini Apps history guide</a> to turn off <strong>Keep Activity</strong> (formerly <em>Gemini Apps Activity</em>) if you prefer not to have chats saved to your Google Account or used to improve models. HealthDock itself is a static browser-only tool with zero backend servers.</p>
       </details>
       <details class="faq-item">
-        <summary>Does NotebookLM accept Markdown or JSON files?</summary>
-        <p>NotebookLM accepts plain text (<code>.txt</code>) and Markdown (<code>.md</code>) sources directly. Use our one-click <strong>Download .txt (NotebookLM)</strong> button for immediate upload compatibility.</p>
+        <summary>What file formats and limits does NotebookLM (Gemini Notebook) support?</summary>
+        <p>Per <a href="https://support.google.com/notebooklm/answer/16215270?hl=en" target="_blank" rel="noopener noreferrer">Google’s official NotebookLM / Gemini Notebook source docs</a>, supported sources include <code>.txt</code>, <code>.md</code>, <code>.csv</code>, and <code>.pdf</code> (up to 500,000 words or 200 MB per uploaded file). Use our one-click <strong>Download .txt (NotebookLM)</strong> button for immediate upload compatibility.</p>
       </details>
       <details class="faq-item">
         <summary>Is this medical advice?</summary>
@@ -254,7 +254,7 @@
     const PROMPTS = [
       {
         title: 'Multi-Year & Seasonal Trend Analysis',
-        desc: 'Pair context.md with the Multi-Year JSON to leverage Gemini’s 1M+ token context window.',
+        desc: 'Pair context.md with the Multi-Year JSON to leverage Google AI Pro/Ultra’s 1 million token context window.',
         text: 'Analyze my Apple Health baseline summary below (and the attached multi-year daily JSON if included). Identify multi-year trajectories and seasonal patterns across sleep duration, resting heart rate, HRV, steps, VO2max, and weight. Compare my last 30 days against both my 90-day baseline and the same season in prior years, call out meaningful inflection points, and suggest 3 realistic focus areas—clearly distinguishing observations from medical advice.'
       },
       {

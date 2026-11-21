@@ -38,7 +38,15 @@
         "name": "Why does uploading Apple Health export.zip or export.xml directly to ChatGPT fail?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Apple Health exports typically weigh 300MB to 2GB with millions of verbose XML lines. ChatGPT's Code Interpreter frequently hits memory limits or execution timeouts when parsing raw XML. Converting locally into a ~2KB context.md summary plus a ~50KB clean daily CSV lets ChatGPT analyze trends and plot Python charts in seconds."
+          "text": "OpenAI caps ChatGPT file uploads at 512 MB per file and 2 million tokens for text/document files, while multi-year Apple Health XML exports routinely exceed 500MB–2GB with millions of raw lines. Converting locally into a ~2KB context.md summary plus a compact daily CSV lets ChatGPT analyze trends and plot Python charts in seconds."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why use this instead of Health in ChatGPT's native Apple Health connection?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "According to OpenAI's official Help Center, Health in ChatGPT is currently available only to eligible users in the U.S. (and requires an iPhone to link Apple Health). HealthDock works in every country (including the UK, EU, Canada, Australia, and Asia), runs 100% locally in your browser without syncing raw HealthKit data to cloud servers, and outputs clean CSV files for Python charts."
         }
       },
       {
@@ -214,12 +222,16 @@
     <section class="section-block">
       <h2>ChatGPT &amp; Privacy FAQ</h2>
       <details class="faq-item">
-        <summary>Why does ChatGPT fail or time out on Apple Health export.zip?</summary>
-        <p>Raw Apple Health exports contain millions of overlapping sensor rows—often 300MB to 2GB uncompressed. ChatGPT’s Python sandbox hits memory or time limits reading raw XML and frequently double-counts steps across iPhone and Apple Watch. HealthDock cleans, deduplicates, and summarizes everything locally in your browser first.</p>
+        <summary>Why does ChatGPT fail or reject Apple Health export.zip?</summary>
+        <p>Per <a href="https://help.openai.com/en/articles/8555545-uploading-files-and-audio-to-chatgpt" target="_blank" rel="noopener noreferrer">OpenAI’s official File Uploads documentation</a>, ChatGPT caps document uploads at <strong>512 MB per file</strong> and <strong>2 million tokens</strong> for text files (with separate size caps for spreadsheets). Multi-year Apple Health exports frequently exceed those limits and contain overlapping Watch + iPhone rows. HealthDock cleans, deduplicates, and summarizes everything locally first.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What about OpenAI’s native “Health in ChatGPT” Apple Health connector?</summary>
+        <p>Per <a href="https://help.openai.com/en/articles/20001036-health-in-chatgpt" target="_blank" rel="noopener noreferrer">OpenAI’s Health in ChatGPT Help article</a>, native Health connections are currently limited to eligible users <strong>in the U.S.</strong> (Free, Go, Plus, and Pro, requiring an iPhone to link Apple Health; availability can change). HealthDock works in every country worldwide—including the UK, EEA, Switzerland, Canada, and Asia—and keeps raw HealthKit records off cloud servers.</p>
       </details>
       <details class="faq-item">
         <summary>How do I stop ChatGPT from training on my health summary?</summary>
-        <p>Open <strong>ChatGPT → Settings → Data Controls</strong> and turn off <strong>Improve the model for everyone</strong>, or paste your summary into a <strong>Temporary Chat</strong>. HealthDock itself never transmits or stores your file anywhere.</p>
+        <p>Open <strong>ChatGPT → Settings → Data controls</strong> and turn off <strong>Improve the model for everyone</strong> (<a href="https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt" target="_blank" rel="noopener noreferrer">OpenAI Data Controls docs</a>), or paste your summary into a <a href="https://help.openai.com/en/articles/8914046-temporary-chat-in-chatgpt" target="_blank" rel="noopener noreferrer">Temporary Chat</a>. HealthDock itself never transmits or stores your file anywhere.</p>
       </details>
       <details class="faq-item">
         <summary>Does it work with free ChatGPT as well as ChatGPT Plus / Team?</summary>
