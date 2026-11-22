@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Apple Health on Mac — Sync iPhone Health Data Locally | HealthDock</title>
-  <meta name="description" content="Get Apple Health on your Mac without cloud servers or manual 500MB XML exports. Sync iPhone Health data locally over Bluetooth &amp; Wi-Fi into plain Markdown, daily JSON, GPX routes, and AI-ready context.md.">
+  <meta name="description" content="Get Apple Health on your Mac without cloud servers or manual 500MB XML exports. Sync iPhone Health data locally over Bluetooth &amp; Wi-Fi into plain Markdown, daily JSON, GPS route JSON, and AI-ready context.md.">
   <link rel="canonical" href="https://gethealthdock.com/en/apple-health-on-mac/">
   <link rel="icon" href="../../icon.png">
   <link rel="stylesheet" href="../../assets/site.css">
@@ -27,7 +27,7 @@
     "applicationCategory": "HealthApplication",
     "operatingSystem": "macOS 14+, iOS 17+",
     "url": "https://gethealthdock.com/en/apple-health-on-mac/",
-    "description": "Private, local-only companion apps for iPhone and Mac that automatically sync Apple Health data over Bluetooth and local Wi-Fi into plain daily JSON, monthly Markdown archives, ECG files, GPX workout routes, and an AI-ready context.md—with zero cloud servers."
+    "description": "Private, local-only companion apps for iPhone and Mac that automatically sync Apple Health data over Bluetooth and local Wi-Fi into plain daily JSON, monthly Markdown archives, ECG files, GPS route JSON files, and an AI-ready context.md—with zero cloud servers."
   }
   </script>
   <script type="application/ld+json">
@@ -56,7 +56,7 @@
         "name": "What files does HealthDock save on my Mac?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "HealthDock writes plain, human-readable files into a folder you choose: context.md (a ~2KB AI-ready summary with 7d/30d/90d baselines, ≥2 SD unusual days, yearly averages, and 8-week training volume), daily JSON files, monthly Markdown archives, ECG waveforms, GPX workout routes, and optional local AI workspace instructions for Claude Code, Codex, or Obsidian."
+          "text": "HealthDock writes plain, human-readable files into a folder you choose: context.md (a ~2KB AI-ready summary with 7d/30d/90d baselines, ≥2 SD unusual days, yearly averages, and 8-week training volume), daily JSON files, monthly Markdown archives, ECG waveforms, GPS route JSON files, and optional local AI workspace instructions for Claude Code, Codex, or Obsidian."
         }
       },
       {
@@ -102,7 +102,7 @@
       </div>
       <div class="trust-strip">
         <span>🔒 Direct Bluetooth &amp; local Wi-Fi only</span>
-        <span>📂 Plain Markdown, JSON, ECG &amp; GPX files you own</span>
+        <span>📂 Plain Markdown, JSON, ECG &amp; GPS route JSON files you own</span>
         <span>🤖 Auto-refreshes <code>context.md</code> for Claude, ChatGPT &amp; local LLMs</span>
       </div>
     </section>
@@ -113,7 +113,7 @@
         Apple brought the Health app to iPadOS, yet macOS remains completely left out. On a Mac, you can’t browse multi-year sleep and HRV trends on a big screen, you can’t keep a local Time Machine backup of structured health metrics, and desktop AI tools (Claude Desktop, Claude Code, Codex, Cursor, ChatGPT desktop, Ollama, and Obsidian) have zero direct access to your iPhone’s HealthKit store.
       </p>
       <p class="muted" style="margin:12px 0 0">
-        Meanwhile, native mobile Health connectors in <a href="https://support.claude.com/en/articles/11869619-use-claude-with-ios-apps" target="_blank" rel="noopener noreferrer">Claude</a> (Pro/Max/Ultra, US-only iOS), <a href="https://help.openai.com/en/articles/20001036-health-in-chatgpt" target="_blank" rel="noopener noreferrer">ChatGPT Health</a> (U.S. only), and <a href="https://www.perplexity.ai/help-center/en/articles/14035438-what-is-perplexity-health" target="_blank" rel="noopener noreferrer">Perplexity Health</a> (Pro/Max, US iOS) are region-locked or cloud-hosted—leaving international and privacy-first Mac users without a clean local workflow.
+        Meanwhile, native mobile Health connectors in <a href="https://support.claude.com/en/articles/11869619-use-claude-with-ios-apps" target="_blank" rel="noopener noreferrer">Claude</a> (Pro/Max/Ultra, US-only iOS), <a href="https://help.openai.com/en/articles/20001036-health-in-chatgpt" target="_blank" rel="noopener noreferrer">ChatGPT Health</a> (U.S. only), and <a href="https://www.perplexity.ai/help-center/en/articles/14035438-what-is-perplexity-health" target="_blank" rel="noopener noreferrer">Perplexity Health</a> (Pro/Max, US iOS) are region-locked or cloud-hosted—leaving international and privacy-first Mac users without a clean local workflow (as of Nov 2026).
       </p>
     </section>
 
@@ -147,7 +147,7 @@
                 <td><strong>HealthDock (iPhone + Mac)</strong><br><span class="small">Coming soon to App Store</span></td>
                 <td><strong>Automatic daily sync</strong> over Bluetooth + fast local Wi-Fi history catch-up</td>
                 <td><strong>100% local &amp; end-to-end encrypted</strong> between your iPhone &amp; Mac; zero servers</td>
-                <td><strong>Plain files in Finder</strong>: <code>context.md</code>, daily JSON, monthly Markdown, ECG &amp; GPX routes</td>
+                <td><strong>Plain files in Finder</strong>: <code>context.md</code>, daily JSON, monthly Markdown, ECG &amp; GPS route JSON</td>
               </tr>
             </tbody>
           </table>
@@ -176,7 +176,7 @@
 ├── archive/
 │   └── 2026-11.md   # Monthly log
 ├── ecg/             # Apple Watch ECG
-├── routes/          # Workout GPS (.gpx)
+├── routes/          # Workout GPS (JSON)
 ├── journal/         # Saved AI notes
 └── .claude/skills/  # Built-in reviews</pre>
         </div>

@@ -39,7 +39,7 @@
         "name": "Why does uploading Apple Health export.zip or export.xml directly to ChatGPT fail?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "OpenAI caps ChatGPT file uploads at 512 MB per file and 2 million tokens for text/document files, while multi-year Apple Health XML exports routinely exceed 500MB–2GB with millions of raw lines. Converting locally into a ~2KB context.md summary plus a compact daily CSV lets ChatGPT analyze trends and plot Python charts in seconds."
+          "text": "OpenAI caps ChatGPT file uploads at 512 MB per file and 2 million tokens for text/document files, while multi-year Apple Health XML exports routinely exceed 500MB–2GB with millions of raw lines (as of Nov 2026). Converting locally into a ~2KB context.md summary plus a compact daily CSV lets ChatGPT analyze trends and plot Python charts in seconds."
         }
       },
       {
@@ -47,7 +47,7 @@
         "name": "Why use this instead of Health in ChatGPT's native Apple Health connection?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "According to OpenAI's official Help Center, Health in ChatGPT is currently available only to eligible users in the U.S. (and requires an iPhone to link Apple Health). HealthDock works in every country (including the UK, EU, Canada, Australia, and Asia), runs 100% locally in your browser without syncing raw HealthKit data to cloud servers, and outputs clean CSV files for Python charts."
+          "text": "According to OpenAI's official Help Center, Health in ChatGPT is currently available only to eligible users in the U.S. (and requires an iPhone to link Apple Health; as of Nov 2026). HealthDock works in every country (including the UK, EU, Canada, Australia, and Asia), runs 100% locally in your browser without syncing raw HealthKit data to cloud servers, and outputs clean CSV files for Python charts."
         }
       },
       {
@@ -227,11 +227,11 @@
       <h2>ChatGPT &amp; Privacy FAQ</h2>
       <details class="faq-item">
         <summary>Why does ChatGPT fail or reject Apple Health export.zip?</summary>
-        <p>Per <a href="https://help.openai.com/en/articles/8555545-uploading-files-and-audio-to-chatgpt" target="_blank" rel="noopener noreferrer">OpenAI’s official File Uploads documentation</a>, ChatGPT caps document uploads at <strong>512 MB per file</strong> and <strong>2 million tokens</strong> for text files (with separate size caps for spreadsheets). Multi-year Apple Health exports frequently exceed those limits and contain overlapping Watch + iPhone rows. HealthDock cleans, deduplicates, and summarizes everything locally first.</p>
+        <p>Per <a href="https://help.openai.com/en/articles/8555545-uploading-files-and-audio-to-chatgpt" target="_blank" rel="noopener noreferrer">OpenAI’s official File Uploads documentation</a>, ChatGPT caps document uploads at <strong>512 MB per file</strong> and <strong>2 million tokens</strong> for text files (with separate size caps for spreadsheets; as of Nov 2026). Multi-year Apple Health exports frequently exceed those limits and contain overlapping Watch + iPhone rows. HealthDock cleans, deduplicates, and summarizes everything locally first.</p>
       </details>
       <details class="faq-item">
         <summary>What about OpenAI’s native “Health in ChatGPT” Apple Health connector?</summary>
-        <p>Per <a href="https://help.openai.com/en/articles/20001036-health-in-chatgpt" target="_blank" rel="noopener noreferrer">OpenAI’s Health in ChatGPT Help article</a>, native Health connections are currently limited to eligible users <strong>in the U.S.</strong> (Free, Go, Plus, and Pro, requiring an iPhone to link Apple Health; availability can change). HealthDock works in every country worldwide—including the UK, EEA, Switzerland, Canada, and Asia—and keeps raw HealthKit records off cloud servers.</p>
+        <p>Per <a href="https://help.openai.com/en/articles/20001036-health-in-chatgpt" target="_blank" rel="noopener noreferrer">OpenAI’s Health in ChatGPT Help article</a>, native Health connections are currently limited to eligible users <strong>in the U.S.</strong> (Free, Go, Plus, and Pro, requiring an iPhone to link Apple Health; availability can change; as of Nov 2026). HealthDock works in every country worldwide—including the UK, EEA, Switzerland, Canada, and Asia—and keeps raw HealthKit records off cloud servers.</p>
       </details>
       <details class="faq-item">
         <summary>How do I stop ChatGPT from training on my health summary?</summary>

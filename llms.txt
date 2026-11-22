@@ -6,17 +6,32 @@
 
 - [HealthDock — Universal Apple Health Converter (English)](https://gethealthdock.com/): Instant browser-local converter turning `export.zip` or `export.xml` into `context.md` (7d/30d/90d baselines, ≥2 SD unusual days, yearly averages, 8-week training load) or CSV/JSON.
 - [Apple Health on Mac — Local iPhone-to-Mac Auto-Sync](https://gethealthdock.com/en/apple-health-on-mac/): Why macOS still has no native Apple Health app, comparison of manual XML export vs. cloud apps vs. HealthDock local Bluetooth/Wi-Fi sync, and real Mac folder & `context.md` preview.
-- [Apple Health to Claude (`context.md` Generator)](https://gethealthdock.com/en/tools/apple-health-to-claude/): Dedicated streaming converter with ready-to-paste Claude health review prompts. Works worldwide (outside US-only Pro/Max/Ultra iOS beta) and with Claude Web, Claude Desktop, Claude Code, and Cursor.
-- [Apple Health to ChatGPT Converter](https://gethealthdock.com/en/tools/apple-health-to-chatgpt/): Stream-parse huge Apple Health exports locally into a ~2KB `context.md` plus a Python-ready Daily CSV for ChatGPT Data Analysis charts, ChatGPT Projects, and Custom GPTs (works worldwide outside US-only Health in ChatGPT).
+- [Apple Health to Claude (`context.md` Generator)](https://gethealthdock.com/en/tools/apple-health-to-claude/): Dedicated streaming converter with ready-to-paste Claude health review prompts. Works worldwide (outside US-only Pro/Max/Ultra iOS beta) and with Claude Web, Claude Desktop, Claude Code, and Cursor (as of Nov 2026).
+- [Apple Health to ChatGPT Converter](https://gethealthdock.com/en/tools/apple-health-to-chatgpt/): Stream-parse huge Apple Health exports locally into a ~2KB `context.md` plus a Python-ready Daily CSV for ChatGPT Data Analysis charts, ChatGPT Projects, and Custom GPTs (works worldwide outside US-only Health in ChatGPT, as of Nov 2026).
 - [Apple Health XML to CSV & JSON Converter](https://gethealthdock.com/en/tools/xml-to-csv/): Filter by custom date range and 15 health metrics to export Daily Summary CSV, Workouts CSV, or Daily Summary JSON for Excel, Numbers, Python, or DuckDB.
 - [健康坞 HealthDock — 免费本地 Apple 健康导出转换工具（简体中文）](https://gethealthdock.com/zh/): 100% 浏览器本地流式解析 Apple 健康 `export.zip` / `export.xml`，生成中文或英文 `context.md` 健康背景摘要与每日 CSV。
 - [Apple Health to Obsidian Markdown & YAML](https://gethealthdock.com/en/tools/apple-health-to-obsidian/): Exports Obsidian Properties YAML frontmatter for Daily Notes, a Health MOC note, a wiki-linked 90-day log table, and ready-to-paste Dataview queries.
 - [Apple Health Sleep & HRV Analyzer](https://gethealthdock.com/en/tools/apple-health-hrv-sleep-analyzer/): 100% browser-local dashboard charting 30 nights of Total/Deep/REM sleep and HRV (SDNN) against your 90-day personal baseline band with ≥2 SD unusual night detection.
 - [Fix Large Apple Health `export.xml` (500MB–2GB+)](https://gethealthdock.com/en/tools/apple-health-export-xml-too-large/): Stream huge exports that crash Excel (1,048,576-row cap) or Chrome in 4MB slices, slice by year, and shrink file size by 99.9% into Excel-ready CSV.
-- [Apple Health to Google Gemini & NotebookLM Converter](https://gethealthdock.com/en/tools/apple-health-to-gemini/): Generates `context.md`, a NotebookLM (Gemini Notebook) `.txt` source, and Multi-Year Daily JSON tailored for Gemini (32k Free / 128k AI Plus / 1M tokens on AI Pro & Ultra) and Gemini Gems.
+- [Apple Health to Google Gemini & NotebookLM Converter](https://gethealthdock.com/en/tools/apple-health-to-gemini/): Generates `context.md`, a NotebookLM (Gemini Notebook) `.txt` source, and Multi-Year Daily JSON tailored for Gemini (32k Free / 128k AI Plus / 1M tokens on AI Pro & Ultra) and Gemini Gems (as of Nov 2026).
 - [Apple Health to Grok Converter](https://gethealthdock.com/en/tools/apple-health-to-grok/): Generates a compact ~2KB `context.md` and Daily CSV tailored for Grok Think mode, DeepSearch norm benchmarking, and Private Chat on grok.com and X.
-- [Apple Health to Perplexity Converter](https://gethealthdock.com/en/tools/apple-health-to-perplexity/): Generates `context.md` for Perplexity Projects (formerly Spaces) and Academic-source prompts for peer-reviewed VO2max, HRV, and sleep citations—works worldwide outside US-only Perplexity Health and stays well under Perplexity's 40 MB upload limit.
+- [Apple Health to Perplexity Converter](https://gethealthdock.com/en/tools/apple-health-to-perplexity/): Generates `context.md` for Perplexity Projects (formerly Spaces) and Academic-source prompts for peer-reviewed VO2max, HRV, and sleep citations—works worldwide outside US-only Perplexity Health and stays well under Perplexity's 40 MB upload limit (as of Nov 2026).
 - [Apple Health to DeepSeek R1 & Local Ollama](https://gethealthdock.com/en/tools/apple-health-to-deepseek/): Generates a ~600-token `context.md` plus ready-to-run local `ollama run deepseek-r1` CLI commands for 100% air-gapped health AI on Mac.
+
+## HealthDock App (iPhone + Mac)
+
+- **Availability**: China App Store first; worldwide release planned.
+- **What It Does**: The iPhone app reads Apple Health (read-only) and automatically syncs to the paired Mac over Bluetooth and local Wi-Fi—no servers, with encrypted device pairing.
+- **Mac Health Archive Structure** (user-chosen folder):
+  - `context.md`: AI-ready summary (7/30/90-day vs. personal baseline, unusual days ≥2 SD, yearly averages, and training load).
+  - `daily/YYYY/YYYY-MM-DD.json`: Daily summary fields (missing field = no record, never `0`; `spo2_pct` in percent).
+  - `archive/YYYY.md` & `archive/YYYY-MM.md`: Yearly and monthly Markdown archives.
+  - `routes/*.json`: Workout GPS route point JSON files.
+  - `ecg/*.json`: Apple Watch ECG JSON files.
+  - `journal/`: Notes written by the user's own AI tools.
+  - `CLAUDE.md`, `AGENTS.md`, `DATA.md`: Guides and data dictionary for AI tools.
+- **Privacy**: Data never leaves the user's devices unless the user copies it to an AI tool; no accounts, no analytics.
+- **Pricing**: Mac app free; iPhone app has a 7-day free trial, then yearly subscription or one-time purchase.
 
 ## Key Technical Properties
 
