@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Log Life Events with Apple Health Data (AI Journal) | HealthDock</title>
+  <meta name="description" content="Track alcohol, travel, and life events alongside Apple Health sleep and HRV in an AI health journal on Mac. Local plain files, coming in HealthDock 1.3.">
+  <link rel="canonical" href="https://gethealthdock.com/en/log-life-events-health-data/">
+  <link rel="icon" href="../../icon.png">
+  <link rel="stylesheet" href="../../assets/site.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Log Life Events with Apple Health Data (AI Journal) | HealthDock">
+  <meta property="og:description" content="Tell your AI one sentence to log evening drinks, travel, or habit goals into plain local files alongside Apple Health metrics—coming in HealthDock 1.3.">
+  <meta property="og:url" content="https://gethealthdock.com/en/log-life-events-health-data/">
+  <meta property="og:image" content="https://gethealthdock.com/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Log Life Events with Apple Health Data (AI Journal) | HealthDock">
+  <meta name="twitter:description" content="Keep a plain-file AI health journal next to Apple Health sleep, HRV, and workouts on Mac. Write tools off by default, never touches Apple Health—coming in 1.3.">
+  <meta name="twitter:image" content="https://gethealthdock.com/og.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "HealthDock for Mac & iPhone",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "macOS 14+, iOS 17+",
+    "url": "https://gethealthdock.com/en/log-life-events-health-data/",
+    "description": "Local-only iPhone and Mac Apple Health sync apps, with conversational life-event logging (events/YYYY-MM.jsonl) and personal habit goals (goals.json) coming in HealthDock 1.3."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does logging a life event or goal write anything back into the iPhone Apple Health app?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Never. HealthDock on iPhone is strictly read-only for Apple Health. Coming in HealthDock 1.3, life events and goals are stored only in plain local files (events/YYYY-MM.jsonl and goals.json) inside your chosen Mac Health Archive folder and are never written back to Apple Health."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can my AI log or delete events without my permission?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All four MCP write tools in HealthDock 1.3—log_event, delete_event, set_goal, and deactivate_goal—are turned off by default. Your AI client can only record or update life events and goals after you explicitly enable write access in HealthDock Settings."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does HealthDock claim that alcohol, travel, or other logged events changed my HRV or sleep?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Everyday health metrics shift with many overlapping factors at once. HealthDock surfaces your logged life events alongside sleep, resting heart rate, and HRV strictly so you can compare dates side by side—never implying cause and effect and never providing medical advice."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How are bedtime and wake-time goals evaluated if I take a short evening nap?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In HealthDock 1.3, bedtime and wake-time goals (such as falling asleep before 23:30) are evaluated using the longest sleep segment of that night. Brief early-evening naps are ignored so they do not count toward or distort your bedtime streak."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who can see the life events and goals I tell my AI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HealthDock itself has no servers, no accounts, and uploads nothing, and its MCP server runs only on your Mac. However, whatever you say to your AI client—and any archive data your AI queries—is sent to the AI service provider you selected under that provider's privacy policy."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../">
+        <img src="../../icon.png" alt="HealthDock icon">
+        <span>HealthDock</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../tools/apple-health-to-claude/">Claude</a>
+        <a href="../tools/apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-on-mac/">On Mac</a>
+        <a href="../tools/xml-to-csv/">XML → CSV</a>
+        <a href="../../#all-tools">All Tools</a>
+        <a href="../../zh/" hreflang="zh-Hans">中文</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container container-narrow">
+    <section class="hero" style="padding-bottom:24px">
+      <div class="eyebrow"><span class="dot"></span>Coming in HealthDock 1.3 · Conversational AI Health Journal · Plain Local Files</div>
+      <h1>Log Life Events &amp; Habit Goals Alongside Your Apple Health Data</h1>
+      <p class="lead">
+        Apple Watch faithfully records what your body measured—sleep stages, resting heart rate, HRV, and workouts—while missing the real-world backdrop: two glasses of red wine at dinner, a cross-country work trip, or a target 23:30 bedtime. <strong>Coming in HealthDock 1.3</strong>, you can tell your AI a single sentence to save life events and goals into plain local files on your Mac for calm, side-by-side review.
+      </p>
+      <div class="btn-row" style="margin-top:20px">
+        <a class="btn btn-primary" href="../../">Try Free Browser Converter Now →</a>
+        <a class="btn btn-secondary" href="#waitlist">Join Launch Waitlist</a>
+      </div>
+      <div class="trust-strip">
+        <span>💬 Log in plain language via your AI</span>
+        <span>📂 Stored locally in <code>events/YYYY-MM.jsonl</code> &amp; <code>goals.json</code></span>
+        <span>🛡️ Write tools off by default; never writes to Apple Health</span>
+      </div>
+    </section>
+
+    <section class="section-block card">
+      <h2>Why Keep Real-Life Context Next to Wearable Numbers?</h2>
+      <p class="muted" style="margin:8px 0 0">
+        When you look back at a 90-day HRV or sleep chart and spot an unusual night three weeks ago, raw sensor numbers rarely tell the full story on their own. People searching for ways to track alcohol and sleep with Apple Health—or keep an AI health journal—often end up tapping twenty daily checkboxes inside a proprietary app, only to abandon the habit a week later when daily checklists feel like chores.
+      </p>
+      <p class="muted" style="margin:12px 0 0">
+        Keeping short, date-stamped notes right beside your HealthKit archive solves the memory gap without friction. Even today, our free <a href="../tools/apple-health-to-claude/">Apple Health to Claude converter</a> lets you type optional personal context notes directly into a browser-generated <code>context.md</code>. With the HealthDock iPhone and Mac apps (1.0 launching on the China App Store first, with other regions following) and the local features <strong>coming in HealthDock 1.3</strong>, event logging becomes a natural one-sentence conversation on your Mac.
+      </p>
+    </section>
+
+    <section class="section-block">
+      <h2>One Sentence to Your AI: How Event Logging Works in HealthDock 1.3</h2>
+      <p class="muted" style="margin:6px 0 14px">
+        In <strong>HealthDock 1.3 (upcoming)</strong>, MCP write tools are <strong>disabled by default</strong>. Once you toggle them on in HealthDock Settings and connect Claude Code, Codex, Cursor, Claude Desktop, or VS Code (see our <a href="../apple-health-mcp/">Apple Health MCP Server guide</a>), you don’t open a separate journaling form—you simply mention what happened during a normal chat:
+      </p>
+      <div class="grid-2">
+        <div class="card-subtle">
+          <h3>Single-Evening Note</h3>
+          <p class="muted" style="margin:4px 0 0">
+            <em>“I had two glasses of red wine last night.”</em><br>
+            Your AI calls <code>log_event</code> for yesterday’s date and appends a clean record to <code>events/YYYY-MM.jsonl</code> inside your Mac archive folder.
+          </p>
+        </div>
+        <div class="card-subtle">
+          <h3>Multi-Day Span</h3>
+          <p class="muted" style="margin:4px 0 0">
+            <em>“I’m away on a business trip all this week.”</em><br>
+            Your AI logs the travel window via <code>log_event</code> (and can list or remove entries anytime via <code>list_events</code> and <code>delete_event</code>).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>How Logged Events Show Up in <code>context.md</code> &amp; Daily Reports</h2>
+      <p class="muted" style="margin:6px 0 14px">
+        Once recorded, your life events automatically appear in <code>context.md</code>, MCP query responses, and the morning summaries described in our <a href="../ai-daily-health-report/">AI Daily Health Report guide</a>. Everything is presented strictly so <strong>you can compare dates side by side</strong>—never asserting that a logged note produced a sensor reading:
+      </p>
+      <div class="grid-2">
+        <div class="code-window">
+          <div class="code-window-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span>events/2026-11.jsonl (synthetic sample)</span>
+          </div>
+          <pre class="code-body" style="font-size:12px">{"id":"evt_01","date":"2026-11-17","note":"Two glasses of red wine at dinner"}
+{"id":"evt_02","start":"2026-11-18","end":"2026-11-20","note":"Business trip this week"}</pre>
+        </div>
+
+        <div class="code-window">
+          <div class="code-window-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span>context.md excerpt (synthetic sample)</span>
+          </div>
+          <pre class="code-body" style="font-size:12px">## Unusual Days (14d, ≥2 SD)
+| Date       | Metric  | Val | Base (±SD) |
+|------------|---------|-----|------------|
+| 2026-11-18 | Sleep h | 5.1 | 7.2 (±0.6) |
+| 2026-11-18 | HRV ms  | 34  | 58 (±9)    |
+
+## Recent Life Events (Side-by-Side Context)
+- 2026-11-17: Two glasses of red wine at dinner
+- 2026-11-18 → 2026-11-20: Business trip this week</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>Personal Goals, Streaks &amp; Smart Bedtime Window Rules</h2>
+      <p class="muted" style="margin:6px 0 14px">
+        Alongside life events, HealthDock 1.3 adds simple habit targets stored locally in <code>goals.json</code> via <code>set_goal</code>, <code>list_goals</code>, and <code>deactivate_goal</code>—letting you track current streaks alongside your <a href="../apple-health-on-mac/">local Mac health archive</a> without gamified streak guilt:
+      </p>
+      <div class="card" style="padding:18px 20px">
+        <div class="table-scroll">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Example Goal</th>
+                <th>How HealthDock 1.3 Evaluates It</th>
+                <th>Why This Detail Matters</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Asleep before 23:30</strong><br><span class="small">Bedtime / wake target</span></td>
+                <td>Checked against the <strong>longest sleep segment</strong> of that night</td>
+                <td>A 20-minute early-evening nap on the couch never counts as meeting a 23:30 bedtime target</td>
+              </tr>
+              <tr>
+                <td><strong>8,000 steps per day</strong><br><span class="small">Daily movement</span></td>
+                <td>Compared against deduplicated daily step totals in <code>daily/YYYY/YYYY-MM-DD.json</code></td>
+                <td>Missing days without sensor records stay blank rather than fake zeros</td>
+              </tr>
+              <tr>
+                <td><strong>Weekly workout duration</strong><br><span class="small">Training consistency</span></td>
+                <td>Summed across recorded workouts for the week</td>
+                <td>Keeps focus on sustainable weekly time rather than single-day spikes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block card">
+      <h2>Side-by-Side Comparison Only (No Causal Claims) &amp; Privacy</h2>
+      <p class="muted" style="margin:8px 0 0">
+        <strong>Compare side by side—never assume one note explains a number:</strong> Sleep stages, resting heart rate, and HRV fluctuate with training load, travel schedules, room environment, normal biological variation, and everyday routines all at once. HealthDock displays logged events solely so <strong>you can look at them side by side with your metrics</strong>, never implying cause and effect and never offering medical advice.
+      </p>
+      <p class="muted" style="margin:12px 0 0">
+        <strong>Local storage &amp; AI privacy:</strong> Write tools are off by default in Settings, save only to <code>events/YYYY-MM.jsonl</code> and <code>goals.json</code> on your Mac, and <strong>never write back to Apple Health</strong>. HealthDock’s MCP server runs strictly on your Mac and HealthDock itself uploads nothing to any server; however, <strong>anything you tell your AI tool and any data your AI queries is sent to the AI provider you chose</strong>, governed by that provider’s privacy policy. See our <a href="../privacy.html">Privacy Policy</a>.
+      </p>
+    </section>
+
+    <div id="waitlist" class="funnel-banner">
+      <div class="funnel-copy">
+        <h3>Try Browser Context Notes Today — Or Join the Waitlist</h3>
+        <p>
+          Want to pair personal notes with your Apple Health baselines right now? Use our <strong>free 100% browser-local converter</strong> to generate <code>context.md</code> today—or join the waitlist to hear when HealthDock launches worldwide.
+        </p>
+      </div>
+      <form class="waitlist-form" data-waitlist data-lang="en">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+        <div class="waitlist-row">
+          <input type="email" name="email" required placeholder="you@example.com" aria-label="Email for launch notification" autocomplete="email">
+          <button type="submit" class="btn btn-primary btn-sm">Notify Me</button>
+        </div>
+        <p class="waitlist-note" role="status" aria-live="polite">One email on launch day. No spam, no newsletters.</p>
+      </form>
+    </div>
+
+    <section class="section-block">
+      <h2>Life Events &amp; AI Health Journal FAQ</h2>
+      <details class="faq-item">
+        <summary>Does logging a life event or goal write anything back into the iPhone Apple Health app?</summary>
+        <p>Never. HealthDock on iPhone is strictly read-only for Apple Health. Coming in HealthDock 1.3, life events and goals are stored only in plain local files (<code>events/YYYY-MM.jsonl</code> and <code>goals.json</code>) inside your chosen Mac Health Archive folder and are never written back to Apple Health.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can my AI log or delete events without my permission?</summary>
+        <p>No. All four MCP write tools in HealthDock 1.3—<code>log_event</code>, <code>delete_event</code>, <code>set_goal</code>, and <code>deactivate_goal</code>—are turned off by default. Your AI client can only record or update life events and goals after you explicitly enable write access in HealthDock Settings.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does HealthDock claim that alcohol, travel, or other logged events changed my HRV or sleep?</summary>
+        <p>No. Everyday health metrics shift with many overlapping factors at once. HealthDock surfaces your logged life events alongside sleep, resting heart rate, and HRV strictly so you can compare dates side by side—never implying cause and effect and never providing medical advice.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How are bedtime and wake-time goals evaluated if I take a short evening nap?</summary>
+        <p>In HealthDock 1.3, bedtime and wake-time goals (such as falling asleep before 23:30) are evaluated using the longest sleep segment of that night. Brief early-evening naps are ignored so they do not count toward or distort your bedtime streak.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Who can see the life events and goals I tell my AI?</summary>
+        <p>HealthDock itself has no servers, no accounts, and uploads nothing, and its MCP server runs only on your Mac. However, whatever you say to your AI client—and any archive data your AI queries—is sent to the AI service provider you selected under that provider’s privacy policy. Read our <a href="../privacy.html">Privacy Policy</a>.</p>
+      </details>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 HealthDock · Private, local-only Apple Health tools</div>
+      <div class="footer-links">
+        <a href="../../">Converter</a>
+        <a href="../apple-health-on-mac/">On Mac</a>
+        <a href="../apple-health-mcp/">MCP Server</a>
+        <a href="../ai-daily-health-report/">Daily Report</a>
+        <a href="../tools/apple-health-to-claude/">Claude</a>
+        <a href="../tools/xml-to-csv/">XML → CSV</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="../../zh/" hreflang="zh-Hans">中文</a>
+      </div>
+    </footer>
+  </main>
+  <script src="../../assets/waitlist.js" defer></script>
+</body>
+</html>

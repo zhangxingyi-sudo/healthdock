@@ -12,8 +12,23 @@
   </url>
   <url>
     <loc>https://gethealthdock.com/en/apple-health-on-mac/</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://gethealthdock.com/en/apple-health-mcp/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://gethealthdock.com/en/ai-daily-health-report/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://gethealthdock.com/en/log-life-events-health-data/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://gethealthdock.com/en/tools/xml-to-csv/</loc>

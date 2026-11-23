@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apple Health MCP Server for Claude Code and Codex | HealthDock</title>
+  <meta name="description" content="Connect Apple Health to Claude Code, Codex, Cursor, and Claude Desktop on Mac via a local-only HealthKit MCP server coming in HealthDock 1.3. Zero cloud.">
+  <link rel="canonical" href="https://gethealthdock.com/en/apple-health-mcp/">
+  <link rel="icon" href="../../icon.png">
+  <link rel="stylesheet" href="../../assets/site.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Apple Health MCP Server for Claude Code and Codex | HealthDock">
+  <meta property="og:description" content="Connect Apple Health to Claude Code, Codex, Cursor, Claude Desktop, and VS Code on your Mac with a local-only MCP server coming in HealthDock 1.3.">
+  <meta property="og:url" content="https://gethealthdock.com/en/apple-health-mcp/">
+  <meta property="og:image" content="https://gethealthdock.com/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Apple Health MCP Server for Claude Code and Codex | HealthDock">
+  <meta name="twitter:description" content="Query Apple Health sleep stages, HRV, heart rate, and workouts from Claude Code, Codex, and Cursor via a local Mac MCP server coming in HealthDock 1.3.">
+  <meta name="twitter:image" content="https://gethealthdock.com/og.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "HealthDock for Mac & iPhone",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "macOS 14+, iOS 17+",
+    "url": "https://gethealthdock.com/en/apple-health-mcp/",
+    "description": "Private iPhone-to-Mac Apple Health sync companion apps, with a built-in local-only Model Context Protocol (MCP) server coming in HealthDock 1.3 for Claude Code, Codex, Cursor, Claude Desktop, and VS Code."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is the Apple Health MCP server available in HealthDock right now?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not yet. HealthDock 1.0 launches on the China App Store first, with other regions following afterward, and the built-in local MCP server is coming in HealthDock 1.3. If you want an AI-ready context.md summary for Claude or ChatGPT today, you can use HealthDock's free 100% browser-local export.zip converter right now."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I connect via --mcp-stdio or local Streamable HTTP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We recommend stdio mode (/Applications/HealthDock.app/Contents/MacOS/HealthDock --mcp-stdio) whenever your AI client supports local command servers, as your client starts the binary directly without opening a port. For clients that prefer HTTP, HealthDock 1.3 also provides a local Streamable HTTP endpoint at http://127.0.0.1:47321/mcp protected by an access token and bound strictly to 127.0.0.1."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Claude Code or Codex modify my Apple Health records through MCP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Never. HealthDock on iPhone requests read-only access to Apple Health. In HealthDock 1.3, MCP write tools (log_event, delete_event, set_goal, deactivate_goal) are turned off by default in Settings. Even if you enable them, they only save personal life events and goals into plain files (events/YYYY-MM.jsonl and goals.json) inside your Mac archive folder and never write back to Apple Health."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does HealthDock prevent double-counted sleep if I wear both an Apple Watch and a smart ring?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "When multiple wearables write sleep intervals to Apple Health, HealthDock 1.3 evaluates each night using a single primary sleep source rather than stacking overlapping totals. You can adjust your preferred primary source in Settings."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does a local MCP server mean my health data never reaches cloud AI providers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HealthDock itself runs no servers and never uploads your data anywhere, and the MCP server runs strictly on your Mac. However, whenever an AI client like Claude Code, Codex, Cursor, or Claude Desktop calls an MCP tool, the query results returned to that client are sent to whichever AI service provider powers your model and are governed by that provider's privacy policy."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../">
+        <img src="../../icon.png" alt="HealthDock icon">
+        <span>HealthDock</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../tools/apple-health-to-claude/">Claude</a>
+        <a href="../tools/apple-health-to-chatgpt/">ChatGPT</a>
+        <a href="../apple-health-on-mac/">On Mac</a>
+        <a href="../tools/xml-to-csv/">XML → CSV</a>
+        <a href="../../#all-tools">All Tools</a>
+        <a href="../../zh/" hreflang="zh-Hans">中文</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container container-narrow">
+    <section class="hero" style="padding-bottom:24px">
+      <div class="eyebrow"><span class="dot"></span>Coming in HealthDock 1.3 · Local Mac MCP Server · Zero Cloud Relay</div>
+      <h1>Connect Apple Health to Claude Code, Codex &amp; Desktop AI via Local MCP</h1>
+      <p class="lead">
+        Apple HealthKit stays locked on iPhone, while AI coding and desktop assistants run on your Mac. With the built-in local MCP server <strong>coming in HealthDock 1.3</strong>, tools like Claude Code, Codex, Cursor, Claude Desktop, and VS Code can query your synced sleep stages, HRV, workouts, and daily heart rate on demand—without manual XML exports or third-party cloud dashboards.
+      </p>
+      <div class="btn-row" style="margin-top:20px">
+        <a class="btn btn-primary" href="../../">Try Free Browser Converter Now →</a>
+        <a class="btn btn-secondary" href="#waitlist">Join Launch Waitlist</a>
+      </div>
+      <div class="trust-strip">
+        <span>🔒 Runs only on your Mac (<code>--mcp-stdio</code> or <code>127.0.0.1</code>)</span>
+        <span>🛡️ Write tools off by default; never writes to Apple Health</span>
+        <span>⚡ Need <code>context.md</code> today? Convert <code>export.zip</code> in your browser now</span>
+      </div>
+    </section>
+
+    <section class="section-block card">
+      <h2>What Is MCP—and Why Use It Instead of Uploading <code>export.zip</code>?</h2>
+      <p class="muted" style="margin:8px 0 0">
+        The <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">Model Context Protocol (MCP)</a> is an open standard that lets AI assistants invoke structured local tools instead of forcing you to paste giant files into a chat box. Rather than stuffing years of raw Apple Health XML into a single prompt, your AI client starts light and fetches specific slices—like last night’s sleep stages or a 30-day HRV series—only when your question calls for them.
+      </p>
+      <p class="muted" style="margin:12px 0 0">
+        Today, if you want to explore your HealthKit history in Claude or ChatGPT right away, dropping <code>export.zip</code> into our free <a href="../tools/apple-health-to-claude/">Apple Health to Claude converter</a> generates a clean ~2KB <code>context.md</code> in seconds inside your browser. HealthDock’s companion apps (with 1.0 launching on the China App Store first and other regions following) automate the iPhone-to-Mac sync over Bluetooth and local Wi-Fi—and <strong>coming in HealthDock 1.3</strong>, the Mac app adds a native local MCP server on top of that archive.
+      </p>
+      <div class="table-scroll" style="margin-top:16px">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Workflow</th>
+              <th>Freshness</th>
+              <th>Detail Granularity</th>
+              <th>Where Data Lives</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Manual <code>export.zip</code> + Converter</strong><br><span class="small">Available free right now</span></td>
+              <td>Re-export from iPhone whenever you want new days</td>
+              <td>Great ~2KB <code>context.md</code> overview or filtered CSV</td>
+              <td>100% browser-local until you paste into an AI chat</td>
+            </tr>
+            <tr>
+              <td><strong>Third-Party Cloud Dashboards</strong><br><span class="small">Hosted health APIs</span></td>
+              <td>Automatic via external servers</td>
+              <td>Fixed vendor endpoints</td>
+              <td>Uploaded to a remote database under an account</td>
+            </tr>
+            <tr>
+              <td><strong>HealthDock Local MCP Server</strong><br><span class="small">Coming in HealthDock 1.3</span></td>
+              <td><strong>Automatic background sync</strong> from iPhone to Mac</td>
+              <td><strong>On-demand drill-down</strong>: 7/30/90d baselines, single-day peak HR, sleep stages, workouts</td>
+              <td><strong>Plain Mac files + local-only MCP</strong>; only queried snippets go to your chosen AI</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>Client Setup Preview: Claude Code, Codex, Cursor, Claude Desktop &amp; VS Code</h2>
+      <p class="muted" style="margin:6px 0 14px">
+        In <strong>HealthDock 1.3 (upcoming)</strong>, Settings includes client cards to connect in one click or copy snippets for <strong>Claude Code, Codex, Cursor, Claude Desktop, and VS Code</strong>. We recommend <code>stdio</code> mode, where your AI tool starts the binary directly. As a fallback, local Streamable HTTP runs at <code>http://127.0.0.1:47321/mcp</code> with an access token, listening only on <code>127.0.0.1</code>.
+      </p>
+
+      <div class="code-window" style="margin-bottom:16px">
+        <div class="code-window-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span>Claude Code &amp; Terminal CLI (coming in HealthDock 1.3)</span>
+        </div>
+        <pre class="code-body" style="font-size:12.5px"># Register HealthDock MCP server in Claude Code (stdio)
+claude mcp add --scope user healthdock -- "/Applications/HealthDock.app/Contents/MacOS/HealthDock" --mcp-stdio
+
+# Or run a one-off query straight from Terminal without an MCP client
+HealthDock --query get_day_detail '{"date":"YYYY-MM-DD"}'</pre>
+      </div>
+
+      <div class="grid-2">
+        <div class="code-window">
+          <div class="code-window-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span>Codex (~/.codex/config.toml)</span>
+          </div>
+          <pre class="code-body" style="font-size:12px">[mcp_servers.healthdock]
+command = "/Applications/HealthDock.app/Contents/MacOS/HealthDock"
+args = ["--mcp-stdio"]</pre>
+        </div>
+
+        <div class="code-window">
+          <div class="code-window-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span>Claude Desktop / Cursor (JSON)</span>
+          </div>
+          <pre class="code-body" style="font-size:12px">{
+  "mcpServers": {
+    "healthdock": {
+      "command": "/Applications/HealthDock.app/Contents/MacOS/HealthDock",
+      "args": ["--mcp-stdio"]
+    }
+  }
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>MCP Tools Reference (Coming in HealthDock 1.3)</h2>
+      <p class="muted" style="margin:6px 0 14px">
+        Behind the scenes, HealthDock’s Mac archive stores ordinary files you own—<code>context.md</code>, <code>daily/YYYY/YYYY-MM-DD.json</code> (where an omitted field means no reading was recorded that day, never <code>0</code>), <code>archive/</code>, <code>routes/*.json</code>, <code>ecg/*.json</code>, <code>journal/</code>, and data dictionaries (<code>CLAUDE.md</code>, <code>AGENTS.md</code>, <code>DATA.md</code>)—as covered in our <a href="../apple-health-on-mac/">Apple Health on Mac guide</a>. When wearables overlap (such as wearing both an Apple Watch and a smart ring), sleep is resolved to one primary source per night, adjustable in Settings.
+      </p>
+      <div class="card" style="padding:18px 20px">
+        <div class="table-scroll">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Tool Name</th>
+                <th>Access</th>
+                <th>What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>get_health_context</code></td>
+                <td>Read-only</td>
+                <td>Returns your 7-day, 30-day, and 90-day summary compared against personal baselines.</td>
+              </tr>
+              <tr>
+                <td><code>query_daily_range</code></td>
+                <td>Read-only</td>
+                <td>Fetches daily summaries across a start and end date range.</td>
+              </tr>
+              <tr>
+                <td><code>get_day_detail</code></td>
+                <td>Read-only</td>
+                <td>Returns granular single-day details, such as peak heart rate and the time it occurred.</td>
+              </tr>
+              <tr>
+                <td><code>get_metric_series</code></td>
+                <td>Read-only</td>
+                <td>Pulls a date-indexed time series for an individual health metric.</td>
+              </tr>
+              <tr>
+                <td><code>get_sleep_stages</code></td>
+                <td>Read-only</td>
+                <td>Returns deep, REM, core, and awakening stage details for a specific night.</td>
+              </tr>
+              <tr>
+                <td><code>list_workouts</code></td>
+                <td>Read-only</td>
+                <td>Lists recorded workouts with duration and activity metadata.</td>
+              </tr>
+              <tr>
+                <td><code>list_events</code> / <code>list_goals</code></td>
+                <td>Read-only</td>
+                <td>Reads logged personal life events and active habit goals from your local archive.</td>
+              </tr>
+              <tr>
+                <td><code>log_event</code>, <code>delete_event</code>,<br><code>set_goal</code>, <code>deactivate_goal</code></td>
+                <td><strong>Opt-in write</strong><br><span class="small">(Off by default)</span></td>
+                <td>Disabled until enabled in Settings. Writes only life events and goals to <code>events/YYYY-MM.jsonl</code> and <code>goals.json</code>—<strong>never writes back to Apple Health</strong>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <h2>Example Session: Asking About Yesterday’s Peak Heart Rate</h2>
+      <p class="muted" style="margin:6px 0 14px">
+        Suppose you ask Claude Code or Claude Desktop: <em>“What time did my heart rate peak yesterday, and was it during a workout?”</em> Instead of scanning gigabytes of XML, your AI calls <code>get_day_detail</code> (and <code>list_workouts</code> if needed) on your Mac. Below is a synthetic illustration of the tool exchange coming in HealthDock 1.3:
+      </p>
+      <div class="code-window">
+        <div class="code-window-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span>MCP tool call &amp; response (synthetic sample)</span>
+        </div>
+        <pre class="code-body" style="font-size:12px">User: "What time was my highest heart rate yesterday, and what was my day like?"
+
+→ Assistant calls healthdock.get_day_detail({"date": "2026-11-21"})
+
+← Local MCP response (synthetic sample):
+{
+  "date": "2026-11-21",
+  "resting_hr_avg": 56,
+  "hrv_sdnn_ms": 62,
+  "heart_rate_max": 171,
+  "heart_rate_max_at": "2026-11-21T17:38:12+08:00",
+  "steps": 11280,
+  "sleep_min": 450,
+  "workouts": [
+    { "type": "Outdoor Run", "start": "17:12", "end": "17:54", "duration_min": 42 }
+  ]
+}
+
+Assistant: "Yesterday (Nov 21), your heart rate peaked at 171 bpm at 17:38, right in the
+middle of your 42-minute Outdoor Run (17:12–17:54). Outside of training, resting heart rate
+was 56 bpm and HRV averaged 62 ms across 7.5 hours of sleep."</pre>
+      </div>
+      <p class="small" style="margin:12px 0 0">
+        Want your AI to also compile a morning briefing or remember travel and social notes alongside your metrics? Read our companion previews on <a href="../ai-daily-health-report/">AI Daily Health Reports</a> and <a href="../log-life-events-health-data/">Logging Life Events &amp; Goals</a>.
+      </p>
+    </section>
+
+    <section class="section-block card">
+      <h2>Privacy Boundary: Local MCP Server vs. Your Chosen AI Provider</h2>
+      <p class="muted" style="margin:8px 0 0">
+        HealthDock’s iPhone-to-Mac sync runs strictly over Bluetooth and local Wi-Fi with encrypted device pairing—zero accounts and zero HealthDock servers. In HealthDock 1.3, the MCP server executes <strong>exclusively on your Mac</strong> (via local <code>stdio</code> or loopback <code>127.0.0.1</code>), and HealthDock itself never uploads any health data anywhere.
+      </p>
+      <p class="muted" style="margin:12px 0 0">
+        <strong>Be clear on what happens next:</strong> whenever your AI tool calls an MCP function, <strong>the data returned to that AI client is sent to whichever AI provider you chose</strong> (unless you run a strictly offline local model) and is governed by that provider’s own privacy policy. Review our full <a href="../privacy.html">Privacy Policy</a> for complete details on permissions and local AI controls.
+      </p>
+    </section>
+
+    <div id="waitlist" class="funnel-banner">
+      <div class="funnel-copy">
+        <h3>Try Browser Conversion Today — Or Join the Launch Waitlist</h3>
+        <p>
+          Need Apple Health inside Claude or Codex right now? Use our <strong>free 100% browser-local converter</strong> to generate <code>context.md</code> from <code>export.zip</code> today—or leave your email to hear when the HealthDock apps launch worldwide.
+        </p>
+      </div>
+      <form class="waitlist-form" data-waitlist data-lang="en">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+        <div class="waitlist-row">
+          <input type="email" name="email" required placeholder="you@example.com" aria-label="Email for launch notification" autocomplete="email">
+          <button type="submit" class="btn btn-primary btn-sm">Notify Me</button>
+        </div>
+        <p class="waitlist-note" role="status" aria-live="polite">One email on launch day. No spam, no newsletters.</p>
+      </form>
+    </div>
+
+    <section class="section-block">
+      <h2>Apple Health MCP Server FAQ</h2>
+      <details class="faq-item">
+        <summary>Is the Apple Health MCP server available in HealthDock right now?</summary>
+        <p>Not yet. HealthDock 1.0 launches on the China App Store first, with other regions following afterward, and the built-in local MCP server is <strong>coming in HealthDock 1.3</strong>. If you want an AI-ready <code>context.md</code> summary for Claude or ChatGPT today, use our <a href="../../">free browser-local converter</a> right now.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Should I connect via <code>--mcp-stdio</code> or local Streamable HTTP?</summary>
+        <p>We recommend <code>stdio</code> mode (<code>/Applications/HealthDock.app/Contents/MacOS/HealthDock --mcp-stdio</code>) whenever your AI client supports local command servers, since your client starts the binary directly without opening a port. For clients that need HTTP, HealthDock 1.3 provides <code>http://127.0.0.1:47321/mcp</code> with an access token, bound strictly to <code>127.0.0.1</code>.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can Claude Code or Codex modify my Apple Health records through MCP?</summary>
+        <p>Never. HealthDock on iPhone requests read-only access to Apple Health. In HealthDock 1.3, MCP write tools (<code>log_event</code>, <code>delete_event</code>, <code>set_goal</code>, <code>deactivate_goal</code>) are turned off by default in Settings. Even when enabled, they only save personal life events and goals into <code>events/YYYY-MM.jsonl</code> and <code>goals.json</code> in your Mac archive folder and never write back to Apple Health.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How does HealthDock prevent double-counted sleep if I wear both an Apple Watch and a smart ring?</summary>
+        <p>When multiple wearables write sleep intervals to Apple Health, HealthDock 1.3 evaluates each night using a single primary sleep source rather than stacking overlapping totals. You can adjust your preferred primary source in Settings.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does a local MCP server mean my health data never reaches cloud AI providers?</summary>
+        <p>HealthDock itself runs no servers and never uploads your data anywhere, and the MCP server runs strictly on your Mac. However, whenever an AI client like Claude Code, Codex, Cursor, or Claude Desktop calls an MCP tool, the query results returned to that client are sent to whichever AI service provider powers your model and are governed by that provider’s privacy policy. See our <a href="../privacy.html">Privacy Policy</a>.</p>
+      </details>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 HealthDock · Private, local-only Apple Health tools</div>
+      <div class="footer-links">
+        <a href="../../">Converter</a>
+        <a href="../apple-health-on-mac/">On Mac</a>
+        <a href="../ai-daily-health-report/">Daily Report</a>
+        <a href="../log-life-events-health-data/">Life Events</a>
+        <a href="../tools/apple-health-to-claude/">Claude</a>
+        <a href="../tools/xml-to-csv/">XML → CSV</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="../../zh/" hreflang="zh-Hans">中文</a>
+      </div>
+    </footer>
+  </main>
+  <script src="../../assets/waitlist.js" defer></script>
+</body>
+</html>
